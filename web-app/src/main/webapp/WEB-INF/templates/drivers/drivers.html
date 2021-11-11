@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Drivers</title>
+</head>
+<body>
+<center>
+    <h1>Drivers</h1>
+    <br/>
+    <a th:href="@{/drivers/new-driver}">Add driver</a>
+    <br/>
+    <div>
+        <table border="1">
+            <thead>
+            <tr>
+                <th scope="col">Id</th>
+                <th scope="col">Name</th>
+                <th scope="col">Date when got job</th>
+                <th scope="col">Salary</th>
+                <th scope="col">Count of cars assigned to the driver</th>
+                <th scope="col">Update driver</th>
+                <th scope="col">Delete driver</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="driver : ${driversList}">
+                <td th:text="${driver.getDriver_id()}"></td>
+                <td th:text="${driver.getName()}"></td>
+                <td th:text="${driver.getDateStartWork()}"></td>
+                <td th:text="${driver.getSalary()}"></td>
+                <td th:text="${countOfCars}"></td>
+                <td>
+                    <a th:href="@{/drivers/{id}/update(id=${driver.getDriver_id()})}" th:text="'Update driver ' + ${driver.getName()}"></a>
+                </td>
+                <td>
+                    <a th:href="@{/drivers/{id}/delete(id=${driver.getDriver_id()})}" th:text="'Delete driver ' + ${driver.getName()}"></a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</center>
+</body>
+<hr>
+<a th:href="@{/}">Back to menu of autobase</a>
+</html>

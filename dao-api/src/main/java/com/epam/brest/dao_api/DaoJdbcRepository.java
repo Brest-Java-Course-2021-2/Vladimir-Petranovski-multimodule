@@ -3,7 +3,7 @@ package com.epam.brest.dao_api;
 
 import java.util.List;
 
-public interface DAORepository<T> {
+public interface DaoJdbcRepository<T> {
 
     List<T> findAll();
 

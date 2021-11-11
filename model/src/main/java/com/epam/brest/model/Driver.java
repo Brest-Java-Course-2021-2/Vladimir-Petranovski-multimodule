@@ -2,13 +2,14 @@ package com.epam.brest.model;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
-import java.sql.Date;
+import java.time.Instant;
+import java.util.Objects;
 
 public class Driver implements Serializable {
 
     private Integer driver_id;
     private String name;
-    private Date dateStartWork;
+    private Instant dateStartWork;
     private BigDecimal salary;
 
     public Integer getDriver_id() {
@@ -27,11 +28,11 @@ public class Driver implements Serializable {
         this.name = name;
     }
 
-    public Date getDateStartWork() {
+    public Instant getDateStartWork() {
         return dateStartWork;
     }
 
-    public void setDateStartWork(Date dateStartWork) {
+    public void setDateStartWork(Instant dateStartWork) {
         this.dateStartWork = dateStartWork;
     }
 
@@ -41,5 +42,28 @@ public class Driver implements Serializable {
 
     public void setSalary(BigDecimal salary) {
         this.salary = salary;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Driver driver = (Driver) o;
+        return Objects.equals(driver_id, driver.driver_id) && Objects.equals(name, driver.name) && Objects.equals(dateStartWork, driver.dateStartWork) && Objects.equals(salary, driver.salary);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(driver_id, name, dateStartWork, salary);
+    }
+
+    @Override
+    public String toString() {
+        return "Driver{" +
+                "driver_id=" + driver_id +
+                ", name='" + name + '\'' +
+                ", dateStartWork=" + dateStartWork +
+                ", salary=" + salary +
+                '}';
     }
 }
