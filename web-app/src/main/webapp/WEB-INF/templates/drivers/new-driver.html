@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>New driver</title>
+</head>
+<body>
+<form th:method="POST" th:action="@{/drivers}" th:object="${driver}">
+    <label for="name">Enter name: </label>
+    <input type="text" th:field="*{name}" id="name"/> <!-- try  th:placeholder="Name"-->
+    <br/>
+    <label for="dateStartWork">Enter date when got this job</label>
+    <input type="text" th:field="*{dateStartWork}" id="dateStartWork">
+    <br/>
+    <label for="salary">Enter salary: </label>
+    <input type="text" th:field="*{salary}" id="salary"/>
+    <br/>
+    <input type="submit" value="Add driver"/>
+    <br/>
+    <button><a th:href="@{/drivers}"></a>Cancel</button>
+</form>
+</body>
+</html>
