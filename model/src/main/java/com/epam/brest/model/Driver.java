@@ -12,6 +12,22 @@ public class Driver implements Serializable {
     private Instant dateStartWork;
     private BigDecimal salary;
 
+    public Driver() {
+    }
+
+    public Driver(String name, Instant dateStartWork, BigDecimal salary) {
+        this.name = name;
+        this.dateStartWork = dateStartWork;
+        this.salary = salary;
+    }
+
+    public Driver(Integer driver_id, String name, Instant dateStartWork, BigDecimal salary) {
+        this.driver_id = driver_id;
+        this.name = name;
+        this.dateStartWork = dateStartWork;
+        this.salary = salary;
+    }
+
     public Integer getDriver_id() {
         return driver_id;
     }
