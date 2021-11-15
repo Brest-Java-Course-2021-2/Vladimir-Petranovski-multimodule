@@ -1,8 +1,6 @@
 package com.epam.brest.model;
 
-import java.io.Serializable;
-
-public class Car implements Serializable {
+public class Car {
 
     private Integer car_id;
     private String model;

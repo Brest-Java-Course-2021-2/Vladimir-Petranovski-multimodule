@@ -5,24 +5,20 @@ import com.epam.brest.dao_api.DaoJdbcRepository;
 import com.epam.brest.model.Driver;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.PreparedStatementCallback;
-import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
-import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 
 import javax.sql.DataSource;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import static com.epam.brest.dao.Queries.*;
 
-public class DriverDaoJdbcJdbcImpl implements DaoJdbcRepository<Driver> {
+public class DriverDaoJdbcImpl implements DaoJdbcRepository<Driver> {
 
     private final NamedParameterJdbcTemplate namedParameterJdbcTemplate;
 
-    public DriverDaoJdbcJdbcImpl(DataSource dataSource) {
+    public DriverDaoJdbcImpl(DataSource dataSource) {
         this.namedParameterJdbcTemplate = new NamedParameterJdbcTemplate(dataSource);
     }
 
@@ -40,17 +36,21 @@ public class DriverDaoJdbcJdbcImpl implements DaoJdbcRepository<Driver> {
 
     @Override
     public void save(Driver driver) {
-        Map<String, Object> params = new HashMap<>();
-        params.put("name", driver.getName());
-        params.put("dateStartWork", driver.getDateStartWork());
-        params.put("salary", driver.getSalary());
-        namedParameterJdbcTemplate.execute(DRIVER_SAVE, params, new PreparedStatementCallback<Integer>() {
-            @Override
-            public Integer doInPreparedStatement(PreparedStatement ps)
-                    throws SQLException, DataAccessException {
-                return ps.executeUpdate();
-            }
-        });
+        if (!findAllNameDrivers().contains(driver.getName().toUpperCase())) {
+            Map<String, Object> params = new HashMap<>();
+            params.put("name", driver.getName());
+            params.put("dateStartWork", driver.getDateStartWork());
+            params.put("salary", driver.getSalary());
+            namedParameterJdbcTemplate.execute(DRIVER_SAVE, params, new PreparedStatementCallback<Integer>() {
+                @Override
+                public Integer doInPreparedStatement(PreparedStatement ps)
+                        throws SQLException, DataAccessException {
+                    return ps.executeUpdate();
+                }
+            });
+        } else {
+            throw new IllegalArgumentException("Name must be unique");
+        }
     }
 
 //    @Override
@@ -69,8 +69,6 @@ public class DriverDaoJdbcJdbcImpl implements DaoJdbcRepository<Driver> {
         params.put("dateStartWork", updateToDriver.getDateStartWork());
         params.put("salary", updateToDriver.getSalary());
         namedParameterJdbcTemplate.update(DRIVER_UPDATE_BY_ID, params);
-//        namedParameterJdbcTemplate.update(DRIVER_UPDATE_BY_ID, params, new DriverDaoJdbcRowMapper());
-
     }
 
     @Override
@@ -78,5 +76,15 @@ public class DriverDaoJdbcJdbcImpl implements DaoJdbcRepository<Driver> {
         Map<String, Integer> param = new HashMap<>();
         param.put("driver_id", id);
         namedParameterJdbcTemplate.update(DRIVER_DELETE_BY_ID, param);
+    }
+
+    public String findNameDriverById(Integer id) {
+        Map<String, Integer> param = new HashMap<>();
+        param.put("driver_id", id);
+        return namedParameterJdbcTemplate.queryForObject(DRIVER_FIND_NAME_BY_ID, param, String.class);
+    }
+
+    public List<String> findAllNameDrivers() {
+        return namedParameterJdbcTemplate.queryForList(DRIVER_FIND_ALL_NAME, Collections.emptyMap(), String.class);
     }
 }

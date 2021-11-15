@@ -1,30 +1,32 @@
-package com.epam.brest.model;
+package com.epam.brest.model.dto;
 
 import java.math.BigDecimal;
 import java.time.Instant;
 import java.util.Objects;
 
-public class Driver {
-
+public class DriverDto {
     private Integer driver_id;
     private String name;
     private Instant dateStartWork;
     private BigDecimal salary;
+    private Integer countOfCarsAssignedToDriver;
 
-    public Driver() {
+    public DriverDto() {
     }
 
-    public Driver(String name, Instant dateStartWork, BigDecimal salary) {
+    public DriverDto(String name, Instant dateStartWork, BigDecimal salary, Integer countOfCarsAssignedToDriver) {
         this.name = name;
         this.dateStartWork = dateStartWork;
         this.salary = salary;
+        this.countOfCarsAssignedToDriver = countOfCarsAssignedToDriver;
     }
 
-    public Driver(Integer driver_id, String name, Instant dateStartWork, BigDecimal salary) {
+    public DriverDto(Integer driver_id, String name, Instant dateStartWork, BigDecimal salary, Integer countOfCarsAssignedToDriver) {
         this.driver_id = driver_id;
         this.name = name;
         this.dateStartWork = dateStartWork;
         this.salary = salary;
+        this.countOfCarsAssignedToDriver = countOfCarsAssignedToDriver;
     }
 
     public Integer getDriver_id() {
@@ -59,26 +61,35 @@ public class Driver {
         this.salary = salary;
     }
 
+    public Integer getCountOfCarsAssignedToDriver() {
+        return countOfCarsAssignedToDriver;
+    }
+
+    public void setCountOfCarsAssignedToDriver(Integer countOfCarsAssignedToDriver) {
+        this.countOfCarsAssignedToDriver = countOfCarsAssignedToDriver;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Driver driver = (Driver) o;
-        return Objects.equals(driver_id, driver.driver_id) && Objects.equals(name, driver.name) && Objects.equals(dateStartWork, driver.dateStartWork) && Objects.equals(salary, driver.salary);
+        DriverDto driverDto = (DriverDto) o;
+        return Objects.equals(driver_id, driverDto.driver_id) && Objects.equals(name, driverDto.name) && Objects.equals(dateStartWork, driverDto.dateStartWork) && Objects.equals(salary, driverDto.salary) && Objects.equals(countOfCarsAssignedToDriver, driverDto.countOfCarsAssignedToDriver);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(driver_id, name, dateStartWork, salary);
+        return Objects.hash(driver_id, name, dateStartWork, salary, countOfCarsAssignedToDriver);
     }
 
     @Override
     public String toString() {
-        return "Driver{" +
+        return "DriverDto{" +
                 "driver_id=" + driver_id +
                 ", name='" + name + '\'' +
                 ", dateStartWork=" + dateStartWork +
                 ", salary=" + salary +
+                ", countOfCarsAssignedToDriver=" + countOfCarsAssignedToDriver +
                 '}';
     }
 }
