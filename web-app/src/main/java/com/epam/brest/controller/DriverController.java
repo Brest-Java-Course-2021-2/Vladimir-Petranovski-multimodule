@@ -3,6 +3,7 @@ package com.epam.brest.controller;
 import com.epam.brest.service_api.DriverDtoService;
 import com.epam.brest.service_api.DriverService;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -20,7 +21,8 @@ public class DriverController {
     }
 
     @GetMapping
-    public String findAllDrivers() {
+    public String findAllDrivers(Model model) {
+        model.addAttribute("driverList", driverDtoService.findAllDriverWithCountCars());
         return "drivers/drivers";
     }
 }

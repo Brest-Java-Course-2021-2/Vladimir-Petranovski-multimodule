@@ -19,7 +19,7 @@ public class DriverDtoServiceImpl implements DriverDtoService {
     }
 
     @Override
-    public List<DriverDto> findAllWithCountCars() {
-        return driverDtoDao.findWithCountCars();
+    public List<DriverDto> findAllDriverWithCountCars() {
+        return driverDtoDao.findAllDriverWithCountCars();
     }
 }

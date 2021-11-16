@@ -5,7 +5,7 @@
     <title>Update driver</title>
 </head>
 <body>
-<form th:method="PATCH" th:action="@{/drivers/{driver_id}(driver_id=${driver.getDriver_id()})}" th:object="${driver}">
+<form th:method="PATCH" th:action="@{/drivers/{driver_id}(driver_id=${driver.getDriverId()})}" th:object="${driver}">
     <label for="name">Update name: </label>
     <input type="text" th:field="*{name}" id="name"/>
     <br/>

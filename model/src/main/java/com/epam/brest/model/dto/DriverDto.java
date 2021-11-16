@@ -33,7 +33,7 @@ public class DriverDto {
         return driverId;
     }
 
-    public void setDriverId(Integer driverId) {
+    public void setDriverId(final Integer driverId) {
         this.driverId = driverId;
     }
 
@@ -41,7 +41,7 @@ public class DriverDto {
         return driverName;
     }
 
-    public void setDriverName(String driverName) {
+    public void setDriverName(final String driverName) {
         this.driverName = driverName;
     }
 
@@ -49,7 +49,7 @@ public class DriverDto {
         return driverDateStartWork;
     }
 
-    public void setDriverDateStartWork(Instant driverDateStartWork) {
+    public void setDriverDateStartWork(final Instant driverDateStartWork) {
         this.driverDateStartWork = driverDateStartWork;
     }
 
@@ -57,7 +57,7 @@ public class DriverDto {
         return driverSalary;
     }
 
-    public void setDriverSalary(BigDecimal driverSalary) {
+    public void setDriverSalary(final BigDecimal driverSalary) {
         this.driverSalary = driverSalary;
     }
 
@@ -65,7 +65,7 @@ public class DriverDto {
         return countOfCarsAssignedToDriver;
     }
 
-    public void setCountOfCarsAssignedToDriver(Integer countOfCarsAssignedToDriver) {
+    public void setCountOfCarsAssignedToDriver(final Integer countOfCarsAssignedToDriver) {
         this.countOfCarsAssignedToDriver = countOfCarsAssignedToDriver;
     }
 
@@ -85,10 +85,10 @@ public class DriverDto {
     @Override
     public String toString() {
         return "DriverDto{" +
-                "driver_id=" + driverId +
-                ", name='" + driverName + '\'' +
-                ", dateStartWork=" + driverDateStartWork +
-                ", salary=" + driverSalary +
+                "driverId=" + driverId +
+                ", driverName='" + driverName + '\'' +
+                ", driverDateStartWork=" + driverDateStartWork +
+                ", driverSalary=" + driverSalary +
                 ", countOfCarsAssignedToDriver=" + countOfCarsAssignedToDriver +
                 '}';
     }

@@ -10,5 +10,5 @@ public interface DriverDtoService {
      *
      * @return list of driver Dto.
      */
-    List<DriverDto> findAllWithCountCars();
+    List<DriverDto> findAllDriverWithCountCars();
 }

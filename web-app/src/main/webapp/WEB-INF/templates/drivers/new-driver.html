@@ -7,13 +7,13 @@
 <body>
 <form th:method="POST" th:action="@{/drivers}" th:object="${driver}">
     <label for="name">Enter name: </label>
-    <input type="text" th:field="*{name}" id="name"/> <!-- try  th:placeholder="Name"-->
+    <input type="text" th:field="*{driverName}" id="name"/> <!-- try  th:placeholder="Name"-->
     <br/>
     <label for="dateStartWork">Enter date when got this job</label>
-    <input type="text" th:field="*{dateStartWork}" id="dateStartWork">
+    <input type="text" th:field="*{driverDateStartWork}" id="dateStartWork">
     <br/>
     <label for="salary">Enter salary: </label>
-    <input type="text" th:field="*{salary}" id="salary"/>
+    <input type="text" th:field="*{driverSalary}" id="salary"/>
     <br/>
     <input type="submit" value="Add driver"/>
     <br/>

@@ -30,7 +30,7 @@ class DriverDtoDaoJdbcImplTestIT {
     @Test
     void findWithCountCars() {
         log.info("Method started: findWithCountCars() of {}", getClass().getName());
-        List<DriverDto> drivers = driverDtoDaoJdbc.findWithCountCars();
+        List<DriverDto> drivers = driverDtoDaoJdbc.findAllDriverWithCountCars();
         assertNotNull(drivers);
         assertTrue(drivers.size() > 0);
         log.info("List of driver Dto was created {}", drivers);

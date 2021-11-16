@@ -12,7 +12,7 @@ import java.util.List;
 
 import static com.epam.brest.dao.Queries.DRIVER_COUNT_CAR;
 
-//@Component
+@Component
 public class DriverDtoDaoJdbcImpl implements DriverDtoDao {
 
     private final NamedParameterJdbcTemplate namedParameterJdbcTemplate;
@@ -22,7 +22,7 @@ public class DriverDtoDaoJdbcImpl implements DriverDtoDao {
     }
 
     @Override
-    public List<DriverDto> findWithCountCars() {
+    public List<DriverDto> findAllDriverWithCountCars() {
         return namedParameterJdbcTemplate.query(DRIVER_COUNT_CAR, BeanPropertyRowMapper.newInstance(DriverDto.class));
     }
 }
