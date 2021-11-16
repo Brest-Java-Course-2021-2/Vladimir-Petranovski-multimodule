@@ -10,10 +10,10 @@ public class DriverDtoDaoJdbcRowMapper implements RowMapper<DriverDto> {
     @Override
     public DriverDto mapRow(ResultSet resultSet, int i) throws SQLException {
         DriverDto driver = new DriverDto();
-        driver.setDriver_id(resultSet.getInt("driver_id"));
-        driver.setName(resultSet.getString("name"));
-        driver.setDateStartWork(resultSet.getTimestamp("dateStartWork").toInstant());
-        driver.setSalary(resultSet.getBigDecimal("salary"));
+        driver.setDriverId(resultSet.getInt("driver_id"));
+        driver.setDriverName(resultSet.getString("name"));
+        driver.setDriverDateStartWork(resultSet.getTimestamp("dateStartWork").toInstant());
+        driver.setDriverSalary(resultSet.getBigDecimal("salary"));
         driver.setCountOfCarsAssignedToDriver(resultSet.getInt("countOfCarsAssignedToDriver"));
         return driver;
     }
