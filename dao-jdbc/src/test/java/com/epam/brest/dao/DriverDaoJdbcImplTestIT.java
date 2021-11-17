@@ -11,7 +11,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 import java.time.Instant;
-import java.util.List;
 
 import static com.epam.brest.logger.ProjectLogger.log;
 import static org.junit.jupiter.api.Assertions.*;
@@ -21,10 +20,10 @@ import static org.junit.jupiter.api.Assertions.*;
 @Transactional
 class DriverDaoJdbcImplTestIT {
 
-    private DriverDriverDaoJdbcImpl driverDAO;
+    private DriverDaoJdbcImpl driverDAO;
 
     DriverDaoJdbcImplTestIT(@Autowired DriverDao driverDAO) {
-        this.driverDAO = (DriverDriverDaoJdbcImpl) driverDAO;
+        this.driverDAO = (DriverDaoJdbcImpl) driverDAO;
     }
 
     @Test

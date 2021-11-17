@@ -6,7 +6,7 @@ import com.epam.brest.model.Car;
 
 import java.util.List;
 
-public class CarDriverDaoJdbcImpl implements CarDao {
+public class CarDaoJdbcImpl implements CarDao {
 
     @Override
     public List<Car> findAll() {

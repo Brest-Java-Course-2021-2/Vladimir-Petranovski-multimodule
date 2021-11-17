@@ -8,6 +8,7 @@ import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import java.util.List;
 
 import static com.epam.brest.dao.Queries.DRIVER_COUNT_CAR;
+import static com.epam.brest.logger.ProjectLogger.log;
 
 //@Component
 public class DriverDtoDaoJdbcImpl implements DriverDtoDao {
@@ -20,6 +21,7 @@ public class DriverDtoDaoJdbcImpl implements DriverDtoDao {
 
     @Override
     public List<DriverDto> findAllDriversWithCountCars() {
+        log.info("Method findAllDriversWithCountCars() of class {} started", getClass().getName());
         return namedParameterJdbcTemplate.query(DRIVER_COUNT_CAR, BeanPropertyRowMapper.newInstance(DriverDto.class));
     }
 }
