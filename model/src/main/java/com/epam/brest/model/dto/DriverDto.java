@@ -2,63 +2,63 @@ package com.epam.brest.model.dto;
 
 import java.math.BigDecimal;
 import java.time.Instant;
-import java.util.Objects;
 
 public class DriverDto {
-    private Integer driver_id;
-    private String name;
-    private Instant dateStartWork;
-    private BigDecimal salary;
+
+    private Integer driverId;
+    private String driverName;
+    private Instant driverDateStartWork;
+    private BigDecimal driverSalary;
     private Integer countOfCarsAssignedToDriver;
 
     public DriverDto() {
     }
 
-    public DriverDto(String name, Instant dateStartWork, BigDecimal salary, Integer countOfCarsAssignedToDriver) {
-        this.name = name;
-        this.dateStartWork = dateStartWork;
-        this.salary = salary;
+    public DriverDto(String driverName, Instant driverDateStartWork, BigDecimal driverSalary, Integer countOfCarsAssignedToDriver) {
+        this.driverName = driverName;
+        this.driverDateStartWork = driverDateStartWork;
+        this.driverSalary = driverSalary;
         this.countOfCarsAssignedToDriver = countOfCarsAssignedToDriver;
     }
 
-    public DriverDto(Integer driver_id, String name, Instant dateStartWork, BigDecimal salary, Integer countOfCarsAssignedToDriver) {
-        this.driver_id = driver_id;
-        this.name = name;
-        this.dateStartWork = dateStartWork;
-        this.salary = salary;
+    public DriverDto(Integer driverId, String driverName, Instant driverDateStartWork, BigDecimal driverSalary, Integer countOfCarsAssignedToDriver) {
+        this.driverId = driverId;
+        this.driverName = driverName;
+        this.driverDateStartWork = driverDateStartWork;
+        this.driverSalary = driverSalary;
         this.countOfCarsAssignedToDriver = countOfCarsAssignedToDriver;
     }
 
-    public Integer getDriver_id() {
-        return driver_id;
+    public Integer getDriverId() {
+        return driverId;
     }
 
-    public void setDriver_id(Integer driver_id) {
-        this.driver_id = driver_id;
+    public void setDriverId(Integer driverId) {
+        this.driverId = driverId;
     }
 
-    public String getName() {
-        return name;
+    public String getDriverName() {
+        return driverName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setDriverName(String driverName) {
+        this.driverName = driverName;
     }
 
-    public Instant getDateStartWork() {
-        return dateStartWork;
+    public Instant getDriverDateStartWork() {
+        return driverDateStartWork;
     }
 
-    public void setDateStartWork(Instant dateStartWork) {
-        this.dateStartWork = dateStartWork;
+    public void setDriverDateStartWork(Instant driverDateStartWork) {
+        this.driverDateStartWork = driverDateStartWork;
     }
 
-    public BigDecimal getSalary() {
-        return salary;
+    public BigDecimal getDriverSalary() {
+        return driverSalary;
     }
 
-    public void setSalary(BigDecimal salary) {
-        this.salary = salary;
+    public void setDriverSalary(BigDecimal driverSalary) {
+        this.driverSalary = driverSalary;
     }
 
     public Integer getCountOfCarsAssignedToDriver() {
@@ -70,25 +70,12 @@ public class DriverDto {
     }
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        DriverDto driverDto = (DriverDto) o;
-        return Objects.equals(driver_id, driverDto.driver_id) && Objects.equals(name, driverDto.name) && Objects.equals(dateStartWork, driverDto.dateStartWork) && Objects.equals(salary, driverDto.salary) && Objects.equals(countOfCarsAssignedToDriver, driverDto.countOfCarsAssignedToDriver);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(driver_id, name, dateStartWork, salary, countOfCarsAssignedToDriver);
-    }
-
-    @Override
     public String toString() {
         return "DriverDto{" +
-                "driver_id=" + driver_id +
-                ", name='" + name + '\'' +
-                ", dateStartWork=" + dateStartWork +
-                ", salary=" + salary +
+                "driverId=" + driverId +
+                ", driverName='" + driverName + '\'' +
+                ", driverDateStartWork=" + driverDateStartWork +
+                ", driverSalary=" + driverSalary +
                 ", countOfCarsAssignedToDriver=" + countOfCarsAssignedToDriver +
                 '}';
     }
