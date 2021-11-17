@@ -2,31 +2,31 @@ package com.epam.brest.model;
 
 public class Car {
 
-    private Integer car_id;
-    private String model;
-    private Integer driver_id;
+    private Integer carId;
+    private String carModel;
+    private Integer driverId;
 
-    public Integer getCar_id() {
-        return car_id;
+    public Integer getCarId() {
+        return carId;
     }
 
-    public void setCar_id(Integer car_id) {
-        this.car_id = car_id;
+    public void setCarId(Integer carId) {
+        this.carId = carId;
     }
 
-    public String getModel() {
-        return model;
+    public String getCarModel() {
+        return carModel;
     }
 
-    public void setModel(String model) {
-        this.model = model;
+    public void setCarModel(String carModel) {
+        this.carModel = carModel;
     }
 
-    public Integer getDriver_id() {
-        return driver_id;
+    public Integer getDriverId() {
+        return driverId;
     }
 
-    public void setDriver_id(Integer driver_id) {
-        this.driver_id = driver_id;
+    public void setDriverId(Integer driverId) {
+        this.driverId = driverId;
     }
 }

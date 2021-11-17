@@ -4,7 +4,7 @@ import com.epam.brest.dao_api.DaoJdbcRepository;
 
 import java.util.List;
 
-public class CarDaoJdbcJdbcImpl implements DaoJdbcRepository {
+public class CarDaoJdbcImpl implements DaoJdbcRepository {
     @Override
     public List findAll() {
         return null;

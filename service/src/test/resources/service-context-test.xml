@@ -14,7 +14,7 @@
         <constructor-arg ref="namedParameterJdbcTemplate"/>
     </bean>
 
-    <bean id="driverDtoService" class="com.epam.brest.service.impl.DriverDtoServiceImpl">
-        <constructor-arg name="driverDtoDao" ref="driverDtoDao"/>
-    </bean>
+<!--    <bean id="driverDtoService" class="com.epam.brest.service.impl.DriverDtoServiceImpl">-->
+<!--        <constructor-arg name="driverDtoDao" ref="driverDtoDao"/>-->
+<!--    </bean>-->
 </beans>

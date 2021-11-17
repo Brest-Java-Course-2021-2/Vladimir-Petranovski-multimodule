@@ -24,8 +24,8 @@
     </bean>
 
     <jdbc:initialize-database data-source="dataSource">
-        <jdbc:script location="sql-scripts/create-tables.sql"/>
-        <jdbc:script location="sql-scripts/init-tables.sql"/>
+        <jdbc:script location="classpath*:sql-scripts/create-tables.sql"/>
+        <jdbc:script location="classpath*:sql-scripts/init-tables.sql"/>
     </jdbc:initialize-database>
 
 </beans>

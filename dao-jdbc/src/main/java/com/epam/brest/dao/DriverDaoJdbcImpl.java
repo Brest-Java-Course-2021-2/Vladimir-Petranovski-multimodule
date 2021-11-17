@@ -30,17 +30,17 @@ public class DriverDaoJdbcImpl implements DaoJdbcRepository<Driver> {
     @Override
     public Driver findById(Integer id) {
         Map<String, Integer> params = new HashMap<>();
-        params.put("driver_id", id);
+        params.put("driverId", id);
         return namedParameterJdbcTemplate.queryForObject(DRIVER_FIND_BY_ID, params, new DriverDaoJdbcRowMapper());
     }
 
     @Override
     public void save(Driver driver) {
-        if (!findAllNameDrivers().contains(driver.getName().toUpperCase())) {
+        if (!findAllNameDrivers().contains(driver.getDriverName().toUpperCase())) {
             Map<String, Object> params = new HashMap<>();
-            params.put("name", driver.getName());
-            params.put("dateStartWork", driver.getDateStartWork());
-            params.put("salary", driver.getSalary());
+            params.put("driverName", driver.getDriverName());
+            params.put("driverDateStartWork", driver.getDriverDateStartWork());
+            params.put("driverSalary", driver.getDriverSalary());
             namedParameterJdbcTemplate.execute(DRIVER_SAVE, params, new PreparedStatementCallback<Integer>() {
                 @Override
                 public Integer doInPreparedStatement(PreparedStatement ps)
@@ -64,23 +64,23 @@ public class DriverDaoJdbcImpl implements DaoJdbcRepository<Driver> {
     @Override
     public void update(Integer id, Driver updateToDriver) {
         Map<String, Object> params = new HashMap<>();
-        params.put("driver_id", id);
-        params.put("name", updateToDriver.getName());
-        params.put("dateStartWork", updateToDriver.getDateStartWork());
-        params.put("salary", updateToDriver.getSalary());
+        params.put("driverId", id);
+        params.put("driverName", updateToDriver.getDriverName());
+        params.put("driverDateStartWork", updateToDriver.getDriverDateStartWork());
+        params.put("driverSalary", updateToDriver.getDriverSalary());
         namedParameterJdbcTemplate.update(DRIVER_UPDATE_BY_ID, params);
     }
 
     @Override
     public void delete(Integer id) {
         Map<String, Integer> param = new HashMap<>();
-        param.put("driver_id", id);
+        param.put("driverId", id);
         namedParameterJdbcTemplate.update(DRIVER_DELETE_BY_ID, param);
     }
 
     public String findNameDriverById(Integer id) {
         Map<String, Integer> param = new HashMap<>();
-        param.put("driver_id", id);
+        param.put("driverId", id);
         return namedParameterJdbcTemplate.queryForObject(DRIVER_FIND_NAME_BY_ID, param, String.class);
     }
 
