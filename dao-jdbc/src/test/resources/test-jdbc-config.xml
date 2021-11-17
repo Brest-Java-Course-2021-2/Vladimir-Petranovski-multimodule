@@ -5,7 +5,7 @@
        https://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc.xsd">
 
     <bean id="daoJdbcRepository"
-          class="com.epam.brest.dao.DriverDaoJdbcImpl">
+          class="com.epam.brest.dao.DriverDriverDaoJdbcImpl">
         <constructor-arg name="dataSource" ref="dataSource"/>
     </bean>
 

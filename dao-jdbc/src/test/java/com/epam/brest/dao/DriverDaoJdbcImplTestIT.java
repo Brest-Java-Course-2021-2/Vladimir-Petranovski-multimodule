@@ -1,6 +1,6 @@
 package com.epam.brest.dao;
 
-import com.epam.brest.dao_api.DaoJdbcRepository;
+import com.epam.brest.dao_api.DriverDao;
 import com.epam.brest.model.Driver;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -21,10 +21,10 @@ import static org.junit.jupiter.api.Assertions.*;
 @Transactional
 class DriverDaoJdbcImplTestIT {
 
-    private DriverDaoJdbcImpl driverDAO;
+    private DriverDriverDaoJdbcImpl driverDAO;
 
-    DriverDaoJdbcImplTestIT(@Autowired DaoJdbcRepository<Driver> driverDAO) {
-        this.driverDAO = (DriverDaoJdbcImpl) driverDAO;
+    DriverDaoJdbcImplTestIT(@Autowired DriverDao driverDAO) {
+        this.driverDAO = (DriverDriverDaoJdbcImpl) driverDAO;
     }
 
     @Test
@@ -101,22 +101,22 @@ class DriverDaoJdbcImplTestIT {
         log.info("Driver with id equals {} was deleted {}", victim_id, driverDAO.findAll());
     }
 
-    @Test
-    void findNameDriverById() {
-        log.info("Method started: findNameDriverById() of {}", getClass().getName());
-        assertNotNull(driverDAO);
-        String expectedName = "VITALIY";
-        Integer expectedId = 3;
-        assertEquals(expectedName, driverDAO.findNameDriverById(expectedId));
-        log.info("ExpectedName {} equals name from method findNameDriverById() --- {}", expectedName, driverDAO.findNameDriverById(expectedId));
-    }
+//    @Test
+//    void findNameDriverById() {
+//        log.info("Method started: findNameDriverById() of {}", getClass().getName());
+//        assertNotNull(driverDAO);
+//        String expectedName = "VITALIY";
+//        Integer expectedId = 3;
+//        assertEquals(expectedName, driverDAO.findNameDriverById(expectedId));
+//        log.info("ExpectedName {} equals name from method findNameDriverById() --- {}", expectedName, driverDAO.findNameDriverById(expectedId));
+//    }
 
-    @Test
-    void findAllNameDrivers() {
-        log.info("Method started: findAllNameDrivers() of {}", getClass().getName());
-        assertNotNull(driverDAO);
-        List<String> expectedListName = List.of("VASIA", "VITALIY", "VOVA");
-        assertEquals(expectedListName, driverDAO.findAllNameDrivers());
-        log.info("Expected list of name {} equals list of name from method findAllNameDrivers() --- {}", expectedListName, driverDAO.findAllNameDrivers());
-    }
+//    @Test
+//    void findAllNameDrivers() {
+//        log.info("Method started: findAllNameDrivers() of {}", getClass().getName());
+//        assertNotNull(driverDAO);
+//        List<String> expectedListName = List.of("VASIA", "VITALIY", "VOVA");
+//        assertEquals(expectedListName, driverDAO.findAllNameDrivers());
+//        log.info("Expected list of name {} equals list of name from method findAllNameDrivers() --- {}", expectedListName, driverDAO.findAllNameDrivers());
+//    }
 }

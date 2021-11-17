@@ -1,7 +1,7 @@
 package com.epam.brest.dao;
 
 import com.epam.brest.dao.rowMappers.DriverDaoJdbcRowMapper;
-import com.epam.brest.dao_api.DaoJdbcRepository;
+import com.epam.brest.dao_api.DriverDao;
 import com.epam.brest.model.Driver;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.PreparedStatementCallback;
@@ -14,11 +14,11 @@ import java.util.*;
 
 import static com.epam.brest.dao.Queries.*;
 
-public class DriverDaoJdbcImpl implements DaoJdbcRepository<Driver> {
+public class DriverDriverDaoJdbcImpl implements DriverDao {
 
     private final NamedParameterJdbcTemplate namedParameterJdbcTemplate;
 
-    public DriverDaoJdbcImpl(DataSource dataSource) {
+    public DriverDriverDaoJdbcImpl(DataSource dataSource) {
         this.namedParameterJdbcTemplate = new NamedParameterJdbcTemplate(dataSource);
     }
 
@@ -78,13 +78,13 @@ public class DriverDaoJdbcImpl implements DaoJdbcRepository<Driver> {
         namedParameterJdbcTemplate.update(DRIVER_DELETE_BY_ID, param);
     }
 
-    public String findNameDriverById(Integer id) {
-        Map<String, Integer> param = new HashMap<>();
-        param.put("driverId", id);
-        return namedParameterJdbcTemplate.queryForObject(DRIVER_FIND_NAME_BY_ID, param, String.class);
-    }
+//    private String findNameDriverById(Integer id) {
+//        Map<String, Integer> param = new HashMap<>();
+//        param.put("driverId", id);
+//        return namedParameterJdbcTemplate.queryForObject(DRIVER_FIND_NAME_BY_ID, param, String.class);
+//    }
 
-    public List<String> findAllNameDrivers() {
+    private List<String> findAllNameDrivers() {
         return namedParameterJdbcTemplate.queryForList(DRIVER_FIND_ALL_NAME, Collections.emptyMap(), String.class);
     }
 }

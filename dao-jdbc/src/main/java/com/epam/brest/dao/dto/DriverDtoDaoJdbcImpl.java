@@ -19,7 +19,7 @@ public class DriverDtoDaoJdbcImpl implements DriverDtoDao {
     }
 
     @Override
-    public List<DriverDto> findWithCountCars() {
+    public List<DriverDto> findAllDriversWithCountCars() {
         return namedParameterJdbcTemplate.query(DRIVER_COUNT_CAR, BeanPropertyRowMapper.newInstance(DriverDto.class));
     }
 }
