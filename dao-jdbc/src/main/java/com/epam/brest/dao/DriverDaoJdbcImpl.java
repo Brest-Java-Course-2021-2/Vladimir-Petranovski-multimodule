@@ -5,6 +5,7 @@ import com.epam.brest.dao_api.DriverDao;
 import com.epam.brest.model.Driver;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.PreparedStatementCallback;
+import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 
 import java.sql.PreparedStatement;
@@ -23,13 +24,13 @@ public class DriverDaoJdbcImpl implements DriverDao {
     }
 
     @Override
-    public List<Driver> findAll() {
+    public List<Driver> findAllDrivers() {
         log.info("Method findAll() of class {} started", getClass().getName());
         return namedParameterJdbcTemplate.query(DRIVER_FIND_ALL, new DriverDaoJdbcRowMapper());
     }
 
     @Override
-    public Driver findById(Integer id) {
+    public Driver findDriverById(Integer id) {
         log.info("Method findById(with id={}) of class {} started", id, getClass().getName());
         Map<String, Integer> params = new HashMap<>();
         params.put("driverId", id);
@@ -37,7 +38,7 @@ public class DriverDaoJdbcImpl implements DriverDao {
     }
 
     @Override
-    public void save(Driver driver) {
+    public void saveDriver(Driver driver) {
         log.info("Method save(with driver {}) of class {} started", driver, getClass().getName());
         if (!findAllNameDrivers().contains(driver.getDriverName().toUpperCase())) {
             Map<String, Object> params = new HashMap<>();
@@ -57,7 +58,7 @@ public class DriverDaoJdbcImpl implements DriverDao {
     }
 
     @Override
-    public void update(Integer id, Driver updateToDriver) {
+    public void updateDriverById(Integer id, Driver updateToDriver) {
         log.info("Method update(with id={}, with update to driver {}) of class {} started",id, updateToDriver, getClass().getName());
         Map<String, Object> params = new HashMap<>();
         params.put("driverId", id);
@@ -68,11 +69,16 @@ public class DriverDaoJdbcImpl implements DriverDao {
     }
 
     @Override
-    public void delete(Integer id) {
+    public void deleteDriverById(Integer id) {
         log.info("Method delete( with id={}) of class {} started", id, getClass().getName());
         Map<String, Integer> param = new HashMap<>();
         param.put("driverId", id);
         namedParameterJdbcTemplate.update(DRIVER_DELETE_BY_ID, param);
+    }
+
+    @Override
+    public Integer count() {
+        return namedParameterJdbcTemplate.queryForObject(DRIVER_COUNT, new MapSqlParameterSource(), Integer.class);
     }
 
     private List<String> findAllNameDrivers() {

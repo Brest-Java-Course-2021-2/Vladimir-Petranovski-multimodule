@@ -6,13 +6,13 @@ import java.util.List;
 
 public interface CarDao {
 
-    List<Car> findAll();
+    List<Car> findAllCars();
 
-    Car findById(Integer id);
+    Car findCarById(Integer id);
 
-    void save(Car car);
+    void saveCar(Car car);
 
-    void update(Integer id, Car car);
+    void updateCarById(Integer id, Car car);
 
-    void delete(Integer id);
+    void deleteCarById(Integer id);
 }

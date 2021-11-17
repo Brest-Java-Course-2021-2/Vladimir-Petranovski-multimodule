@@ -7,13 +7,15 @@ import java.util.List;
 
 public interface DriverDao {
 
-    List<Driver> findAll();
+    List<Driver> findAllDrivers();
 
-    Driver findById(Integer id);
+    Driver findDriverById(Integer id);
 
-    void save(Driver driver);
+    void saveDriver(Driver driver);
 
-    void update(Integer id, Driver driver);
+    void updateDriverById(Integer id, Driver driver);
 
-    void delete(Integer id);
+    void deleteDriverById(Integer id);
+
+    Integer count();
 }

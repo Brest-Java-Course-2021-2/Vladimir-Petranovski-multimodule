@@ -9,27 +9,27 @@ import java.util.List;
 public class CarDaoJdbcImpl implements CarDao {
 
     @Override
-    public List<Car> findAll() {
+    public List<Car> findAllCars() {
         return null;
     }
 
     @Override
-    public Car findById(Integer id) {
+    public Car findCarById(Integer id) {
         return null;
     }
 
     @Override
-    public void save(Car car) {
+    public void saveCar(Car car) {
 
     }
 
     @Override
-    public void update(Integer id, Car car) {
+    public void updateCarById(Integer id, Car car) {
 
     }
 
     @Override
-    public void delete(Integer id) {
+    public void deleteCarById(Integer id) {
 
     }
 }

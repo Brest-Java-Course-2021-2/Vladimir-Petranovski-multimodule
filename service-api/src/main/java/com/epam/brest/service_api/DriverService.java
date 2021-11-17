@@ -13,4 +13,14 @@ public interface DriverService {
      */
 
     List<Driver> findAllDrivers();
+
+    Driver findDriverById(Integer id);
+
+    void saveDriver(Driver driver);
+
+    void updateDriverById(Integer id, Driver driver);
+
+    void deleteDriverById(Integer id);
+
+    Integer count();
 }
