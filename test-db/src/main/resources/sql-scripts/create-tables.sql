@@ -8,7 +8,7 @@ CREATE TABLE driver (
 DROP TABLE IF EXISTS car;
 CREATE TABLE car (
     car_id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-    model VARCHAR(20) NOT NULL UNIQUE,
+    model VARCHAR(20) NOT NULL,
     driver_id INT NOT NULL,
     CONSTRAINT car_driver_fk FOREIGN KEY (driver_id) REFERENCES driver(driver_id)
 );
