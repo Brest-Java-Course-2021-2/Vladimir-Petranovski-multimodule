@@ -1,8 +1,8 @@
-package com.epam.brest.service.impl;
+package com.epam.brest.service.impl.dto;
 
 import com.epam.brest.dao_api.DriverDtoDao;
 import com.epam.brest.model.dto.DriverDto;
-import com.epam.brest.service_api.DriverDtoService;
+import com.epam.brest.service_api.dto.DriverDtoService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -19,7 +19,7 @@ public class DriverDtoServiceImpl implements DriverDtoService {
     }
 
     @Override
-    public List<DriverDto> findAllWithCountCars() {
-        return driverDtoDao.findWithCountCars();
+    public List<DriverDto> findAllDriverWithCountCars() {
+        return driverDtoDao.findAllDriversWithCountCars();
     }
 }

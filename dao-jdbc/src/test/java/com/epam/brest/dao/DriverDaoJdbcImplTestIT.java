@@ -1,6 +1,6 @@
 package com.epam.brest.dao;
 
-import com.epam.brest.dao_api.DaoJdbcRepository;
+import com.epam.brest.dao_api.DriverDao;
 import com.epam.brest.model.Driver;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -21,9 +21,9 @@ import static org.junit.jupiter.api.Assertions.*;
 @Transactional
 class DriverDaoJdbcImplTestIT {
 
-    private DriverDaoJdbcImpl driverDAO;
+    private final DriverDaoJdbcImpl driverDAO;
 
-    DriverDaoJdbcImplTestIT(@Autowired DaoJdbcRepository<Driver> driverDAO) {
+    DriverDaoJdbcImplTestIT(@Autowired DriverDao driverDAO) {
         this.driverDAO = (DriverDaoJdbcImpl) driverDAO;
     }
 
@@ -32,30 +32,37 @@ class DriverDaoJdbcImplTestIT {
         log.info("Method started: findAll() of {}", getClass().getName());
         assertNotNull(driverDAO);
         log.info("Object {} not null", driverDAO);
-        assertNotNull(driverDAO.findAll());
-        log.info("{}", driverDAO.findAll());
+        assertNotNull(driverDAO.findAllDrivers());
+        log.info("{}", driverDAO.findAllDrivers());
     }
 
     @Test
     void findDriverById() {
         log.info("Method started: findDriverById() of {}", getClass().getName());
         assertNotNull(driverDAO);
-        Integer victim_id = 3;
-        Driver victimDriver = new Driver(3, "VITALIY", Instant.parse("2005-04-28T10:44:50.532700Z"), new BigDecimal(650));
-        assertEquals(victimDriver, driverDAO.findById(victim_id));
-        log.info("VictimDriver {} equals {}", victimDriver, driverDAO.findById(victim_id));
+        List<Driver> drivers = driverDAO.findAllDrivers();
+        if (drivers.size() == 0) {
+            driverDAO.saveDriver(new Driver("TEST DRIVER", Instant.parse("2001-04-18T00:04:15Z"), new BigDecimal(1000)));
+            drivers = driverDAO.findAllDrivers();
+        }
+        Driver driverSrc = drivers.get(0);
+        Driver driverDst = driverDAO.findDriverById(driverSrc.getDriverId());
+        assertEquals(driverSrc.getDriverName(), driverDst.getDriverName());
+        log.info("Driver's name first from list: {} equals driver's name after finding: {}", driverSrc.getDriverName(), driverDst.getDriverName());
+
     }
 
     @Test
-    void save() {
+    void saveDriver() {
         log.info("Method started: save() of {}", getClass().getName());
         assertNotNull(driverDAO);
-        Integer driverListBeforeSave = driverDAO.findAll().size();
+        int driversSizeBefore = driverDAO.count();
         Driver victimDriver = new Driver("VERANICA", Instant.parse("2002-09-15T08:09:12.4342Z"), new BigDecimal(720));
-        driverDAO.save(victimDriver);
-        Integer driverListAfterSave = driverDAO.findAll().size();
-        assertTrue(driverListBeforeSave < driverListAfterSave);
-        log.info("Driver {} was saved {}", victimDriver, driverDAO.findAll());
+        driverDAO.saveDriver(victimDriver);
+        Integer driversSizeAfterSave = driverDAO.count();
+        assertNotNull(driversSizeAfterSave);
+        assertEquals(driversSizeBefore, driverDAO.count() - 1);
+        log.info("Size driver's list before save():{} equals after save minus one {}", driversSizeBefore, driversSizeAfterSave - 1);
     }
 
     @Test
@@ -65,58 +72,51 @@ class DriverDaoJdbcImplTestIT {
         Driver victimDriver = new Driver("VERANICA", Instant.parse("2002-09-15T08:09:12.4342Z"), new BigDecimal(720));
 
         assertThrows(IllegalArgumentException.class, () -> {
-            driverDAO.save(victimDriver);
-            driverDAO.save(victimDriver);
+            driverDAO.saveDriver(victimDriver);
+            driverDAO.saveDriver(victimDriver);
         });
         log.info("I checked that was called exception {}", IllegalArgumentException.class);
     }
 
     @Test
-    void update() {
+    void checkUpdateDriver() {
         log.info("Method started: update() of {}", getClass().getName());
         assertNotNull(driverDAO);
-        Integer driverListBeforeUpdate = driverDAO.findAll().size();
+        List<Driver> drivers = driverDAO.findAllDrivers();
+        if (drivers.size() == 0) {
+            driverDAO.saveDriver(new Driver("PETIA", Instant.parse("2003-05-01T00:00:01.01Z"), new BigDecimal(790)));
+            drivers = driverDAO.findAllDrivers();
+        }
 
-        Integer updateId = 2;
-        Driver driverToUpdate = driverDAO.findById(updateId);
+        Driver driverSrc = drivers.get(0);
+        driverSrc.setDriverName(driverSrc.getDriverName() + "_TEST");
+        driverDAO.updateDriverById(driverSrc.getDriverId(), driverSrc);
 
-        Driver victimDriver = new Driver("PETIA", Instant.parse("2003-05-01T00:00:01.01Z"), new BigDecimal(790));
-        driverDAO.update(updateId, victimDriver);
-        assertNotEquals(driverToUpdate, driverDAO.findById(updateId));
-        log.info("Driver before updating {} not equals driver after updating {}", driverToUpdate, driverDAO.findById(updateId));
-
-        Integer driverListAfterUpdate = driverDAO.findAll().size();
-        assertEquals(driverListBeforeUpdate, driverListAfterUpdate);
+        Driver driverDst = driverDAO.findDriverById(driverSrc.getDriverId());
+        assertEquals(driverSrc.getDriverName(), driverDst.getDriverName());
+        log.info("Driver's name first from list: {} equals driver's name after updating: {}", driverSrc.getDriverName(), driverDst.getDriverName());
     }
 
     @Test
-    void delete() {
+    void checkDeleteDriver() {
         log.info("Method started: delete() of {}", getClass().getName());
         assertNotNull(driverDAO);
-        Integer driverListBeforeDelete = driverDAO.findAll().size();
-        Integer victim_id = 1;
-        driverDAO.delete(victim_id);
-        Integer driverListAfterDelete = driverDAO.findAll().size();
-        assertTrue(driverListBeforeDelete > driverListAfterDelete);
-        log.info("Driver with id equals {} was deleted {}", victim_id, driverDAO.findAll());
+        driverDAO.saveDriver(new Driver("VERANICA", Instant.parse("2002-09-15T08:09:12.4342Z"), new BigDecimal(720)));
+        List<Driver> drivers = driverDAO.findAllDrivers();
+
+        driverDAO.deleteDriverById(drivers.get(drivers.size() - 1).getDriverId());
+        assertEquals(drivers.size() - 1, driverDAO.findAllDrivers().size());
+        log.info("First driver's size list minus one: {} equals driver's size list after deleting {}", drivers.size() - 1, driverDAO.findAllDrivers().size());
     }
 
     @Test
-    void findNameDriverById() {
-        log.info("Method started: findNameDriverById() of {}", getClass().getName());
+    void shouldCount() {
+        log.info("Method started: shouldCount() of {}", getClass().getName());
         assertNotNull(driverDAO);
-        String expectedName = "VITALIY";
-        Integer expectedId = 3;
-        assertEquals(expectedName, driverDAO.findNameDriverById(expectedId));
-        log.info("ExpectedName {} equals name from method findNameDriverById() --- {}", expectedName, driverDAO.findNameDriverById(expectedId));
-    }
-
-    @Test
-    void findAllNameDrivers() {
-        log.info("Method started: findAllNameDrivers() of {}", getClass().getName());
-        assertNotNull(driverDAO);
-        List<String> expectedListName = List.of("VASIA", "VITALIY", "VOVA");
-        assertEquals(expectedListName, driverDAO.findAllNameDrivers());
-        log.info("Expected list of name {} equals list of name from method findAllNameDrivers() --- {}", expectedListName, driverDAO.findAllNameDrivers());
+        Integer quantity = driverDAO.count();
+        assertNotNull(quantity);
+        assertTrue(quantity > 0);
+        log.info("Quantity equals {}", quantity);
+        assertEquals(Integer.valueOf(3), quantity);
     }
 }

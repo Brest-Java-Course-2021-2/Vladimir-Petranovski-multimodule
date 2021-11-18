@@ -6,57 +6,57 @@ import java.util.Objects;
 
 public class Driver {
 
-    private Integer driver_id;
-    private String name;
-    private Instant dateStartWork;
-    private BigDecimal salary;
+    private Integer driverId;
+    private String driverName;
+    private Instant driverDateStartWork;
+    private BigDecimal driverSalary;
 
     public Driver() {
     }
 
-    public Driver(String name, Instant dateStartWork, BigDecimal salary) {
-        this.name = name;
-        this.dateStartWork = dateStartWork;
-        this.salary = salary;
+    public Driver(String driverName, Instant driverDateStartWork, BigDecimal driverSalary) {
+        this.driverName = driverName;
+        this.driverDateStartWork = driverDateStartWork;
+        this.driverSalary = driverSalary;
     }
 
-    public Driver(Integer driver_id, String name, Instant dateStartWork, BigDecimal salary) {
-        this.driver_id = driver_id;
-        this.name = name;
-        this.dateStartWork = dateStartWork;
-        this.salary = salary;
+    public Driver(Integer driverId, String driverName, Instant driverDateStartWork, BigDecimal driverSalary) {
+        this.driverId = driverId;
+        this.driverName = driverName;
+        this.driverDateStartWork = driverDateStartWork;
+        this.driverSalary = driverSalary;
     }
 
-    public Integer getDriver_id() {
-        return driver_id;
+    public Integer getDriverId() {
+        return driverId;
     }
 
-    public void setDriver_id(Integer driver_id) {
-        this.driver_id = driver_id;
+    public void setDriverId(Integer driverId) {
+        this.driverId = driverId;
     }
 
-    public String getName() {
-        return name;
+    public String getDriverName() {
+        return driverName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setDriverName(String driverName) {
+        this.driverName = driverName;
     }
 
-    public Instant getDateStartWork() {
-        return dateStartWork;
+    public Instant getDriverDateStartWork() {
+        return driverDateStartWork;
     }
 
-    public void setDateStartWork(Instant dateStartWork) {
-        this.dateStartWork = dateStartWork;
+    public void setDriverDateStartWork(Instant driverDateStartWork) {
+        this.driverDateStartWork = driverDateStartWork;
     }
 
-    public BigDecimal getSalary() {
-        return salary;
+    public BigDecimal getDriverSalary() {
+        return driverSalary;
     }
 
-    public void setSalary(BigDecimal salary) {
-        this.salary = salary;
+    public void setDriverSalary(BigDecimal driverSalary) {
+        this.driverSalary = driverSalary;
     }
 
     @Override
@@ -64,21 +64,21 @@ public class Driver {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Driver driver = (Driver) o;
-        return Objects.equals(driver_id, driver.driver_id) && Objects.equals(name, driver.name) && Objects.equals(dateStartWork, driver.dateStartWork) && Objects.equals(salary, driver.salary);
+        return Objects.equals(driverId, driver.driverId) && Objects.equals(driverName, driver.driverName) && Objects.equals(driverDateStartWork, driver.driverDateStartWork) && Objects.equals(driverSalary, driver.driverSalary);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(driver_id, name, dateStartWork, salary);
+        return Objects.hash(driverId, driverName, driverDateStartWork, driverSalary);
     }
 
     @Override
     public String toString() {
         return "Driver{" +
-                "driver_id=" + driver_id +
-                ", name='" + name + '\'' +
-                ", dateStartWork=" + dateStartWork +
-                ", salary=" + salary +
+                "driverId=" + driverId +
+                ", driverName='" + driverName + '\'' +
+                ", driverDateStartWork=" + driverDateStartWork +
+                ", driverSalary=" + driverSalary +
                 '}';
     }
 }

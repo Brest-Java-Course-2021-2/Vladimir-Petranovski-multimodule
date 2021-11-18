@@ -6,5 +6,5 @@ import java.util.List;
 
 public interface DriverDtoDao {
 
-    List<DriverDto> findWithCountCars();
+    List<DriverDto> findAllDriversWithCountCars();
 }
