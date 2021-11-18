@@ -117,6 +117,6 @@ class DriverDaoJdbcImplTestIT {
         assertNotNull(quantity);
         assertTrue(quantity > 0);
         log.info("Quantity equals {}", quantity);
-        assertEquals(Integer.valueOf(3), quantity);
+        assertEquals(driverDAO.findAllDrivers().size(), quantity);
     }
 }

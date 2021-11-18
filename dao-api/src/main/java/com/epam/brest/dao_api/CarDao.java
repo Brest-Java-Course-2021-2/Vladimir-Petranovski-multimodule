@@ -15,4 +15,6 @@ public interface CarDao {
     void updateCarById(Integer id, Car car);
 
     void deleteCarById(Integer id);
+
+    Integer count();
 }
