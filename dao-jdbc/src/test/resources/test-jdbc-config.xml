@@ -4,16 +4,20 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans
        https://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc.xsd">
 
+    <bean id="namedParameterJdbcTemplate" class="org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate">
+        <constructor-arg ref="dataSource"/>
+    </bean>
+
     <bean id="driverDao"
           class="com.epam.brest.dao.DriverDaoJdbcImpl">
         <constructor-arg ref="namedParameterJdbcTemplate"/>
     </bean>
 
-    <bean id="namedParameterJdbcTemplate" class="org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate">
-        <constructor-arg ref="dataSource"/>
+    <bean id="driverDtoDao" class="com.epam.brest.dao.dto.DriverDtoDaoJdbcImpl">
+        <constructor-arg ref="namedParameterJdbcTemplate"/>
     </bean>
 
-    <bean id="driverDtoDao" class="com.epam.brest.dao.dto.DriverDtoDaoJdbcImpl">
+    <bean id="carDao" class="com.epam.brest.dao.CarDaoJdbcImpl">
         <constructor-arg ref="namedParameterJdbcTemplate"/>
     </bean>
 </beans>
