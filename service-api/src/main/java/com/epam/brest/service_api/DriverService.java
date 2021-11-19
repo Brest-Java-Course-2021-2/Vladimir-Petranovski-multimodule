@@ -7,20 +7,44 @@ import java.util.List;
 public interface DriverService {
 
     /**
-     * Get list of driver Dao.
+     * Get list of driver.
      *
-     * @return list of driver Dao.
+     * @return list of driver.
      */
 
     List<Driver> findAllDrivers();
 
+    /**
+     * Get driver by id.
+     *
+     * @return driver by id.
+     */
+
     Driver findDriverById(Integer id);
+
+    /**
+     * Save driver.
+     */
 
     void saveDriver(Driver driver);
 
+    /**
+     * Update driver by id.
+     */
+
     void updateDriverById(Integer id, Driver driver);
 
+    /**
+     * Delete driver by id.
+     */
+
     void deleteDriverById(Integer id);
+
+    /**
+     * Get count of records.
+     *
+     * @return count of records.
+     */
 
     Integer count();
 }
