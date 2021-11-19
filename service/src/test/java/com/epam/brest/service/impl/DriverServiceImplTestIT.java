@@ -1,7 +1,6 @@
 package com.epam.brest.service.impl;
 
 import com.epam.brest.model.Driver;
-import com.epam.brest.service.impl.dto.DriverDtoServiceImpl;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 import java.time.Instant;
+import java.util.List;
 
 import static com.epam.brest.logger.ProjectLogger.log;
 import static org.junit.jupiter.api.Assertions.*;
@@ -26,6 +26,9 @@ class DriverServiceImplTestIT {
     @Test
     void findAllDrivers() {
         log.info("Method started: findAllDrivers() of {}", getClass().getName());
+        assertNotNull(driverService);
+        assertNotNull(driverService.findAllDrivers());
+        log.info("{}", driverService.findAllDrivers());
     }
 
     @Test
@@ -50,6 +53,8 @@ class DriverServiceImplTestIT {
         Integer newDriverId = driverService.count();
         assertNotNull(newDriverId);
         assertEquals(driversSizeBefore, driverService.count() - 1);
+        log.info("Size driver's list before save():{} equals after save minus one {}", driversSizeBefore, driverService.count() - 1);
+
     }
 
     @Test
@@ -62,5 +67,52 @@ class DriverServiceImplTestIT {
             driverService.saveDriver(driver);
             driverService.saveDriver(driver);
         });
+        log.info("I checked that was called exception {}", IllegalArgumentException.class);
+    }
+
+    @Test
+    void checkFindDriverById() {
+        log.info("Method started: checkFindDriverById() of {}", getClass().getName());
+        assertNotNull(driverService);
+        List<Driver> drivers = driverService.findAllDrivers();
+        if (drivers.size() == 0) {
+            driverService.saveDriver(new Driver("TEST DRIVER", Instant.parse("2001-04-18T00:04:15Z"), new BigDecimal(1000)));
+            drivers = driverService.findAllDrivers();
+        }
+        Driver driverSrc = drivers.get(0);
+        Driver driverDst = driverService.findDriverById(driverSrc.getDriverId());
+        assertEquals(driverSrc.getDriverName(), driverDst.getDriverName());
+        log.info("Driver's name first from list: {} equals driver's name after finding: {}", driverSrc.getDriverName(), driverDst.getDriverName());
+    }
+
+    @Test
+    void checkUpdateDriverById() {
+        log.info("Method started: checkUpdateDriverById() of {}", getClass().getName());
+        assertNotNull(driverService);
+        List<Driver> drivers = driverService.findAllDrivers();
+        if (drivers.size() == 0) {
+            driverService.saveDriver(new Driver("PETIA", Instant.parse("2003-05-01T00:00:01.01Z"), new BigDecimal(790)));
+            drivers = driverService.findAllDrivers();
+        }
+
+        Driver driverSrc = drivers.get(0);
+        driverSrc.setDriverName(driverSrc.getDriverName() + "_TEST");
+        driverService.updateDriverById(driverSrc.getDriverId(), driverSrc);
+
+        Driver driverDst = driverService.findDriverById(driverSrc.getDriverId());
+        assertEquals(driverSrc.getDriverName(), driverDst.getDriverName());
+        log.info("Driver's name first from list: {} equals driver's name after updating: {}", driverSrc.getDriverName(), driverDst.getDriverName());
+    }
+
+    @Test
+    void checkDeleteDriverById() {
+        log.info("Method started: checkDeleteDriverById() of {}", getClass().getName());
+        assertNotNull(driverService);
+        driverService.saveDriver(new Driver("VERANICA", Instant.parse("2002-09-15T08:09:12.4342Z"), new BigDecimal(720)));
+        List<Driver> drivers = driverService.findAllDrivers();
+
+        driverService.deleteDriverById(drivers.get(drivers.size() - 1).getDriverId());
+        assertEquals(drivers.size() - 1, driverService.findAllDrivers().size());
+        log.info("First driver's size list minus one: {} equals driver's size list after deleting {}", drivers.size() - 1, driverService.findAllDrivers().size());
     }
 }

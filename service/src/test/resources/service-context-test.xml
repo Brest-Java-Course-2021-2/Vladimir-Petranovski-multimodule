@@ -23,4 +23,12 @@
     <bean id="driverService" class="com.epam.brest.service.impl.DriverServiceImpl">
         <constructor-arg name="driverDao" ref="driverDao"/>
     </bean>
+
+    <bean id="carDao" class="com.epam.brest.dao.CarDaoJdbcImpl">
+        <constructor-arg name="namedParameterJdbcTemplate" ref="namedParameterJdbcTemplate"/>
+    </bean>
+
+    <bean id="carService" class="com.epam.brest.service.impl.CarServiceImpl">
+        <constructor-arg name="carDao" ref="carDao"/>
+    </bean>
 </beans>
