@@ -18,6 +18,7 @@ import org.springframework.web.context.WebApplicationContext;
 
 import java.math.BigDecimal;
 import java.time.Instant;
+import java.time.ZoneId;
 
 import static com.epam.brest.logger.ProjectLogger.*;
 import static org.hamcrest.Matchers.allOf;
@@ -69,22 +70,22 @@ class DriverControllerTestIT {
                                 hasProperty("countOfCarsAssignedToDriver", is(2))
                         )
                 )))
-                .andExpect(model().attribute("drivers", hasItem(
+                .andExpect(model().attribute("driverList", hasItem(
                         allOf(
                                 hasProperty("driverId", is(2)),
                                 hasProperty("driverName", is("VOVA")),
                                 hasProperty("driverDateStartWork", is(Instant.parse("2010-10-11T08:30:30.1234Z"))),
                                 hasProperty("driverSalary", is(BigDecimal.valueOf(850))),
-                                hasProperty("countOfCarsAssignedToDriver", is(1))
+                                hasProperty("countOfCarsAssignedToDriver", is(0))
                         )
                 )))
-                .andExpect(model().attribute("departments", hasItem(
+                .andExpect(model().attribute("driverList", hasItem(
                         allOf(
                                 hasProperty("driverId", is(3)),
                                 hasProperty("driverName", is("VITALIY")),
                                 hasProperty("driverDateStartWork", is(Instant.parse("2005-04-28T14:44:50.5327Z"))),
                                 hasProperty("driverSalary", is(BigDecimal.valueOf(650))),
-                                hasProperty("countOfCarsAssignedToDriver", is(2))
+                                hasProperty("countOfCarsAssignedToDriver", is(3))
                         )
                 )));
     }

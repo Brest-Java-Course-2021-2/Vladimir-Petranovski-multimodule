@@ -40,6 +40,14 @@ http://www.springframework.org/schema/context/spring-context.xsd">
         <constructor-arg name="driverDao" ref="driverDao"/>
     </bean>
 
+    <bean id="carDao" class="com.epam.brest.dao.CarDaoJdbcImpl">
+        <constructor-arg ref="namedParameterJdbcTemplate"/>
+    </bean>
+
+    <bean id="carService" class="com.epam.brest.service.impl.CarServiceImpl">
+        <constructor-arg name="carDao" ref="carDao"/>
+    </bean>
+
     <!-- Thymeleaf Template Resolver -->
     <bean id="templateResolver"
           class="org.thymeleaf.spring5.templateresolver.SpringResourceTemplateResolver">
