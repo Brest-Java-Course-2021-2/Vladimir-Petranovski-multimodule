@@ -22,16 +22,16 @@
         </thead>
         <tbody>
         <tr th:each="car : ${carList}">
-            <td th:text="${car.getCar_id()}"/>
-            <td th:text="${car.getModel()}"/>
-            <td th:text="${car.getDriver_id()}"/>
+            <td th:text="${car.getCarId()}"/>
+            <td th:text="${car.getCarModel()}"/>
+            <td th:text="${car.getDriverId()}"/>
             <td>
-                <a th:href="@{/cars/{id}/update(id=${car.getCar_id()})}"
-                   th:text="'Update car ' + ${car.getModel()}"></a>
+                <a th:href="@{/cars/{id}/update(id=${car.getCarId()})}"
+                   th:text="'Update car ' + ${car.getCarModel()}"></a>
             </td>
             <td>
-                <a th:href="@{/cars/{id}/delete(id=${car.getCar_id()})}"
-                   th:text="'Delete car ' + ${car.getModel()}"></a>
+                <a th:href="@{/cars/{id}/delete(id=${car.getCarId()})}"
+                   th:text="'Delete car ' + ${car.getCarModel()}"></a>
             </td>
         </tr>
         </tbody>

@@ -54,7 +54,7 @@ class DriverControllerTestIT {
 
     @Test
     void shouldReturnDriverPage() throws Exception {
-        log.info("Method findAllDrivers() started of class {}", getClass().getName());
+        log.info("Method shouldReturnDriverPage() started of class {}", getClass().getName());
         mockMvc.perform(
                         MockMvcRequestBuilders.get("/drivers")
                 ).andDo(MockMvcResultHandlers.print())
