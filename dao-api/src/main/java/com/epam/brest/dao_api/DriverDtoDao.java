@@ -6,5 +6,11 @@ import java.util.List;
 
 public interface DriverDtoDao {
 
+    /**
+     * Get list of driver Dto.
+     *
+     * @return list of driver Dto.
+     */
+
     List<DriverDto> findAllDriversWithCountCars();
 }
