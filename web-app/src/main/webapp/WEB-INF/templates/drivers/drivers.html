@@ -14,27 +14,27 @@
         <table border="1">
             <thead>
             <tr>
-                <th scope="col">Id</th>
-                <th scope="col">Name</th>
+                <th scope="col">Unique driver's number</th>
+                <th scope="col">Driver name</th>
                 <th scope="col">Date when got job</th>
                 <th scope="col">Salary</th>
-                <th scope="col">Count of cars assigned to the driver</th>
+                <th scope="col">Count cars assigned to the driver</th>
                 <th scope="col">Update driver</th>
                 <th scope="col">Delete driver</th>
             </tr>
             </thead>
             <tbody>
-            <tr th:each="driver : ${driversList}">
-                <td th:text="${driver.getDriver_id()}"></td>
-                <td th:text="${driver.getName()}"></td>
-                <td th:text="${driver.getDateStartWork()}"></td>
-                <td th:text="${driver.getSalary()}"></td>
-                <td th:text="${countOfCars}"></td>
+            <tr th:each="driver : ${driverList}">
+                <td th:text="${driver.getDriverId()}"></td>
+                <td th:text="${driver.getDriverName()}"></td>
+                <td th:text="${driver.getDriverDateStartWork()}"></td>
+                <td th:text="${driver.getDriverSalary()}"></td>
+                <td th:text="${driver.getCountOfCarsAssignedToDriver()}"></td>
                 <td>
-                    <a th:href="@{/drivers/{id}/update(id=${driver.getDriver_id()})}" th:text="'Update driver ' + ${driver.getName()}"></a>
+                    <a th:href="@{/drivers/{id}/update-driver(id=${driver.getDriverId()})}" th:text="'Update driver ' + ${driver.getDriverName()}"></a>
                 </td>
                 <td>
-                    <a th:href="@{/drivers/{id}/delete(id=${driver.getDriver_id()})}" th:text="'Delete driver ' + ${driver.getName()}"></a>
+                    <a th:href="@{/drivers/{id}/delete-driver(id=${driver.getDriverId()})}" th:text="'Delete driver ' + ${driver.getDriverName()}"></a>
                 </td>
             </tr>
             </tbody>

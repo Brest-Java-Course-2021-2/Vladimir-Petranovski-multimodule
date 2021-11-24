@@ -8,10 +8,10 @@
 <h2>New car</h2>
 <form th:method="POST" th:action="@{/cars}" th:object="${car}">
     <label for="model">Enter model: </label>
-    <input type="text" th:field="*{model}" id="model"/>
+    <input type="text" th:field="*{carModel}" id="model"/>
     <br/>
     <label for="driver_id">Enter driver number: </label>
-    <input type="text" th:field="*{driver_id}" id="driver_id"/>
+    <input type="text" th:field="*{driverId}" id="driver_id"/>
     <br/>
     <input type="submit" value="Add car"/>
     <br>

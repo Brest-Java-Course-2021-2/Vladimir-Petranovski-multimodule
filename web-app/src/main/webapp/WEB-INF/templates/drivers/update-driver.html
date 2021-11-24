@@ -5,19 +5,20 @@
     <title>Update driver</title>
 </head>
 <body>
-<form th:method="PATCH" th:action="@{/drivers/{driver_id}(driver_id=${driver.getDriver_id()})}" th:object="${driver}">
+<form th:method="PATCH" th:action="@{/drivers/{driver_id}(driver_id=${driver.getDriverId()})}" th:object="${driver}">
+<!--    <input type="hidden" name="_method" value="PATCH"/>-->
     <label for="name">Update name: </label>
-    <input type="text" th:field="*{name}" id="name"/>
+    <input type="text" th:field="*{driverName}" id="name"/>
     <br/>
     <label for="dateStartWork">Update date when got this job</label>
-    <input type="text" th:field="*{dateStartWork}" id="dateStartWork"/>
+    <input type="text" th:field="*{driverDateStartWork}" id="dateStartWork"/>
     <br/>
     <label for="salary"> Update salary</label>
-    <input type="text" th:field="*{salary}" id="salary"/>
+    <input type="text" th:field="*{driverSalary}" id="salary"/>
     <br/>
     <input type="submit" value="Update driver!"/>
     <br/>
-    <button><a th:href="@{/drivers}"></a>Cancel</button>
+    <button><a th:href="@{/drivers}">Cancel</a></button>
 </form>
 </body>
 </html>
