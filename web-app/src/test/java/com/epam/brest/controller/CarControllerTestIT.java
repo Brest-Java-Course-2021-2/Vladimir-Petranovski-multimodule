@@ -1,6 +1,5 @@
 package com.epam.brest.controller;
 
-import com.epam.brest.logger.ProjectLogger;
 import com.epam.brest.model.Car;
 import com.epam.brest.service_api.CarService;
 import org.junit.jupiter.api.BeforeEach;
@@ -21,7 +20,6 @@ import org.springframework.web.context.WebApplicationContext;
 
 import java.util.List;
 
-import static com.epam.brest.logger.ProjectLogger.*;
 import static com.epam.brest.logger.ProjectLogger.log;
 import static org.hamcrest.Matchers.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
