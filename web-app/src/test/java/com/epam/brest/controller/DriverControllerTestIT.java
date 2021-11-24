@@ -142,7 +142,7 @@ class DriverControllerTestIT {
                 .andExpect(status().isOk())
                 .andExpect(view().name("drivers/update-driver"));
 
-        assertEquals(driverDst.getDriverName(), driverDst.getDriverName());
+        assertEquals(driverSrc.getDriverName(), driverDst.getDriverName());
         log.info("Driver's name first from list: {} equals driver's name after updating: {}", driverSrc.getDriverName(), driverDst.getDriverName());
     }
 

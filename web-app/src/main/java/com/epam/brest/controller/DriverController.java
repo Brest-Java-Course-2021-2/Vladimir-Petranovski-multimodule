@@ -24,6 +24,7 @@ public class DriverController {
 
     @GetMapping()
     public final String findAllDrivers(Model model) {
+        log.info("Method findAllDrivers() started of class {}", getClass().getName());
         model.addAttribute("driverList", driverDtoService.findAllDriverWithCountCars());
         return "drivers/drivers";
     }

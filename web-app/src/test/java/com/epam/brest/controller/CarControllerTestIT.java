@@ -1,10 +1,13 @@
 package com.epam.brest.controller;
 
+import com.epam.brest.logger.ProjectLogger;
+import com.epam.brest.model.Car;
 import com.epam.brest.service_api.CarService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.context.web.WebAppConfiguration;
@@ -16,8 +19,13 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.context.WebApplicationContext;
 
+import java.util.List;
+
+import static com.epam.brest.logger.ProjectLogger.*;
 import static com.epam.brest.logger.ProjectLogger.log;
 import static org.hamcrest.Matchers.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @ExtendWith(SpringExtension.class)
@@ -83,5 +91,109 @@ class CarControllerTestIT {
                                 hasProperty("driverId", is(3))
                         )
                 )));
+    }
+
+    @Test
+    void shouldShowFormAddingCars() throws Exception {
+        log.info("Method shouldShowFormAddingCars() started of class {}", getClass().getName());
+        assertNotNull(carService);
+
+        mockMvc.perform(
+                MockMvcRequestBuilders.get("/cars/new-car")
+                        .contentType(MediaType.APPLICATION_FORM_URLENCODED)
+        ).andDo(MockMvcResultHandlers.print())
+                .andExpect(status().isOk())
+                .andExpect(view().name("cars/new-car"));
+    }
+
+    @Test
+    void shouldSaveCar() throws Exception {
+        log.info("Method shouldSaveCar() started of class {}", getClass().getName());
+        assertNotNull(carService);
+        Integer carSizeBefore = carService.count();
+        assertNotNull(carSizeBefore);
+        Car car = new Car("LUAZIK", 2);
+
+        mockMvc.perform(
+                MockMvcRequestBuilders.post("/cars")
+                        .param("carModel", car.getCarModel())
+                        .param("driverId", String.valueOf(car.getDriverId()))
+        ).andDo(MockMvcResultHandlers.print())
+                .andExpect(status().is3xxRedirection())
+                .andExpect(view().name("redirect:/cars"))
+                .andExpect(redirectedUrl("/cars"));
+
+        assertEquals(carSizeBefore, carService.count() - 1);
+        log.info("Car's size list before save {} equals car's size list after save minus one {}", carSizeBefore, carService.count() - 1);
+    }
+
+    @Test
+    void shouldShowFormForUpdateCar() throws Exception {
+        log.info("Method shouldShowFormForUpdateCar() started of class {}", getClass().getName());
+        assertNotNull(carService);
+        List<Car> cars = carService.findAllCars();
+        if (cars.size() ==  0) {
+            carService.saveCar(new Car("NIVA", 1));
+            cars = carService.findAllCars();
+        }
+        Car carSrc = cars.get(0);
+
+        mockMvc.perform(
+                MockMvcRequestBuilders.get("/cars/" + carSrc.getCarId() + "/update-car")
+                        .contentType(MediaType.APPLICATION_FORM_URLENCODED)
+        ).andDo(MockMvcResultHandlers.print())
+                .andExpect(status().isOk())
+                .andExpect(view().name("cars/update-car"));
+
+        Car carDst = carService.findCarById(carSrc.getCarId());
+        assertEquals(carSrc.getCarModel(), carDst.getCarModel());
+        log.info("Car's name first from list: {} equals car's name after updating: {}", carSrc.getCarModel(), carDst.getCarModel());
+    }
+
+    @Test
+    void shouldUpdateCar() throws Exception {
+        log.info("Method shouldUpdateCar() started of class {}", getClass().getName());
+        assertNotNull(carService);
+        List<Car> cars = carService.findAllCars();
+        if(cars.size() == 0) {
+            carService.saveCar(new Car("NIVA", 2));
+            cars = carService.findAllCars();
+        }
+        assertNotNull(cars);
+        Car carSrc = cars.get(0);
+        carSrc.setCarModel(carSrc.getCarModel() + "_TEST");
+
+        mockMvc.perform(
+                MockMvcRequestBuilders.post("/cars/" + carSrc.getCarId())
+                        .param("carModel", carSrc.getCarModel())
+                        .param("driverId", String.valueOf(carSrc.getDriverId()))
+        ).andDo(MockMvcResultHandlers.print())
+                .andExpect(status().is3xxRedirection())
+                .andExpect(view().name("redirect:/cars"))
+                .andExpect(redirectedUrl("/cars"));
+
+        carService.updateCarById(carSrc.getCarId(), carSrc);
+        Car carDst = carService.findCarById(carSrc.getCarId());
+        assertEquals(carSrc.getCarModel(), carDst.getCarModel());
+        log.info("Car's name first from list: {} equals car's name after updating: {}", carSrc.getCarModel(), carDst.getCarModel());
+    }
+
+    @Test
+    void shouldDeleteCar() throws Exception {
+        log.info("Method shouldDeleteCar() started of class {}", getClass().getName());
+        assertNotNull(carService);
+        carService.saveCar(new Car("NIVA_TEST", 2));
+        List<Car> cars = carService.findAllCars();
+
+        mockMvc.perform(
+                MockMvcRequestBuilders.get("/cars/" + cars.get(cars.size() - 1).getCarId() + "/delete-car")
+        ).andDo(MockMvcResultHandlers.print())
+                .andExpect(status().is3xxRedirection())
+                .andExpect(view().name("redirect:/cars"))
+                .andExpect(redirectedUrl("/cars"));
+
+        carService.deleteCarById(cars.get(cars.size() - 1).getCarId());
+        assertEquals(cars.size() - 1, carService.findAllCars().size());
+        log.info("First car's size list minus one: {} equals car's size list after deleting {}", cars.size() - 1, carService.findAllCars().size());
     }
 }
