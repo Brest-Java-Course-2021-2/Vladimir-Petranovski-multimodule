@@ -75,4 +75,13 @@
         <property name="characterEncoding" value="UTF-8" />
     </bean>
 
+    <bean id="simpleMappingExceptionResolver"
+          class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">
+
+        <property name="defaultErrorView" value="exception-handler/error"/>
+        <property name="exceptionAttribute" value="exception-handler/exception"/>
+<!--logger кот перебивает logger проекта -->
+        <property name="warnLogCategory" value="example.MvcLogger"/>
+    </bean>
+
 </beans>
