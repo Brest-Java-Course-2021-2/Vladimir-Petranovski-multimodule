@@ -48,6 +48,15 @@ http://www.springframework.org/schema/context/spring-context.xsd">
         <constructor-arg name="carDao" ref="carDao"/>
     </bean>
 
+    <bean class="org.springframework.context.support.PropertySourcesPlaceholderConfigurer">
+        <property name="locations">
+            <list>
+                <value>classpath*:test-db.properties</value>
+                <value>classpath*:jdbc-queries.properties</value>
+            </list>
+        </property>
+    </bean>
+
     <!-- Thymeleaf Template Resolver -->
     <bean id="templateResolver"
           class="org.thymeleaf.spring5.templateresolver.SpringResourceTemplateResolver">
