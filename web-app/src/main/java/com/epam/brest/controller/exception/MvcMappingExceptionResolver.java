@@ -1,4 +1,4 @@
-package com.epam.brest.controller.eception;
+package com.epam.brest.controller.exception;
 
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.handler.SimpleMappingExceptionResolver;
@@ -26,7 +26,7 @@ public class MvcMappingExceptionResolver extends SimpleMappingExceptionResolver 
         ModelAndView modelAndView = super.doResolveException(req, resp, handler, e);
         modelAndView.addObject("timestamp", new Date());
         modelAndView.addObject("url", req.getRequestURL());
-        modelAndView.setViewName("exception-handler/error");
+//        modelAndView.setViewName("exception-handler/error");
         return modelAndView;
     }
 }
