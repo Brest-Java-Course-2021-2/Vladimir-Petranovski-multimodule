@@ -7,8 +7,7 @@
 <body>
 <h1>Form for adding driver</h1>
 <form th:method="POST" th:action="@{/drivers}" th:object="${driver}">
-<!--    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>-->
-<!--    <input type="hidden" name="_method" value="POST"/>-->
+    <input type="hidden" name="_method" value="POST"/>
     <label for="name">Enter name: </label>
     <input type="text" th:field="*{driverName}" id="name"/>
     <br/>

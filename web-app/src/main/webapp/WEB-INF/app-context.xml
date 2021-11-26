@@ -74,11 +74,4 @@
         <property name="templateEngine" ref="templateEngine" />
         <property name="characterEncoding" value="UTF-8" />
     </bean>
-
-    <bean class="com.epam.brest.controller.exception.MvcMappingExceptionResolver">
-        <property name="defaultErrorView" value="exception-handler/error"/>
-        <property name="exceptionAttribute" value="exception-handler/exception"/>
-        <property name="warnLogCategory" value="warn"/>
-    </bean>
-
 </beans>
