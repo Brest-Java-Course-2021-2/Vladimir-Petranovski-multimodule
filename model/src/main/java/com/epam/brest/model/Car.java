@@ -11,6 +11,10 @@ public class Car {
     public Car() {
     }
 
+    public Car(String carModel) {
+        this.carModel = carModel;
+    }
+
     public Car(String carModel, Integer driverId) {
         this.carModel = carModel;
         this.driverId = driverId;

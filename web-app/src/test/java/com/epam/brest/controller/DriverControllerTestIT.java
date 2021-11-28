@@ -122,6 +122,72 @@ class DriverControllerTestIT {
     }
 
     @Test
+    void shouldFailAddDriverOnEmptyName() throws Exception {
+        log.info("Method shouldFailAddDriverOnEmptyName() started of class {}", getClass().getName());
+
+        // WHEN
+        Driver driver = new Driver("");
+
+        // THEN
+        mockMvc.perform(
+                        MockMvcRequestBuilders.post("/drivers")
+                                .contentType(MediaType.APPLICATION_FORM_URLENCODED)
+                                .param("driverName", driver.getDriverName())
+                ).andDo(MockMvcResultHandlers.print())
+                .andExpect(status().isOk())
+                .andExpect(view().name("drivers/new-driver"))
+                .andExpect(
+                        model().attributeHasFieldErrors(
+                                "driver", "driverName"
+                        )
+                );
+    }
+
+    @Test
+    void shouldFailAddDriverOnEmptyDRiverDateStartWork() throws Exception {
+        log.info("Method shouldFailAddDriverOnEmptyName() started of class {}", getClass().getName());
+
+        // WHEN
+        Driver driver = new Driver("TEST", null, new BigDecimal(300));
+
+        // THEN
+        mockMvc.perform(
+                        MockMvcRequestBuilders.post("/drivers")
+                                .contentType(MediaType.APPLICATION_FORM_URLENCODED)
+                                .param("driverName", driver.getDriverName())
+                ).andDo(MockMvcResultHandlers.print())
+                .andExpect(status().isOk())
+                .andExpect(view().name("drivers/new-driver"))
+                .andExpect(
+                        model().attributeHasFieldErrors(
+                                "driver", "driverDateStartWork"
+                        )
+                );
+    }
+
+    @Test
+    void shouldFailAddDriverOnEmptySalary() throws Exception {
+        log.info("Method shouldFailAddDriverOnEmptySalary() started of class {}", getClass().getName());
+
+        // WHEN
+        Driver driver = new Driver("TEST", Instant.parse("1996-10-10T00:00:00.001Z"), null);
+
+        // THEN
+        mockMvc.perform(
+                        MockMvcRequestBuilders.post("/drivers")
+                                .contentType(MediaType.APPLICATION_FORM_URLENCODED)
+                                .param("driverSalary", String.valueOf(driver.getDriverSalary()))
+                ).andDo(MockMvcResultHandlers.print())
+                .andExpect(status().isOk())
+                .andExpect(view().name("drivers/new-driver"))
+                .andExpect(
+                        model().attributeHasFieldErrors(
+                                "driver", "driverSalary"
+                        )
+                );
+    }
+
+    @Test
     void shouldShowPageUpdatingDriver() throws Exception {
         log.info("Method shouldShowPageUpdatingDriver() started of class {}", getClass().getName());
         assertNotNull(driverService);
@@ -171,6 +237,102 @@ class DriverControllerTestIT {
                 .andExpect(view().name("redirect:/drivers"))
                 .andExpect(redirectedUrl("/drivers"));
 
+        Driver driverDst = driverService.findDriverById(driverSrc.getDriverId());
+        assertEquals(driverSrc.getDriverName(), driverDst.getDriverName());
+        log.info("Driver's name first from list: {} equals driver's name after updating: {}", driverSrc.getDriverName(), driverDst.getDriverName());
+    }
+
+    @Test
+    void shouldFailUpdateDriverOnEmptyName() throws Exception {
+        // WHEN
+        log.info("Method shouldFailUpdateDriverOnEmptyName() started of class {}", getClass().getName());
+        assertNotNull(driverService);
+        List<Driver> drivers = driverService.findAllDrivers();
+        if (drivers.size() == 0) {
+            driverService.saveDriver(new Driver("PETIA", Instant.parse("2003-05-01T00:00:01.01Z"), new BigDecimal(790)));
+            drivers = driverService.findAllDrivers();
+        }
+
+        Driver driverSrc = drivers.get(0);
+        driverSrc.setDriverName("");
+        driverService.updateDriverById(driverSrc.getDriverId(), driverSrc);
+
+        // THEN
+        mockMvc.perform(
+                        MockMvcRequestBuilders.post("/drivers/" + driverSrc.getDriverId())
+                                .contentType(MediaType.APPLICATION_FORM_URLENCODED)
+                                .param("driverName", driverSrc.getDriverName())
+                ).andDo(MockMvcResultHandlers.print())
+                .andExpect(status().isOk())
+                .andExpect(view().name("drivers/update-driver"))
+                .andExpect(
+                        model().attributeHasFieldErrors(
+                                "driver", "driverName"
+                        )
+                );
+        Driver driverDst = driverService.findDriverById(driverSrc.getDriverId());
+        assertEquals(driverSrc.getDriverName(), driverDst.getDriverName());
+        log.info("Driver's name first from list: {} equals driver's name after updating: {}", driverSrc.getDriverName(), driverDst.getDriverName());
+    }
+
+    @Test
+    void shouldFailUpdateDriverOnEmptyDriverDateStartWork() throws Exception {
+        // WHEN
+        log.info("Method shouldFailUpdateDriverOnEmptyDriverDateStartWork() started of class {}", getClass().getName());
+        assertNotNull(driverService);
+        List<Driver> drivers = driverService.findAllDrivers();
+        if (drivers.size() == 0) {
+            driverService.saveDriver(new Driver("PETIA", Instant.parse("2003-05-01T00:00:01.01Z"), new BigDecimal(790)));
+            drivers = driverService.findAllDrivers();
+        }
+
+        Driver driverSrc = drivers.get(0);
+        driverSrc.setDriverDateStartWork(null);
+        // THEN
+        mockMvc.perform(
+                        MockMvcRequestBuilders.post("/drivers/" + driverSrc.getDriverId())
+                                .contentType(MediaType.APPLICATION_FORM_URLENCODED)
+                                .param("driverDateStartWork", String.valueOf(driverSrc.getDriverDateStartWork()))
+                ).andDo(MockMvcResultHandlers.print())
+                .andExpect(status().isOk())
+                .andExpect(view().name("drivers/update-driver"))
+                .andExpect(
+                        model().attributeHasFieldErrors(
+                                "driver", "driverDateStartWork"
+                        )
+                );
+
+        Driver driverDst = driverService.findDriverById(driverSrc.getDriverId());
+        assertEquals(driverSrc.getDriverName(), driverDst.getDriverName());
+        log.info("Driver's name first from list: {} equals driver's name after updating: {}", driverSrc.getDriverName(), driverDst.getDriverName());
+    }
+
+    @Test
+    void shouldFailUpdateDriverOnEmptySalary() throws Exception {
+        // WHEN
+        log.info("Method shouldFailUpdateDriverOnEmptyName() started of class {}", getClass().getName());
+        assertNotNull(driverService);
+        List<Driver> drivers = driverService.findAllDrivers();
+        if (drivers.size() == 0) {
+            driverService.saveDriver(new Driver("PETIA", Instant.parse("2003-05-01T00:00:01.01Z"), new BigDecimal(790)));
+            drivers = driverService.findAllDrivers();
+        }
+
+        Driver driverSrc = drivers.get(0);
+        driverSrc.setDriverSalary(null);
+        // THEN
+        mockMvc.perform(
+                        MockMvcRequestBuilders.post("/drivers/" + driverSrc.getDriverId())
+                                .contentType(MediaType.APPLICATION_FORM_URLENCODED)
+                                .param("driverSalary", String.valueOf(driverSrc.getDriverSalary()))
+                ).andDo(MockMvcResultHandlers.print())
+                .andExpect(status().isOk())
+                .andExpect(view().name("drivers/update-driver"))
+                .andExpect(
+                        model().attributeHasFieldErrors(
+                                "driver", "driverSalary"
+                        )
+                );
         Driver driverDst = driverService.findDriverById(driverSrc.getDriverId());
         assertEquals(driverSrc.getDriverName(), driverDst.getDriverName());
         log.info("Driver's name first from list: {} equals driver's name after updating: {}", driverSrc.getDriverName(), driverDst.getDriverName());

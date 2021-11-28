@@ -1,10 +1,12 @@
 package com.epam.brest.controller;
 
+import com.epam.brest.controller.validator.DriverValidator;
 import com.epam.brest.model.Driver;
 import com.epam.brest.service_api.DriverService;
 import com.epam.brest.service_api.dto.DriverDtoService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import static com.epam.brest.logger.ProjectLogger.log;
@@ -17,9 +19,12 @@ public class DriverController {
 
     private final DriverService driverService;
 
-    public DriverController(DriverDtoService driverDtoService, DriverService driverService) {
+    private final DriverValidator driverValidator;
+
+    public DriverController(DriverDtoService driverDtoService, DriverService driverService, DriverValidator driverValidator) {
         this.driverDtoService = driverDtoService;
         this.driverService = driverService;
+        this.driverValidator = driverValidator;
     }
 
     @GetMapping()
@@ -36,8 +41,14 @@ public class DriverController {
     }
 
     @PostMapping()
-    public String saveDriver(@ModelAttribute("driver") Driver driver) {
+    public String saveDriver(@ModelAttribute("driver") Driver driver, BindingResult result) {
         log.info("Method saveDriver() with driver {} started of class {}", driver, getClass().getName());
+
+        driverValidator.validate(driver, result);
+        if (result.hasErrors()) {
+            return "drivers/new-driver";
+        }
+
         driverService.saveDriver(driver);
         return "redirect:/drivers";
     }
@@ -50,8 +61,13 @@ public class DriverController {
     }
 
     @PostMapping("/{id}")
-    public String updateDriver(@ModelAttribute("driver") Driver driver, @PathVariable("id") Integer id) {
+    public String updateDriver(@ModelAttribute("driver") Driver driver, BindingResult result, @PathVariable("id") Integer id) {
         log.info("Method updateDriver() with driver {} and id {} started of class {}", driver, id, getClass().getName());
+
+        driverValidator.validate(driver, result);
+        if (result.hasErrors()) {
+            return "drivers/update-driver";
+        }
         driverService.updateDriverById(id, driver);
         return "redirect:/drivers";
     }

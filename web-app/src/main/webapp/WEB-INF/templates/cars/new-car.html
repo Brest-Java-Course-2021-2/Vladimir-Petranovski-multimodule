@@ -10,9 +10,11 @@
     <input type="hidden" name="_method" value="POST"/>
     <label for="model">Enter model: </label>
     <input type="text" th:field="*{carModel}" id="model"/>
+    <div style="color: red" th:if="${#fields.hasErrors('carModel')}" th:errors="*{carModel}">Name error</div>
     <br/>
     <label for="driver_id">Enter driver number: </label>
     <input type="text" th:field="*{driverId}" id="driver_id"/>
+    <div style="color: red" th:if="${#fields.hasErrors('driverId')}" th:errors="*{driverId}">Name error</div>
     <br/>
     <input type="submit" value="Add car"/>
     <br>

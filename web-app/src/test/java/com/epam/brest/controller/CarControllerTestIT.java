@@ -126,6 +126,50 @@ class CarControllerTestIT {
     }
 
     @Test
+    void shouldFailAddCarOnEmptyName() throws Exception {
+        log.info("Method shouldFailAddCarOnEmptyName() started of class {}", getClass().getName());
+
+        // WHEN
+        Car car = new Car("");
+
+        // THEN
+        mockMvc.perform(
+                        MockMvcRequestBuilders.post("/cars")
+                                .contentType(MediaType.APPLICATION_FORM_URLENCODED)
+                                .param("carModel", car.getCarModel())
+                ).andDo(MockMvcResultHandlers.print())
+                .andExpect(status().isOk())
+                .andExpect(view().name("cars/new-car"))
+                .andExpect(
+                        model().attributeHasFieldErrors(
+                                "car", "carModel"
+                        )
+                );
+    }
+
+    @Test
+    void shouldFailAddCarOnEmptyDriverId() throws Exception {
+        log.info("Method shouldFailAddCarOnEmptyDriverId() started of class {}", getClass().getName());
+
+        // WHEN
+        Car car = new Car("");
+
+        // THEN
+        mockMvc.perform(
+                        MockMvcRequestBuilders.post("/cars")
+                                .contentType(MediaType.APPLICATION_FORM_URLENCODED)
+                                .param("driverId", String.valueOf(car.getDriverId()))
+                ).andDo(MockMvcResultHandlers.print())
+                .andExpect(status().isOk())
+                .andExpect(view().name("cars/new-car"))
+                .andExpect(
+                        model().attributeHasFieldErrors(
+                                "car", "driverId"
+                        )
+                );
+    }
+
+    @Test
     void shouldShowFormForUpdateCar() throws Exception {
         log.info("Method shouldShowFormForUpdateCar() started of class {}", getClass().getName());
         assertNotNull(carService);
@@ -171,6 +215,72 @@ class CarControllerTestIT {
                 .andExpect(redirectedUrl("/cars"));
 
         carService.updateCarById(carSrc.getCarId(), carSrc);
+        Car carDst = carService.findCarById(carSrc.getCarId());
+        assertEquals(carSrc.getCarModel(), carDst.getCarModel());
+        log.info("Car's name first from list: {} equals car's name after updating: {}", carSrc.getCarModel(), carDst.getCarModel());
+    }
+
+    @Test
+    void shouldFailUpdateCarOnEmptyName() throws Exception {
+        // WHEN
+        log.info("Method shouldFailUpdateCarOnEmptyName() started of class {}", getClass().getName());
+        assertNotNull(carService);
+        List<Car> cars = carService.findAllCars();
+        if (cars.size() == 0) {
+            carService.saveCar(new Car("NIVA", 2));
+            cars = carService.findAllCars();
+        }
+
+        Car carSrc = cars.get(0);
+        carSrc.setCarModel("");
+        carService.updateCarById(carSrc.getDriverId(), carSrc);
+
+        // THEN
+        mockMvc.perform(
+                        MockMvcRequestBuilders.post("/cars/" + carSrc.getCarId())
+                                .contentType(MediaType.APPLICATION_FORM_URLENCODED)
+                                .param("carModel", carSrc.getCarModel())
+                ).andDo(MockMvcResultHandlers.print())
+                .andExpect(status().isOk())
+                .andExpect(view().name("cars/update-car"))
+                .andExpect(
+                        model().attributeHasFieldErrors(
+                                "car", "carModel"
+                        )
+                );
+        Car carDst = carService.findCarById(carSrc.getCarId());
+        assertEquals(carSrc.getCarModel(), carDst.getCarModel());
+        log.info("Car's name first from list: {} equals car's name after updating: {}", carSrc.getCarModel(), carDst.getCarModel());
+    }
+
+    @Test
+    void shouldFailUpdateCarOnEmptyDriverId() throws Exception {
+        // WHEN
+        log.info("Method shouldFailUpdateCarOnEmptyDriverId() started of class {}", getClass().getName());
+        assertNotNull(carService);
+        List<Car> cars = carService.findAllCars();
+        if (cars.size() == 0) {
+            carService.saveCar(new Car("NIVA", 2));
+            cars = carService.findAllCars();
+        }
+
+        Car carSrc = cars.get(0);
+        carSrc.setDriverId(null);
+        carService.updateCarById(carSrc.getDriverId(), carSrc);
+
+        // THEN
+        mockMvc.perform(
+                        MockMvcRequestBuilders.post("/cars/" + carSrc.getCarId())
+                                .contentType(MediaType.APPLICATION_FORM_URLENCODED)
+                                .param("driverId", String.valueOf(carSrc.getDriverId()))
+                ).andDo(MockMvcResultHandlers.print())
+                .andExpect(status().isOk())
+                .andExpect(view().name("cars/update-car"))
+                .andExpect(
+                        model().attributeHasFieldErrors(
+                                "car", "driverId"
+                        )
+                );
         Car carDst = carService.findCarById(carSrc.getCarId());
         assertEquals(carSrc.getCarModel(), carDst.getCarModel());
         log.info("Car's name first from list: {} equals car's name after updating: {}", carSrc.getCarModel(), carDst.getCarModel());
