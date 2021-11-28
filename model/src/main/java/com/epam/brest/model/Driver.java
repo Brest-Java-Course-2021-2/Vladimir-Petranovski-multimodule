@@ -14,6 +14,10 @@ public class Driver {
     public Driver() {
     }
 
+    public Driver(String driverName) {
+        this.driverName = driverName;
+    }
+
     public Driver(String driverName, Instant driverDateStartWork, BigDecimal driverSalary) {
         this.driverName = driverName;
         this.driverDateStartWork = driverDateStartWork;

@@ -1,9 +1,11 @@
 package com.epam.brest.controller;
 
+import com.epam.brest.controller.validator.CarValidator;
 import com.epam.brest.model.Car;
 import com.epam.brest.service_api.CarService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import static com.epam.brest.logger.ProjectLogger.log;
@@ -14,8 +16,11 @@ public class CarController {
 
     private final CarService carService;
 
-    public CarController(CarService carService) {
+    private final CarValidator carValidator;
+
+    public CarController(CarService carService, CarValidator carValidator) {
         this.carService = carService;
+        this.carValidator = carValidator;
     }
 
     @GetMapping()
@@ -32,8 +37,13 @@ public class CarController {
     }
 
     @PostMapping()
-    public String saveCar(@ModelAttribute("car") Car car) {
+    public String saveCar(@ModelAttribute("car") Car car, BindingResult result) {
         log.info("Method saveCar() with car {} started of class {}", car, getClass().getName());
+
+        carValidator.validate(car, result);
+        if (result.hasErrors()) {
+            return "cars/new-car";
+        }
         carService.saveCar(car);
         return "redirect:/cars";
     }
@@ -46,8 +56,13 @@ public class CarController {
     }
 
     @PostMapping("/{id}")
-    public String updateCar(@ModelAttribute("car") Car car, @PathVariable("id") Integer id) {
+    public String updateCar(@ModelAttribute("car") Car car, BindingResult result, @PathVariable("id") Integer id) {
         log.info("Method updateCar() with car {} and id {} started of class {}", car, id, getClass().getName());
+
+        carValidator.validate(car, result);
+        if(result.hasErrors()) {
+            return "cars/update-car";
+        }
         carService.updateCarById(id, car);
         return "redirect:/cars";
     }
