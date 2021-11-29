@@ -10,7 +10,6 @@ import java.util.List;
 import static com.epam.brest.dao.Queries.DRIVER_COUNT_CAR;
 import static com.epam.brest.logger.ProjectLogger.log;
 
-//@Component
 public class DriverDtoDaoJdbcImpl implements DriverDtoDao {
 
     private final NamedParameterJdbcTemplate namedParameterJdbcTemplate;
