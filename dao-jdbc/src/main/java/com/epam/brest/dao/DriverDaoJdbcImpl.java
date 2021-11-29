@@ -3,17 +3,16 @@ package com.epam.brest.dao;
 import com.epam.brest.dao.rowMappers.DriverDaoJdbcRowMapper;
 import com.epam.brest.dao_api.DriverDao;
 import com.epam.brest.model.Driver;
-import org.springframework.dao.DataAccessException;
-import org.springframework.jdbc.core.PreparedStatementCallback;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
-import java.util.*;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import static com.epam.brest.dao.Queries.*;
-import static com.epam.brest.logger.ProjectLogger.*;
+import static com.epam.brest.logger.ProjectLogger.log;
 
 public class DriverDaoJdbcImpl implements DriverDao {
 
@@ -45,13 +44,8 @@ public class DriverDaoJdbcImpl implements DriverDao {
             params.put("driverName", driver.getDriverName());
             params.put("driverDateStartWork", driver.getDriverDateStartWork());
             params.put("driverSalary", driver.getDriverSalary());
-            namedParameterJdbcTemplate.execute(DRIVER_SAVE, params, new PreparedStatementCallback<Integer>() {
-                @Override
-                public Integer doInPreparedStatement(PreparedStatement ps)
-                        throws SQLException, DataAccessException {
-                    return ps.executeUpdate();
-                }
-            });
+
+            namedParameterJdbcTemplate.update(DRIVER_SAVE, params);
         } else {
             throw new IllegalArgumentException("Name must be unique");
         }
@@ -59,7 +53,7 @@ public class DriverDaoJdbcImpl implements DriverDao {
 
     @Override
     public void updateDriverById(Integer id, Driver updateToDriver) {
-        log.info("Method updateDriverById(with id={}, with update to driver {}) of class {} started",id, updateToDriver, getClass().getName());
+        log.info("Method updateDriverById(with id={}, with update to driver {}) of class {} started", id, updateToDriver, getClass().getName());
         Map<String, Object> params = new HashMap<>();
         params.put("driverId", id);
         params.put("driverName", updateToDriver.getDriverName());
