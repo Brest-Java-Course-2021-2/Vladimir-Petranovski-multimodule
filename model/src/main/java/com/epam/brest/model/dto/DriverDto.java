@@ -1,6 +1,7 @@
 package com.epam.brest.model.dto;
 
 import java.math.BigDecimal;
+import java.sql.Timestamp;
 import java.time.Instant;
 
 public class DriverDto {
@@ -10,6 +11,8 @@ public class DriverDto {
     private Instant driverDateStartWork;
     private BigDecimal driverSalary;
     private Integer countOfCarsAssignedToDriver;
+    private String fromDateChoose;
+    private String toDateChoose;
 
     public DriverDto() {
     }
@@ -69,6 +72,22 @@ public class DriverDto {
         this.countOfCarsAssignedToDriver = countOfCarsAssignedToDriver;
     }
 
+    public String getFromDateChoose() {
+        return fromDateChoose;
+    }
+
+    public void setFromDateChoose(String fromDateChoose) {
+        this.fromDateChoose = fromDateChoose;
+    }
+
+    public String getToDateChoose() {
+        return toDateChoose;
+    }
+
+    public void setToDateChoose(String toDateChoose) {
+        this.toDateChoose = toDateChoose;
+    }
+
     @Override
     public String toString() {
         return "DriverDto{" +
@@ -77,6 +96,8 @@ public class DriverDto {
                 ", driverDateStartWork=" + driverDateStartWork +
                 ", driverSalary=" + driverSalary +
                 ", countOfCarsAssignedToDriver=" + countOfCarsAssignedToDriver +
+                ", fromDateChoose=" + fromDateChoose +
+                ", toDateChoose=" + toDateChoose +
                 '}';
     }
 }

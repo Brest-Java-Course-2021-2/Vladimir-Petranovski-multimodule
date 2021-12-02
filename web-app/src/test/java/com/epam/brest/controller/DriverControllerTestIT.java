@@ -1,7 +1,9 @@
 package com.epam.brest.controller;
 
 import com.epam.brest.model.Driver;
+import com.epam.brest.model.dto.DriverDto;
 import com.epam.brest.service_api.DriverService;
+import com.epam.brest.service_api.dto.DriverDtoService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -192,7 +194,7 @@ class DriverControllerTestIT {
         log.info("Method shouldShowPageUpdatingDriver() started of class {}", getClass().getName());
         assertNotNull(driverService);
         List<Driver> drivers = driverService.findAllDrivers();
-        if(drivers.size() == 0) {
+        if (drivers.size() == 0) {
             driverService.saveDriver(new Driver("VLADIMIR", Instant.parse("1996-10-10T00:00:00.001Z"), new BigDecimal(840)));
             drivers = driverService.findAllDrivers();
         }
@@ -202,8 +204,8 @@ class DriverControllerTestIT {
         assertNotNull(driverSrc);
 
         mockMvc.perform(
-                MockMvcRequestBuilders.get("/drivers/" + driverSrc.getDriverId() + "/update-driver")
-                        .contentType(MediaType.APPLICATION_FORM_URLENCODED)
+                        MockMvcRequestBuilders.get("/drivers/" + driverSrc.getDriverId() + "/update-driver")
+                                .contentType(MediaType.APPLICATION_FORM_URLENCODED)
                 ).andDo(MockMvcResultHandlers.print())
                 .andExpect(status().isOk())
                 .andExpect(view().name("drivers/update-driver"));
@@ -347,8 +349,8 @@ class DriverControllerTestIT {
         Driver driver = drivers.get(drivers.size() - 1);
 
         mockMvc.perform(
-                MockMvcRequestBuilders.get("/drivers/" + driver.getDriverId() + "/delete-driver")
-        ).andDo(MockMvcResultHandlers.print())
+                        MockMvcRequestBuilders.get("/drivers/" + driver.getDriverId() + "/delete-driver")
+                ).andDo(MockMvcResultHandlers.print())
                 .andExpect(status().is3xxRedirection())
                 .andExpect(view().name("redirect:/drivers"))
                 .andExpect(redirectedUrl("/drivers"));
@@ -359,4 +361,36 @@ class DriverControllerTestIT {
         log.info("First driver's size list minus one: {} equals driver's size list after deleting {}", drivers.size() - 1, driverService.findAllDrivers().size());
     }
 
+    @Test
+    void shouldReturnFormForChoosingDriversByDate() throws Exception {
+        log.info("Method shouldReturnFormForChoosingDriversByDate() started of class {}", getClass().getName());
+        assertNotNull(driverService);
+
+        mockMvc.perform(
+                        MockMvcRequestBuilders.get("/drivers/choose-date-range")
+                                .contentType(MediaType.APPLICATION_FORM_URLENCODED)
+                ).andDo(MockMvcResultHandlers.print())
+                .andExpect(status().isOk())
+                .andExpect(view().name("drivers/choose-date-range"));
+    }
+
+    @Test
+    void shouldDoChooseDriverFromDateToDate() throws Exception {
+        log.info("Method shouldDoChooseDriverFromDateToDate() started of class {}", getClass().getName());
+        assertNotNull(driverService);
+//        List<Driver> drivers = driverService.findAllDrivers();
+//        if (drivers.size() == 0) {
+//            driverService.saveDriver(new Driver("PETIA", Instant.parse("2003-05-01T00:00:01.01Z"), new BigDecimal(790)));
+//            drivers = driverService.findAllDrivers();
+//        }
+//        assertNotNull(drivers);
+//        String fromDate = drivers.get(0).getDriverDateStartWork().toString();
+//        String toDate = drivers.get(drivers.size() - 1).getDriverDateStartWork().toString();
+//
+//        mockMvc.perform(
+//                MockMvcRequestBuilders.put("/drivers/" + fromDate + "/" + toDate + "/drivers-range")
+//        ).andDo(MockMvcResultHandlers.print())
+//                .andExpect(status().is2xxSuccessful())
+//                .andExpect(view().name("drivers/drivers-range"));
+    }
 }

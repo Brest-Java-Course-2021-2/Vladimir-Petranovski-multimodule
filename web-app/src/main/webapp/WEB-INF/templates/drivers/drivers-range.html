@@ -2,17 +2,12 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Drivers</title>
+    <title>Drivers from date to date</title>
 </head>
 <body>
 <center>
-    <h1>Drivers</h1>
+    <h1>Driver's list from date to date</h1>
     <br/>
-    <a th:href="@{/drivers/new-driver}">Add driver</a>
-    <br/>
-    <div>
-        <a th:href="@{/drivers/choose-date-range}">Choose driver from date to date</a>
-    </div>
     <div>
         <table border="1">
             <thead>
@@ -22,8 +17,6 @@
                 <th scope="col">Date when got job</th>
                 <th scope="col">Salary</th>
                 <th scope="col">Count cars assigned to the driver</th>
-                <th scope="col">Update driver</th>
-                <th scope="col">Delete driver</th>
             </tr>
             </thead>
             <tbody>
@@ -33,12 +26,6 @@
                 <td th:text="${driver.getDriverDateStartWork()}"></td>
                 <td th:text="${driver.getDriverSalary()}"></td>
                 <td th:text="${driver.getCountOfCarsAssignedToDriver()}"></td>
-                <td>
-                    <a th:href="@{/drivers/{id}/update-driver(id=${driver.getDriverId()})}" th:text="'Update driver ' + ${driver.getDriverName()}"></a>
-                </td>
-                <td>
-                    <a th:href="@{/drivers/{id}/delete-driver(id=${driver.getDriverId()})}" th:text="'Delete driver ' + ${driver.getDriverName()}"></a>
-                </td>
             </tr>
             </tbody>
         </table>
@@ -46,5 +33,5 @@
 </center>
 </body>
 <hr>
-<a th:href="@{/}">Back to menu of autobase</a>
+<a th:href="@{/drivers}">Back to menu of drivers</a>
 </html>
