@@ -1,18 +1,16 @@
 package com.epam.brest.rest.controller;
 
-import com.epam.brest.logger.ProjectLogger;
+import org.hamcrest.Matchers;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.MockMvcBuilder;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
-import static com.epam.brest.logger.ProjectLogger.*;
-import static org.junit.jupiter.api.Assertions.*;
+import static com.epam.brest.logger.ProjectLogger.log;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -36,6 +34,7 @@ class VersionControllerTest {
                 MockMvcRequestBuilders.get("/version")
         ).andDo(MockMvcResultHandlers.print())
                 .andExpect(status().isOk())
-                .andExpect(content().contentType("text/plain;charset=ISO-8859-1"));
+                .andExpect(content().contentType("text/plain;charset=ISO-8859-1"))
+                .andExpect(content().string(Matchers.containsString("0.0.1")));
     }
 }
