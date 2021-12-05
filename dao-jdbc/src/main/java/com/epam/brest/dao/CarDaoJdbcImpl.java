@@ -5,7 +5,12 @@ import com.epam.brest.dao_api.CarDao;
 import com.epam.brest.model.Car;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.PreparedStatementCallback;
+import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
+import org.springframework.jdbc.core.namedparam.SqlParameterSource;
+import org.springframework.jdbc.support.GeneratedKeyHolder;
+import org.springframework.jdbc.support.KeyHolder;
+import org.springframework.stereotype.Component;
 
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
@@ -17,6 +22,7 @@ import java.util.Map;
 import static com.epam.brest.dao.Queries.*;
 import static com.epam.brest.logger.ProjectLogger.log;
 
+@Component
 public class CarDaoJdbcImpl implements CarDao {
 
     private final NamedParameterJdbcTemplate namedParameterJdbcTemplate;
@@ -40,18 +46,25 @@ public class CarDaoJdbcImpl implements CarDao {
     }
 
     @Override
-    public void saveCar(Car car) {
+    public Integer saveCar(Car car) {
         log.info("Method saveCar(with car {}) of class {} started", car, getClass().getName());
-        Map<String, Object> params = new HashMap<>();
-        params.put("carModel", car.getCarModel());
-        params.put("driverId", car.getDriverId());
-        namedParameterJdbcTemplate.execute(CAR_SAVE, params, new PreparedStatementCallback<Integer>() {
-            @Override
-            public Integer doInPreparedStatement(PreparedStatement ps)
-                    throws SQLException, DataAccessException {
-                return ps.executeUpdate();
-            }
-        });
+//        Map<String, Object> params = new HashMap<>();
+//        params.put("carModel", car.getCarModel());
+//        params.put("driverId", car.getDriverId());
+//        namedParameterJdbcTemplate.execute(CAR_SAVE, params, new PreparedStatementCallback<Integer>() {
+//            @Override
+//            public Integer doInPreparedStatement(PreparedStatement ps)
+//                    throws SQLException, DataAccessException {
+//                return ps.executeUpdate();
+//            }
+//        });
+        SqlParameterSource sqlParameterSource =
+                new MapSqlParameterSource()
+                        .addValue("carModel", car.getCarModel())
+                        .addValue( "driverId", car.getDriverId());
+        KeyHolder keyHolder = new GeneratedKeyHolder();
+        namedParameterJdbcTemplate.update(CAR_SAVE, sqlParameterSource, keyHolder);
+        return (Integer) keyHolder.getKey();
     }
 
     @Override

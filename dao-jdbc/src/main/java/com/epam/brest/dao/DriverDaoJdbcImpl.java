@@ -5,6 +5,7 @@ import com.epam.brest.dao_api.DriverDao;
 import com.epam.brest.model.Driver;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
+import org.springframework.stereotype.Component;
 
 import java.util.Collections;
 import java.util.HashMap;
@@ -14,6 +15,7 @@ import java.util.Map;
 import static com.epam.brest.dao.Queries.*;
 import static com.epam.brest.logger.ProjectLogger.log;
 
+@Component
 public class DriverDaoJdbcImpl implements DriverDao {
 
     private final NamedParameterJdbcTemplate namedParameterJdbcTemplate;

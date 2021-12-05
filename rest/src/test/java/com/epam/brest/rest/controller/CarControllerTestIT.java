@@ -66,9 +66,8 @@ class CarControllerTestIT {
     public void shouldSaveCar() throws Exception {
         log.info("Method shouldSaveCar() started of class {}", getClass().getName());
 
-        Car car = new Car(RandomStringUtils.randomAlphabetic(CAR_MODEL_SIZE));
-        carService.saveCar(car);
-        Integer id = car.getCarId();
+        Car car = new Car(RandomStringUtils.randomAlphabetic(CAR_MODEL_SIZE), carService.findAllCars().get(0).getDriverId());
+        Integer id =  carService.saveCar(car);
         assertNotNull(id);
     }
 

@@ -26,7 +26,7 @@ public interface CarDao {
      * Save car.
      */
 
-    void saveCar(Car car);
+    Integer saveCar(Car car);
 
     /**
      * Update car by id.

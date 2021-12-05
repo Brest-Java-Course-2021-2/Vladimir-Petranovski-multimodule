@@ -1,5 +1,8 @@
 package com.epam.brest.dao;
 
+import org.springframework.stereotype.Component;
+
+@Component
 public class Queries {
 
     public static final String DRIVER_FIND_ALL = "SELECT * FROM driver";

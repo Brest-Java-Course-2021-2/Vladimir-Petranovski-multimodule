@@ -26,10 +26,23 @@ public class CarController {
      * @return car list Dao.
      */
 
-    @GetMapping(consumes = "application/app", produces = "application/app")
+    @GetMapping()
     public final Collection<Car> findAllCars() {
         log.info("Method findAllCars() started of class {}", getClass().getName());
         return carService.findAllCars();
+    }
+
+    /**
+     * Get car by id Dao.
+     *
+     * @return car by id Dao.
+     */
+
+    @GetMapping(value = "/{id}")
+    public final Car findCarById(@PathVariable Integer id) {
+        log.info("Method findCarById() with id: {} started of class {}", id, getClass().getName());
+
+        return carService.findCarById(id);
     }
 
     /**
@@ -37,10 +50,10 @@ public class CarController {
      *
      */
 
-    @PostMapping(consumes = "application/app", produces = "application/app")
-    public ResponseEntity<Void> saveCar(@RequestBody Car car) {
+    @PostMapping(consumes = "application/json", produces = "application/json")
+    public ResponseEntity<Integer> saveCar(@RequestBody Car car) {
         log.info("Method saveCar() with car: {} started of class {}", car, getClass().getName());
-        carService.saveCar(car);
-        return new ResponseEntity<>(HttpStatus.CREATED);
+        Integer id = carService.saveCar(car);
+        return new ResponseEntity<>(id, HttpStatus.OK);
     }
 }

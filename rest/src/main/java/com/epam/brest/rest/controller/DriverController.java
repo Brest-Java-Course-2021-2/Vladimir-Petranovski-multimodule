@@ -6,6 +6,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Collection;
 import java.util.List;
 
 import static com.epam.brest.logger.ProjectLogger.log;
@@ -18,6 +19,18 @@ public class DriverController {
 
     public DriverController(DriverService driverService) {
         this.driverService = driverService;
+    }
+
+    /**
+     * Get driver's list Dao.
+     *
+     * @return Driver's list Dao.
+     */
+
+    @GetMapping()
+    public Collection<Driver> findAllDrivers() {
+        log.info("Method findAllDrivers() started of class {}", getClass().getName());
+        return driverService.findAllDrivers();
     }
 
     /**

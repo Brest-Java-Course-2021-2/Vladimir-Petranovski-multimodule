@@ -31,8 +31,8 @@ public class CarServiceImpl implements CarService {
     }
 
     @Override
-    public void saveCar(Car car) {
-        carDao.saveCar(car);
+    public Integer saveCar(Car car) {
+        return carDao.saveCar(car);
     }
 
     @Override
