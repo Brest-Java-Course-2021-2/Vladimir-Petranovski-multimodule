@@ -56,6 +56,7 @@
         </jacoco.ut.execution.data.file>
         <jackson.version>2.13.0</jackson.version>
         <springfox-swagger-ui.version>3.0.0</springfox-swagger-ui.version>
+        <json-path.version>2.0.0</json-path.version>
     </properties>
 
     <dependencyManagement>
@@ -171,6 +172,14 @@
                 <artifactId>jackson-datatype-jsr310</artifactId>
                 <version>${jackson.version}</version>
             </dependency>
+<!--            &lt;!&ndash; https://mvnrepository.com/artifact/com.fasterxml.jackson.module/jackson-modules-java8 &ndash;&gt;-->
+<!--            <dependency>-->
+<!--                <groupId>com.fasterxml.jackson.module</groupId>-->
+<!--                <artifactId>jackson-modules-java8</artifactId>-->
+<!--                <version>2.13.0</version>-->
+<!--&lt;!&ndash;                <type>pom</type>&ndash;&gt;-->
+<!--&lt;!&ndash;                <scope>runtime</scope>&ndash;&gt;-->
+<!--            </dependency>-->
 
             <!-- https://mvnrepository.com/artifact/io.springfox/springfox-swagger-ui -->
             <dependency>
@@ -217,6 +226,13 @@
                 <groupId>org.hamcrest</groupId>
                 <artifactId>hamcrest-all</artifactId>
                 <version>${hamcrest.version}</version>
+                <scope>test</scope>
+            </dependency>
+
+            <dependency>
+                <groupId>com.jayway.jsonpath</groupId>
+                <artifactId>json-path</artifactId>
+                <version>${json-path.version}</version>
                 <scope>test</scope>
             </dependency>
 
@@ -284,6 +300,11 @@
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-surefire-plugin</artifactId>
                     <version>${maven-surefire-plugin.version}</version>
+<!--                    <configuration>-->
+<!--                        <excludes>-->
+<!--                            <exclude>com/fasterxml/jackson/**/failing/*.java</exclude>-->
+<!--                        </excludes>-->
+<!--                    </configuration>-->
                 </plugin>
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>

@@ -11,7 +11,7 @@ import java.util.Collection;
 import static com.epam.brest.logger.ProjectLogger.log;
 
 @RestController
-@RequestMapping("/drivers")
+@RequestMapping("/drivers_dto")
 public class DriverDtoController {
 
     private final DriverDtoService driverDtoService;
@@ -19,6 +19,12 @@ public class DriverDtoController {
     public DriverDtoController(DriverDtoService driverDtoService) {
         this.driverDtoService = driverDtoService;
     }
+
+    /**
+     * Get driver's list Dto.
+     *
+     * @return Driver Dto collection.
+     */
 
     @GetMapping()
     public final Collection<DriverDto> findAllDriversWithCountCars() {
