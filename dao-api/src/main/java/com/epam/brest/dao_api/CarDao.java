@@ -32,13 +32,13 @@ public interface CarDao {
      * Update car by id.
      */
 
-    void updateCarById(Integer id, Car car);
+    Integer updateCarById(Integer id, Car car);
 
     /**
      * Delete car by id.
      */
 
-    void deleteCarById(Integer id);
+    Integer deleteCarById(Integer id);
 
     /**
      * Get count of records.

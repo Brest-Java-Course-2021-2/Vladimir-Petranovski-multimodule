@@ -6,9 +6,7 @@ import com.epam.brest.service_api.CarService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @Service
 @Transactional
@@ -36,13 +34,13 @@ public class CarServiceImpl implements CarService {
     }
 
     @Override
-    public void updateCarById(Integer id, Car car) {
-        carDao.updateCarById(id, car);
+    public Integer updateCarById(Integer id, Car car) {
+        return carDao.updateCarById(id, car);
     }
 
     @Override
-    public void deleteCarById(Integer id) {
-        carDao.deleteCarById(id);
+    public Integer deleteCarById(Integer id) {
+        return carDao.deleteCarById(id);
     }
 
     @Override

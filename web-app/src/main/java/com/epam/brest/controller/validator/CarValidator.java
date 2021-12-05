@@ -1,14 +1,13 @@
 package com.epam.brest.controller.validator;
 
 import com.epam.brest.model.Car;
-import com.epam.brest.model.constant.CarConstants;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 import org.springframework.validation.Errors;
 import org.springframework.validation.ValidationUtils;
 import org.springframework.validation.Validator;
 
-import static com.epam.brest.model.constant.CarConstants.*;
+import static com.epam.brest.model.constant.CarConstants.CAR_MODEL_SIZE;
 
 @Component
 public class CarValidator implements Validator {

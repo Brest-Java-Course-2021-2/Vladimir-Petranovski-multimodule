@@ -48,16 +48,7 @@ public class CarDaoJdbcImpl implements CarDao {
     @Override
     public Integer saveCar(Car car) {
         log.info("Method saveCar(with car {}) of class {} started", car, getClass().getName());
-//        Map<String, Object> params = new HashMap<>();
-//        params.put("carModel", car.getCarModel());
-//        params.put("driverId", car.getDriverId());
-//        namedParameterJdbcTemplate.execute(CAR_SAVE, params, new PreparedStatementCallback<Integer>() {
-//            @Override
-//            public Integer doInPreparedStatement(PreparedStatement ps)
-//                    throws SQLException, DataAccessException {
-//                return ps.executeUpdate();
-//            }
-//        });
+
         SqlParameterSource sqlParameterSource =
                 new MapSqlParameterSource()
                         .addValue("carModel", car.getCarModel())
@@ -68,21 +59,23 @@ public class CarDaoJdbcImpl implements CarDao {
     }
 
     @Override
-    public void updateCarById(Integer id, Car car) {
+    public Integer updateCarById(Integer id, Car car) {
         log.info("Method updateCarById(with id={}, car {}) of class {} started", id, car, getClass().getName());
-        Map<String, Object> params = new HashMap<>();
-        params.put("carId", id);
-        params.put("carModel", car.getCarModel());
-        params.put("driverId", car.getDriverId());
-        namedParameterJdbcTemplate.update(CAR_UPDATE_BY_ID, params);
+
+        SqlParameterSource sqlParameterSource = new MapSqlParameterSource()
+                .addValue("carId", id)
+                .addValue("carModel", car.getCarModel())
+                .addValue("driverId", car.getDriverId());
+        return namedParameterJdbcTemplate.update(CAR_UPDATE_BY_ID, sqlParameterSource);
     }
 
     @Override
-    public void deleteCarById(Integer id) {
+    public Integer deleteCarById(Integer id) {
         log.info("Method deleteCarById(with id={}) of class {} started", id, getClass().getName());
-        Map<String, Integer> param = new HashMap<>();
-        param.put("carId", id);
-        namedParameterJdbcTemplate.update(CAR_DELETE_BY_ID, param);
+//        Map<String, Integer> param = new HashMap<>();
+//        param.put("carId", id);
+        SqlParameterSource sqlParameterSource = new MapSqlParameterSource("carId", id);
+        return namedParameterJdbcTemplate.update(CAR_DELETE_BY_ID, sqlParameterSource);
     }
 
     @Override

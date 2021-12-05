@@ -1,6 +1,5 @@
 package com.epam.brest.dao;
 
-import com.epam.brest.dao_api.CarDao;
 import com.epam.brest.model.Car;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
