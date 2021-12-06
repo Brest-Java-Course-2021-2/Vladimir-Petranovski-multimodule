@@ -49,8 +49,7 @@ class DriverServiceImplTestIT {
         Integer driversSizeBefore = driverService.count();
         assertNotNull(driversSizeBefore);
         Driver driver = new Driver("VERANICA", Instant.parse("2002-09-15T08:09:12.4342Z"), new BigDecimal(720));
-        driverService.saveDriver(driver);
-        Integer newDriverId = driverService.count();
+        Integer newDriverId = driverService.saveDriver(driver);
         assertNotNull(newDriverId);
         assertEquals(driversSizeBefore, driverService.count() - 1);
         log.info("Size driver's list before save():{} equals after save minus one {}", driversSizeBefore, driverService.count() - 1);

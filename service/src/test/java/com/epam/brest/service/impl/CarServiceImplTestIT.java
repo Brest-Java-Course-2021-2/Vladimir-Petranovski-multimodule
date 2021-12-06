@@ -52,12 +52,10 @@ class CarServiceImplTestIT {
         log.info("Method started: saveCar() of {}", getClass().getName());
         assertNotNull(carService);
         Integer countCarBeforeSave = carService.count();
-        carService.saveCar(new Car("LADA", 1));
-        Integer countCarAfterSave = carService.count();
+        Integer countCarAfterSave = carService.saveCar(new Car("LADA", 1));
         assertNotNull(countCarAfterSave);
-        assertEquals(countCarBeforeSave, countCarAfterSave - 1);
-        log.info("Size car's list before save():{} equals after save minus one {}",
-                countCarBeforeSave, countCarAfterSave - 1);
+        assertEquals(countCarBeforeSave, carService.count() - 1);
+        log.info("Size driver's list before save():{} equals after save minus one {}", countCarBeforeSave, carService.count() - 1);
     }
 
     @Test

@@ -5,7 +5,8 @@ import com.epam.brest.model.Driver;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.*;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.math.BigDecimal;
@@ -25,9 +26,6 @@ class DriverServiceImplTest {
 
     @Mock
     private DriverDao driverDao;
-
-    @Captor
-    private ArgumentCaptor<Driver> captorDriver;
 
     private Driver driverOne;
     private Driver driverTwo;
@@ -101,7 +99,7 @@ class DriverServiceImplTest {
     void updateDriverById() {
         log.info("Method updateDriverById() of class {} started", getClass().getName());
 
-        when(driverDao.updateDriverById(anyInt(), any(Driver.class))).thenReturn(anyInt());
+        when(driverDao.updateDriverById(anyInt(), any(Driver.class))).thenReturn(1);
 
         driverService.updateDriverById(driverTwo.getDriverId(), driverTwo);
 

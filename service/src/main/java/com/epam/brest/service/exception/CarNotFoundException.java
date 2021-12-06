@@ -4,6 +4,6 @@ import org.springframework.dao.EmptyResultDataAccessException;
 
 public class CarNotFoundException extends EmptyResultDataAccessException {
     public CarNotFoundException(Integer id) {
-        super("Driver not found with id: " + id, 1);
+        super("Car not found with id: " + id, 1);
     }
 }

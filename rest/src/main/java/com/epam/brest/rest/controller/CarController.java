@@ -56,4 +56,30 @@ public class CarController {
         Integer id = carService.saveCar(car);
         return new ResponseEntity<>(id, HttpStatus.OK);
     }
+
+    /**
+     * Update car Dao.
+     *
+     */
+
+    @PatchMapping(value = "/{id}", consumes = {"application/json"}, produces = {"application/json"})
+    public ResponseEntity<Integer> updateCar(@RequestBody Car car, @PathVariable Integer id) {
+        log.info("Method updateCar() with car: {} started of class {}", car, getClass().getName());
+
+        int result = carService.updateCarById(id, car);
+        return new ResponseEntity<>(result, HttpStatus.OK);
+    }
+
+    /**
+     * Delete car Dao.
+     *
+     */
+
+    @DeleteMapping(value = "/{id}/delete-car", produces = "application/json")
+    public ResponseEntity<Integer> deleteCar(@PathVariable Integer id) {
+        log.info("Method updateCar() with id: {} started of class {}", id, getClass().getName());
+
+        int result = carService.deleteCarById(id);
+        return new ResponseEntity<>(result, HttpStatus.OK);
+    }
 }

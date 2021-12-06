@@ -111,7 +111,8 @@ class DriverDaoJdbcImplTest {
 
         when(namedParameterJdbcTemplate.update(anyString(), ArgumentMatchers.<Map<String, Object>>any())).thenReturn(returnRow);
 
-        driverDaoJdbc.saveDriver(driverTest);
+        Integer quantity = driverDaoJdbc.saveDriver(driverTest);
+        assertNotNull(quantity);
 
         verify(namedParameterJdbcTemplate, times(1)).update(eq(DRIVER_SAVE), mapArgumentCaptor.capture());
         verify(namedParameterJdbcTemplate).update(eq(DRIVER_SAVE), mapArgumentCaptor.capture());
