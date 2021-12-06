@@ -3,8 +3,6 @@ package com.epam.brest.dao;
 import com.epam.brest.dao.rowMappers.CarDaoJdbcRowMapper;
 import com.epam.brest.dao_api.CarDao;
 import com.epam.brest.model.Car;
-import org.springframework.dao.DataAccessException;
-import org.springframework.jdbc.core.PreparedStatementCallback;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.core.namedparam.SqlParameterSource;
@@ -12,8 +10,6 @@ import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Component;
 
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -72,8 +68,7 @@ public class CarDaoJdbcImpl implements CarDao {
     @Override
     public Integer deleteCarById(Integer id) {
         log.info("Method deleteCarById(with id={}) of class {} started", id, getClass().getName());
-//        Map<String, Integer> param = new HashMap<>();
-//        param.put("carId", id);
+
         SqlParameterSource sqlParameterSource = new MapSqlParameterSource("carId", id);
         return namedParameterJdbcTemplate.update(CAR_DELETE_BY_ID, sqlParameterSource);
     }

@@ -53,20 +53,20 @@ public class DriverController {
      * Get form for saving driver Dao.
      */
 
-    @GetMapping(value = "/new-driver", consumes = "application/json", produces = "application/json")
-    public ResponseEntity<Void> showFormForAddingDriver(@ModelAttribute Driver driver) {
-        log.info("Method showFormForAddingDriver() with driver {} started of class {}", driver, getClass().getName());
-        return new ResponseEntity<>(HttpStatus.OK);
-    }
+//    @GetMapping(value = "/new-driver", consumes = "application/json", produces = "application/json")
+//    public ResponseEntity<Void> showFormForAddingDriver(@ModelAttribute Driver driver) {
+//        log.info("Method showFormForAddingDriver() with driver {} started of class {}", driver, getClass().getName());
+//        return new ResponseEntity<>(HttpStatus.OK);
+//    }
 
     /**
      * Save driver Dao.
      */
 
     @PostMapping(consumes = "application/json", produces = "application/json")
-    public ResponseEntity<Void> saveDriver(@RequestBody Driver driver) {
+    public ResponseEntity<Integer> saveDriver(@RequestBody Driver driver) {
         log.info("Method findDriverById() with driver {} started of class {}", driver, getClass().getName());
-        driverService.saveDriver(driver);
-        return new ResponseEntity<>(HttpStatus.CREATED);
+        Integer id = driverService.saveDriver(driver);
+        return new ResponseEntity<>(id, HttpStatus.CREATED);
     }
 }

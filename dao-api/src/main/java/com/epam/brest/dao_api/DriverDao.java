@@ -27,19 +27,19 @@ public interface DriverDao {
      * Save driver.
      */
 
-    void saveDriver(Driver driver);
+    Integer saveDriver(Driver driver);
 
     /**
      * Update driver by id.
      */
 
-    void updateDriverById(Integer id, Driver driver);
+    Integer updateDriverById(Integer id, Driver driver);
 
     /**
      * Delete driver by id.
      */
 
-    void deleteDriverById(Integer id);
+    Integer deleteDriverById(Integer id);
 
     /**
      * Get count of records.

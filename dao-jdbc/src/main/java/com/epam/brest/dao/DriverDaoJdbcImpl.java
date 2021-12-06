@@ -39,7 +39,7 @@ public class DriverDaoJdbcImpl implements DriverDao {
     }
 
     @Override
-    public void saveDriver(Driver driver) {
+    public Integer saveDriver(Driver driver) {
         log.info("Method saveDriver(with driver {}) of class {} started", driver, getClass().getName());
         if (!findAllNameDrivers().contains(driver.getDriverName().toUpperCase())) {
             Map<String, Object> params = new HashMap<>();
@@ -47,29 +47,29 @@ public class DriverDaoJdbcImpl implements DriverDao {
             params.put("driverDateStartWork", driver.getDriverDateStartWork());
             params.put("driverSalary", driver.getDriverSalary());
 
-            namedParameterJdbcTemplate.update(DRIVER_SAVE, params);
+            return namedParameterJdbcTemplate.update(DRIVER_SAVE, params);
         } else {
             throw new IllegalArgumentException("Name must be unique");
         }
     }
 
     @Override
-    public void updateDriverById(Integer id, Driver updateToDriver) {
+    public Integer updateDriverById(Integer id, Driver updateToDriver) {
         log.info("Method updateDriverById(with id={}, with update to driver {}) of class {} started", id, updateToDriver, getClass().getName());
         Map<String, Object> params = new HashMap<>();
         params.put("driverId", id);
         params.put("driverName", updateToDriver.getDriverName());
         params.put("driverDateStartWork", updateToDriver.getDriverDateStartWork());
         params.put("driverSalary", updateToDriver.getDriverSalary());
-        namedParameterJdbcTemplate.update(DRIVER_UPDATE_BY_ID, params);
+        return namedParameterJdbcTemplate.update(DRIVER_UPDATE_BY_ID, params);
     }
 
     @Override
-    public void deleteDriverById(Integer id) {
+    public Integer deleteDriverById(Integer id) {
         log.info("Method deleteDriverById( with id={}) of class {} started", id, getClass().getName());
         Map<String, Integer> param = new HashMap<>();
         param.put("driverId", id);
-        namedParameterJdbcTemplate.update(DRIVER_DELETE_BY_ID, param);
+        return namedParameterJdbcTemplate.update(DRIVER_DELETE_BY_ID, param);
     }
 
     @Override

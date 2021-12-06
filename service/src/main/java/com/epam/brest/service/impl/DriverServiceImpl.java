@@ -29,18 +29,18 @@ public class DriverServiceImpl implements DriverService {
     }
 
     @Override
-    public void saveDriver(Driver driver) {
-        driverDao.saveDriver(driver);
+    public Integer saveDriver(Driver driver) {
+        return driverDao.saveDriver(driver);
     }
 
     @Override
-    public void updateDriverById(Integer id, Driver driver) {
-        driverDao.updateDriverById(id, driver);
+    public Integer updateDriverById(Integer id, Driver driver) {
+        return driverDao.updateDriverById(id, driver);
     }
 
     @Override
-    public void deleteDriverById(Integer id) {
-        driverDao.deleteDriverById(id);
+    public Integer deleteDriverById(Integer id) {
+        return driverDao.deleteDriverById(id);
     }
 
     @Override

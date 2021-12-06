@@ -5,8 +5,7 @@ import com.epam.brest.model.Driver;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
+import org.mockito.*;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.math.BigDecimal;
@@ -26,6 +25,9 @@ class DriverServiceImplTest {
 
     @Mock
     private DriverDao driverDao;
+
+    @Captor
+    private ArgumentCaptor<Driver> captorDriver;
 
     private Driver driverOne;
     private Driver driverTwo;
@@ -85,7 +87,7 @@ class DriverServiceImplTest {
     void saveDriver() {
         log.info("Method saveDriver() of class {} started", getClass().getName());
 
-        doNothing().when(driverDao).saveDriver(any(Driver.class));
+        when(driverDao.saveDriver(any(Driver.class))).thenReturn(anyInt());
 
         driverService.saveDriver(driverTest);
 
@@ -99,7 +101,7 @@ class DriverServiceImplTest {
     void updateDriverById() {
         log.info("Method updateDriverById() of class {} started", getClass().getName());
 
-        doNothing().when(driverDao).updateDriverById(anyInt(), any(Driver.class));
+        when(driverDao.updateDriverById(anyInt(), any(Driver.class))).thenReturn(anyInt());
 
         driverService.updateDriverById(driverTwo.getDriverId(), driverTwo);
 
@@ -113,7 +115,7 @@ class DriverServiceImplTest {
     void deleteDriverById() {
         log.info("Method deleteDriverById() of class {} started", getClass().getName());
 
-        doNothing().when(driverDao).deleteDriverById(anyInt());
+        when(driverDao.deleteDriverById(anyInt())).thenReturn(anyInt());
 
         driverService.deleteDriverById(driverThree.getDriverId());
 
