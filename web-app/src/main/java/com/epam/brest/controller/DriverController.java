@@ -2,12 +2,16 @@ package com.epam.brest.controller;
 
 import com.epam.brest.controller.validator.DriverValidator;
 import com.epam.brest.model.Driver;
+import com.epam.brest.model.dto.DriverDto;
 import com.epam.brest.service_api.DriverService;
 import com.epam.brest.service_api.dto.DriverDtoService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+
+import java.sql.Timestamp;
+import java.time.Instant;
 
 import static com.epam.brest.logger.ProjectLogger.log;
 
@@ -77,5 +81,22 @@ public class DriverController {
         log.info("Method deleteDriver() with id {} started of class {}", id, getClass().getName());
         driverService.deleteDriverById(id);
         return "redirect:/drivers";
+    }
+
+    @GetMapping("/choose-date-range")
+    public String showFormForChoseDateRange(@ModelAttribute("driver") DriverDto driverDto) {
+        log.info("Method showFormForChoseDateRange() started of class {}", getClass().getName());
+        return "drivers/choose-date-range";
+    }
+
+    @PostMapping("/drivers-range")
+    public String showDriversListOnRange(@ModelAttribute("driver") DriverDto driverDto, @RequestParam() Model model) {
+        log.info("Method showDriversListOnRange() started of class {}", getClass().getName());
+//        Timestamp fromDateTimestamp = Timestamp.valueOf(fromDate);
+//        Timestamp toDateTimestamp = Timestamp.valueOf(toDate);
+//        Instant fromDateTime = Instant.parse(fromDate);
+//        Instant toDateTime = Instant.parse(toDate);
+        model.addAttribute("driverList", driverDtoService.chooseDriverOnDateRange(driverDto.getFromDateChoose(), driverDto.getToDateChoose()));
+        return "drivers/drivers-range";
     }
 }

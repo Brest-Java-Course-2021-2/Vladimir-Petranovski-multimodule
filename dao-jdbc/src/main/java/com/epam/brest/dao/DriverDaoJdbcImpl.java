@@ -72,6 +72,7 @@ public class DriverDaoJdbcImpl implements DriverDao {
 
     @Override
     public Integer count() {
+        log.info("Method count() of class {} started", getClass().getName());
         return namedParameterJdbcTemplate.queryForObject(DRIVER_COUNT, new MapSqlParameterSource(), Integer.class);
     }
 
