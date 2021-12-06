@@ -89,14 +89,14 @@ public class DriverController {
         return "drivers/choose-date-range";
     }
 
-    @PostMapping("/{fromDate}/{toDate}/drivers-range")
-    public String showDriversListOnRange(@PathVariable("fromDate") String fromDate, @PathVariable("toDate") String toDate, Model model) {
+    @PostMapping("/drivers-range")
+    public String showDriversListOnRange(@ModelAttribute("driver") DriverDto driverDto, @RequestParam() Model model) {
         log.info("Method showDriversListOnRange() started of class {}", getClass().getName());
 //        Timestamp fromDateTimestamp = Timestamp.valueOf(fromDate);
 //        Timestamp toDateTimestamp = Timestamp.valueOf(toDate);
 //        Instant fromDateTime = Instant.parse(fromDate);
 //        Instant toDateTime = Instant.parse(toDate);
-        model.addAttribute("driverList", driverDtoService.chooseDriverOnDateRange(fromDate, toDate));
+        model.addAttribute("driverList", driverDtoService.chooseDriverOnDateRange(driverDto.getFromDateChoose(), driverDto.getToDateChoose()));
         return "drivers/drivers-range";
     }
 }

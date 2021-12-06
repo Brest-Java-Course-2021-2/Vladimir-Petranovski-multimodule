@@ -34,9 +34,16 @@ public class DriverDtoDaoJdbcImpl implements DriverDtoDao {
     public List<DriverDto> chooseDriverOnDateRange(String fromDate, String toDate) {
         log.info("Method chooseDriverOnDateRange() of class {} started", getClass().getName());
         Map<String, Object> params = new HashMap<>();
-        params.put("fromDateChoose", fromDate);
-        params.put("toDateChoose", toDate);
+        params.put("fromDateChoose", Timestamp.valueOf(fromDate)); //TODO
+        params.put("toDateChoose", Timestamp.valueOf(toDate));
+        try {
+            return namedParameterJdbcTemplate.query(DRIVER_FIND_DRIVERS_ON_RANGE_DATE, params, BeanPropertyRowMapper.newInstance(DriverDto.class));
 
-        return namedParameterJdbcTemplate.query(DRIVER_FIND_DRIVERS_ON_RANGE_DATE, params, BeanPropertyRowMapper.newInstance(DriverDto.class));
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println(fromDate);
+            System.out.println(toDate);
+        }
+        return null;
     }
 }
