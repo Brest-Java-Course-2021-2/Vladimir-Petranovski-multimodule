@@ -87,9 +87,26 @@ class CarControllerTestIT {
         assertNotNull(id);
     }
 
+
     @Test
-    public void shouldUpdateDepartment() throws Exception {
-        log.info("Method shouldUpdateDepartment() started of class {}", getClass().getName());
+    public void shouldFindCarById() throws Exception {
+        log.info("Method shouldFindCarById() started of class {}", getClass().getName());
+
+        // given
+        Car car = new Car(RandomStringUtils.randomAlphabetic(CAR_MODEL_SIZE), carService.findAllCars().get(0).getDriverId());
+        Integer id =  carService.saveCar(car);
+        assertNotNull(id);
+        // when
+        Car carSrc = carService.findCarById(id);
+        // then
+        assertNotNull(carSrc);
+        assertEquals(carSrc.getCarId(), id);
+        assertEquals(car.getCarModel(), carSrc.getCarModel());
+    }
+
+    @Test
+    public void shouldUpdateCar() throws Exception {
+        log.info("Method shouldUpdateCar() started of class {}", getClass().getName());
 
         // given
         Car car = new Car(RandomStringUtils.randomAlphabetic(CAR_MODEL_SIZE), carService.findAllCars().get(0).getDriverId());

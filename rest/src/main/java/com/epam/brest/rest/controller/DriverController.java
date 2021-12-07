@@ -7,7 +7,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Collection;
-import java.util.List;
 
 import static com.epam.brest.logger.ProjectLogger.log;
 
@@ -50,23 +49,38 @@ public class DriverController {
     }
 
     /**
-     * Get form for saving driver Dao.
-     */
-
-//    @GetMapping(value = "/new-driver", consumes = "application/json", produces = "application/json")
-//    public ResponseEntity<Void> showFormForAddingDriver(@ModelAttribute Driver driver) {
-//        log.info("Method showFormForAddingDriver() with driver {} started of class {}", driver, getClass().getName());
-//        return new ResponseEntity<>(HttpStatus.OK);
-//    }
-
-    /**
      * Save driver Dao.
      */
 
     @PostMapping(consumes = "application/json", produces = "application/json")
     public ResponseEntity<Integer> saveDriver(@RequestBody Driver driver) {
         log.info("Method findDriverById() with driver {} started of class {}", driver, getClass().getName());
+
         Integer id = driverService.saveDriver(driver);
         return new ResponseEntity<>(id, HttpStatus.CREATED);
+    }
+
+    /**
+     * Update driver Dao by id.
+     */
+
+    @PatchMapping(value = "{id}", consumes = "application/json", produces = "application/json")
+    public ResponseEntity<Integer> updateDriver(@RequestBody Driver driver, @PathVariable Integer id) {
+        log.info("Method updateDriver() with id: {} and driver: {} started of class {}", id, driver, getClass().getName());
+
+        Integer quantity = driverService.updateDriverById(id, driver);
+        return new ResponseEntity<>(quantity, HttpStatus.OK);
+    }
+
+    /**
+     * Delete driver Dao by id.
+     */
+
+    @DeleteMapping(value = "{id}/delete-driver", produces = "application/json")
+    public ResponseEntity<Integer> deleteDriverById(@PathVariable Integer id) {
+        log.info("Method deleteDriverById() with id: {} started of class {}", id, getClass().getName());
+
+        Integer quantity = driverService.deleteDriverById(id);
+        return new ResponseEntity<>(quantity, HttpStatus.OK);
     }
 }
