@@ -6,12 +6,11 @@ import com.epam.brest.model.Driver;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.core.namedparam.SqlParameterSource;
+import org.springframework.jdbc.support.GeneratedKeyHolder;
+import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Component;
 
-import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import static com.epam.brest.dao.Queries.*;
 import static com.epam.brest.logger.ProjectLogger.log;
@@ -34,35 +33,39 @@ public class DriverDaoJdbcImpl implements DriverDao {
     @Override
     public Driver findDriverById(Integer id) {
         log.info("Method findDriverById(with id={}) of class {} started", id, getClass().getName());
-        Map<String, Integer> params = new HashMap<>();
-        params.put("driverId", id);
-        return namedParameterJdbcTemplate.queryForObject(DRIVER_FIND_BY_ID, params, new DriverDaoJdbcRowMapper());
+
+        SqlParameterSource sqlParameterSource = new MapSqlParameterSource("driverId", id);
+        return namedParameterJdbcTemplate.queryForObject(DRIVER_FIND_BY_ID, sqlParameterSource, new DriverDaoJdbcRowMapper());
     }
 
     @Override
     public Integer saveDriver(Driver driver) {
         log.info("Method saveDriver(with driver {}) of class {} started", driver, getClass().getName());
-        if (!findAllNameDrivers().contains(driver.getDriverName().toUpperCase())) {
-            Map<String, Object> params = new HashMap<>();
-            params.put("driverName", driver.getDriverName());
-            params.put("driverDateStartWork", driver.getDriverDateStartWork());
-            params.put("driverSalary", driver.getDriverSalary());
 
-            return namedParameterJdbcTemplate.update(DRIVER_SAVE, params);
-        } else {
-            throw new IllegalArgumentException("Name must be unique");
+        if (!isDriverUnique(driver.getDriverName())) {
+            log.warn("Driver with the same name {} already exists.", driver.getDriverName());
+            throw new IllegalArgumentException("Driver with the same name already exists in DB.");
         }
+        SqlParameterSource sqlParameterSource =
+                new MapSqlParameterSource()
+                        .addValue("driverName", driver.getDriverName())
+                        .addValue("driverDateStartWork", driver.getDriverDateStartWork())
+                        .addValue("driverSalary", driver.getDriverSalary());
+        KeyHolder keyHolder = new GeneratedKeyHolder();
+        namedParameterJdbcTemplate.update(DRIVER_SAVE, sqlParameterSource, keyHolder);
+        return (Integer) keyHolder.getKey();
     }
 
     @Override
     public Integer updateDriverById(Integer id, Driver updateToDriver) {
         log.info("Method updateDriverById(with id={}, with update to driver {}) of class {} started", id, updateToDriver, getClass().getName());
-        Map<String, Object> params = new HashMap<>();
-        params.put("driverId", id);
-        params.put("driverName", updateToDriver.getDriverName());
-        params.put("driverDateStartWork", updateToDriver.getDriverDateStartWork());
-        params.put("driverSalary", updateToDriver.getDriverSalary());
-        return namedParameterJdbcTemplate.update(DRIVER_UPDATE_BY_ID, params);
+
+        SqlParameterSource sqlParameterSource = new MapSqlParameterSource()
+                .addValue("driverId", id)
+                .addValue("driverName", updateToDriver.getDriverName())
+                .addValue("driverDateStartWork", updateToDriver.getDriverDateStartWork())
+                .addValue("driverSalary", updateToDriver.getDriverSalary());
+        return namedParameterJdbcTemplate.update(DRIVER_UPDATE_BY_ID, sqlParameterSource);
     }
 
     /**
@@ -72,9 +75,9 @@ public class DriverDaoJdbcImpl implements DriverDao {
     @Override
     public Integer deleteDriverById(Integer id) {
         log.info("Method deleteDriverById( with id={}) of class {} started", id, getClass().getName());
-        Map<String, Integer> param = new HashMap<>();
-        param.put("driverId", id);
-        return namedParameterJdbcTemplate.update(DRIVER_DELETE_BY_ID, param);
+
+        SqlParameterSource sqlParameterSource = new MapSqlParameterSource("driverId", id);
+        return namedParameterJdbcTemplate.update(DRIVER_DELETE_BY_ID, sqlParameterSource);
     }
 
     /**
@@ -85,6 +88,8 @@ public class DriverDaoJdbcImpl implements DriverDao {
 
     @Override
     public Integer count() {
+        log.info("Method count() of class {} started", getClass().getName());
+
         return namedParameterJdbcTemplate.queryForObject(DRIVER_COUNT, new MapSqlParameterSource(), Integer.class);
     }
 
@@ -94,8 +99,10 @@ public class DriverDaoJdbcImpl implements DriverDao {
      * @return list of driver's name.
      */
 
-    private List<String> findAllNameDrivers() {
-        log.info("Method findAllNameDrivers() of class {} started", getClass().getName());
-        return namedParameterJdbcTemplate.queryForList(DRIVER_FIND_ALL_NAME, Collections.emptyMap(), String.class);
+    private boolean isDriverUnique(String driverName) {
+        log.info("Method isDriverUnique() with driver's name: {} of class {} started", driverName, getClass().getName());
+
+        SqlParameterSource sqlParameterSource = new MapSqlParameterSource("driverName", driverName);
+        return namedParameterJdbcTemplate.queryForObject(DRIVER_CHECK_UNIQUE_NAME, sqlParameterSource, Integer.class) == 0;
     }
 }

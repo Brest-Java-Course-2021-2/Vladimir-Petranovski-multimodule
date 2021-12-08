@@ -58,11 +58,10 @@ class DriverDaoJdbcImplTestIT {
         assertNotNull(driverDAO);
         int driversSizeBefore = driverDAO.count();
         Driver victimDriver = new Driver("VERANICA", Instant.parse("2002-09-15T08:09:12.4342Z"), new BigDecimal(720));
-        driverDAO.saveDriver(victimDriver);
-        Integer driversSizeAfterSave = driverDAO.count();
-        assertNotNull(driversSizeAfterSave);
+        Integer newDriverId = driverDAO.saveDriver(victimDriver);
+        assertNotNull(newDriverId);
         assertEquals(driversSizeBefore, driverDAO.count() - 1);
-        log.info("Size driver's list before save():{} equals after save minus one {}", driversSizeBefore, driversSizeAfterSave - 1);
+        log.info("Size driver's list before save():{} equals after save minus one {}", driversSizeBefore, newDriverId - 1);
     }
 
     @Test

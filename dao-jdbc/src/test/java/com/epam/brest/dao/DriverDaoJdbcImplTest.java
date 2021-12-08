@@ -11,6 +11,7 @@ import org.mockito.quality.Strictness;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.core.namedparam.SqlParameterSource;
+import org.springframework.jdbc.support.KeyHolder;
 
 import java.math.BigDecimal;
 import java.time.Instant;
@@ -90,7 +91,7 @@ class DriverDaoJdbcImplTest {
     void findDriverById() {
         log.info("Method findDriverById() of class {} started", getClass().getName());
 
-        when(namedParameterJdbcTemplate.queryForObject(anyString(), ArgumentMatchers.<Map<String, Integer>>any(), ArgumentMatchers.<RowMapper<Driver>>any())).thenReturn(driverOne);
+        when(namedParameterJdbcTemplate.queryForObject(anyString(), ArgumentMatchers.<SqlParameterSource>any(), ArgumentMatchers.<RowMapper<Driver>>any())).thenReturn(driverOne);
 
         Driver driver = driverDaoJdbc.findDriverById(driverOne.getDriverId());
 
@@ -109,7 +110,7 @@ class DriverDaoJdbcImplTest {
     void saveDriver() {
         log.info("Method saveDriver() of class {} started", getClass().getName());
 
-        when(namedParameterJdbcTemplate.update(anyString(), ArgumentMatchers.<Map<String, Object>>any())).thenReturn(returnRow);
+        when(namedParameterJdbcTemplate.update(any(), ArgumentMatchers.<SqlParameterSource>any(), ArgumentMatchers.<KeyHolder>any())).thenReturn(returnRow);
 
         Integer quantity = driverDaoJdbc.saveDriver(driverTest);
         assertNotNull(quantity);
@@ -125,7 +126,7 @@ class DriverDaoJdbcImplTest {
     void updateDriverById() {
         log.info("Method updateDriverById() of class {} started", getClass().getName());
 
-        when(namedParameterJdbcTemplate.update(anyString(), ArgumentMatchers.<Map<String, Object>>any())).thenReturn(returnRow);
+        when(namedParameterJdbcTemplate.update(anyString(), ArgumentMatchers.<SqlParameterSource>any())).thenReturn(returnRow);
 
         driverDaoJdbc.updateDriverById(driverThree.getDriverId(), driverThree);
 
@@ -140,7 +141,7 @@ class DriverDaoJdbcImplTest {
     void deleteDriverById() {
         log.info("Method deleteDriverById() of class {} started", getClass().getName());
 
-        when(namedParameterJdbcTemplate.update(anyString(), ArgumentMatchers.<Map<String, Object>>any())).thenReturn(returnRow);
+        when(namedParameterJdbcTemplate.update(anyString(), ArgumentMatchers.<SqlParameterSource>any())).thenReturn(returnRow);
 
         driverDaoJdbc.deleteDriverById(driverThree.getDriverId());
 

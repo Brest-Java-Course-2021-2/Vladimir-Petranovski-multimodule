@@ -5,9 +5,12 @@ import com.epam.brest.model.Driver;
 import com.epam.brest.model.constant.DriverConstants;
 import com.epam.brest.rest.controller.exception.CustomExceptionHandler;
 import com.epam.brest.rest.controller.exception.ErrorResponse;
+import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.datatype.jsr310.JSR310Module;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.commons.lang3.RandomUtils;
@@ -42,6 +45,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @ExtendWith(SpringExtension.class)
 @ContextConfiguration(locations = {"classpath*:rest-test-app-context.xml"})
+@Transactional
 class DriverControllerTestIT {
 
     public static final String DRIVERS_ENDPOINT = "/drivers";
