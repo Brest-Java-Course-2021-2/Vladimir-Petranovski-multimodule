@@ -39,9 +39,6 @@ class DriverDaoJdbcImplTest {
     private ArgumentCaptor<RowMapper<Driver>> captorRowMapper;
 
     @Captor
-    private ArgumentCaptor<Map<String, Object>> mapArgumentCaptor;
-
-    @Captor
     private ArgumentCaptor<SqlParameterSource> sqlParameterSourceArgumentCaptor;
 
     private Driver driverOne;
@@ -95,12 +92,12 @@ class DriverDaoJdbcImplTest {
 
         Driver driver = driverDaoJdbc.findDriverById(driverOne.getDriverId());
 
-        verify(namedParameterJdbcTemplate).queryForObject(eq(DRIVER_FIND_BY_ID), mapArgumentCaptor.capture(), captorRowMapper.capture());
+        verify(namedParameterJdbcTemplate).queryForObject(eq(DRIVER_FIND_BY_ID), sqlParameterSourceArgumentCaptor.capture(), captorRowMapper.capture());
         RowMapper<Driver> rowMapper = captorRowMapper.getValue();
-        Map<String, Object> map = mapArgumentCaptor.getValue();
+        SqlParameterSource sqlParameterSource = sqlParameterSourceArgumentCaptor.getValue();
 
         assertNotNull(rowMapper);
-        assertNotNull(map);
+        assertNotNull(sqlParameterSource);
         assertNotNull(driver);
         assertEquals(driver, driverOne);
         log.info("Driver after findDriverById() {} with id id = {} equals driver {}", driver, driverOne.getDriverId(), driverOne);
@@ -110,16 +107,18 @@ class DriverDaoJdbcImplTest {
     void saveDriver() {
         log.info("Method saveDriver() of class {} started", getClass().getName());
 
+        doReturn(true).when(spy(new DriverDaoJdbcImpl(namedParameterJdbcTemplate)), "isDriverUnique", ArgumentMatchers.anyBoolean());
+
         when(namedParameterJdbcTemplate.update(any(), ArgumentMatchers.<SqlParameterSource>any(), ArgumentMatchers.<KeyHolder>any())).thenReturn(returnRow);
 
         Integer quantity = driverDaoJdbc.saveDriver(driverTest);
         assertNotNull(quantity);
 
-        verify(namedParameterJdbcTemplate, times(1)).update(eq(DRIVER_SAVE), mapArgumentCaptor.capture());
-        verify(namedParameterJdbcTemplate).update(eq(DRIVER_SAVE), mapArgumentCaptor.capture());
-        Map<String, Object> map = mapArgumentCaptor.getValue();
+        verify(namedParameterJdbcTemplate, times(1)).update(eq(DRIVER_SAVE), sqlParameterSourceArgumentCaptor.capture());
+        verify(namedParameterJdbcTemplate).update(eq(DRIVER_SAVE), sqlParameterSourceArgumentCaptor.capture());
+        SqlParameterSource sqlParameterSource = sqlParameterSourceArgumentCaptor.getValue();
 
-        assertNotNull(map);
+        assertNotNull(sqlParameterSource);
     }
 
     @Test
@@ -130,26 +129,26 @@ class DriverDaoJdbcImplTest {
 
         driverDaoJdbc.updateDriverById(driverThree.getDriverId(), driverThree);
 
-        verify(namedParameterJdbcTemplate, times(1)).update(eq(DRIVER_UPDATE_BY_ID), mapArgumentCaptor.capture());
-        verify(namedParameterJdbcTemplate).update(eq(DRIVER_UPDATE_BY_ID), mapArgumentCaptor.capture());
-        Map<String, Object> map = mapArgumentCaptor.getValue();
+        verify(namedParameterJdbcTemplate, times(1)).update(eq(DRIVER_UPDATE_BY_ID), sqlParameterSourceArgumentCaptor.capture());
+        verify(namedParameterJdbcTemplate).update(eq(DRIVER_UPDATE_BY_ID), sqlParameterSourceArgumentCaptor.capture());
+        SqlParameterSource sqlParameterSource = sqlParameterSourceArgumentCaptor.getValue();
 
-        assertNotNull(map);
+        assertNotNull(sqlParameterSource);
     }
 
     @Test
     void deleteDriverById() {
         log.info("Method deleteDriverById() of class {} started", getClass().getName());
 
-        when(namedParameterJdbcTemplate.update(anyString(), ArgumentMatchers.<SqlParameterSource>any())).thenReturn(returnRow);
+        when(namedParameterJdbcTemplate.update(anyString(), ArgumentMatchers.<SqlParameterSource>any())).thenReturn(1);
 
         driverDaoJdbc.deleteDriverById(driverThree.getDriverId());
 
-        verify(namedParameterJdbcTemplate, times(1)).update(eq(DRIVER_DELETE_BY_ID), mapArgumentCaptor.capture());
-        verify(namedParameterJdbcTemplate).update(eq(DRIVER_DELETE_BY_ID), mapArgumentCaptor.capture());
-        Map<String, Object> map = mapArgumentCaptor.getValue();
+        verify(namedParameterJdbcTemplate, times(1)).update(eq(DRIVER_DELETE_BY_ID), sqlParameterSourceArgumentCaptor.capture());
+        verify(namedParameterJdbcTemplate).update(eq(DRIVER_DELETE_BY_ID), sqlParameterSourceArgumentCaptor.capture());
+        SqlParameterSource sqlParameterSource = sqlParameterSourceArgumentCaptor.getValue();
 
-        assertNotNull(map);
+        assertNotNull(sqlParameterSource);
     }
 
     @Test
