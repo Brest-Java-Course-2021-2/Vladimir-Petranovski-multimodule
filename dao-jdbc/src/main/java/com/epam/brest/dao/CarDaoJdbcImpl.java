@@ -1,8 +1,10 @@
 package com.epam.brest.dao;
 
 import com.epam.brest.dao.rowMappers.CarDaoJdbcRowMapper;
+import com.epam.brest.dao.rowMappers.DriverDaoJdbcRowMapper;
 import com.epam.brest.dao_api.CarDao;
 import com.epam.brest.model.Car;
+import com.epam.brest.model.Driver;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.core.namedparam.SqlParameterSource;
@@ -36,9 +38,9 @@ public class CarDaoJdbcImpl implements CarDao {
     @Override
     public Car findCarById(Integer id) {
         log.info("Method findCarById(with id={}) of class {} started", id, getClass().getName());
-        Map<String, Integer> param = new HashMap<>();
-        param.put("carId", id);
-        return namedParameterJdbcTemplate.queryForObject(CAR_FIND_BY_ID, param, new CarDaoJdbcRowMapper());
+
+        SqlParameterSource sqlParameterSource = new MapSqlParameterSource("carId", id);
+        return namedParameterJdbcTemplate.queryForObject(CAR_FIND_BY_ID, sqlParameterSource, new CarDaoJdbcRowMapper());
     }
 
     @Override
@@ -76,6 +78,7 @@ public class CarDaoJdbcImpl implements CarDao {
     @Override
     public Integer count() {
         log.info("Method count() of class {} started", getClass().getName());
-        return namedParameterJdbcTemplate.queryForObject(CAR_COUNT, Collections.emptyMap(), Integer.class);
+
+        return namedParameterJdbcTemplate.queryForObject(CAR_COUNT, new MapSqlParameterSource(), Integer.class);
     }
 }

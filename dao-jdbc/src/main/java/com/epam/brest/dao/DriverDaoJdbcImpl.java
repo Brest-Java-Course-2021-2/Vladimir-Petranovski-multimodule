@@ -94,9 +94,9 @@ public class DriverDaoJdbcImpl implements DriverDao {
     }
 
     /**
-     * Get list of driver's name.
+     * Get boolean value.
      *
-     * @return list of driver's name.
+     * @return boolean value.
      */
 
     private boolean isDriverUnique(String driverName) {

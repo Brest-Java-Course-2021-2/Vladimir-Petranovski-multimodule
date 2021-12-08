@@ -1,13 +1,8 @@
 package com.epam.brest.rest.controller;
 
 import com.epam.brest.model.Car;
-import com.epam.brest.model.Driver;
-import com.epam.brest.model.constant.CarConstants;
-import com.epam.brest.rest.controller.exception.CustomExceptionHandler;
 import com.epam.brest.rest.controller.exception.CustomExceptionHandlerCar;
 import com.epam.brest.rest.controller.exception.ErrorResponse;
-import com.epam.brest.service.exception.CarNotFoundException;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.commons.lang3.RandomStringUtils;
@@ -25,11 +20,10 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
-import java.io.UnsupportedEncodingException;
 import java.util.List;
 
 import static com.epam.brest.logger.ProjectLogger.log;
-import static com.epam.brest.model.constant.CarConstants.*;
+import static com.epam.brest.model.constant.CarConstants.CAR_MODEL_SIZE;
 import static com.epam.brest.rest.controller.exception.CustomExceptionHandlerCar.CAR_NOT_FOUND;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -83,17 +77,16 @@ class CarControllerTestIT {
         log.info("Method shouldSaveCar() started of class {}", getClass().getName());
 
         Car car = new Car(RandomStringUtils.randomAlphabetic(CAR_MODEL_SIZE), carService.findAllCars().get(0).getDriverId());
-        Integer id =  carService.saveCar(car);
+        Integer id = carService.saveCar(car);
         assertNotNull(id);
     }
-
 
     @Test
     public void shouldFindCarById() throws Exception {
         log.info("Method shouldFindCarById() started of class {}", getClass().getName());
         // given
         Car car = new Car(RandomStringUtils.randomAlphabetic(CAR_MODEL_SIZE), carService.findAllCars().get(0).getDriverId());
-        Integer id =  carService.saveCar(car);
+        Integer id = carService.saveCar(car);
         assertNotNull(id);
         // when
         Car carSrc = carService.findCarById(id);
@@ -121,12 +114,12 @@ class CarControllerTestIT {
         int result = carService.updateCar(id, carSrc);
 
         // then
-        assertTrue(1 == result);
+        assertEquals(1, result);
 
         Car carDst = carService.findCarById(id);
         assertNotNull(carDst);
         assertEquals(carDst.getCarId(), id);
-        assertEquals(carSrc.getCarModel(),carDst.getCarModel());
+        assertEquals(carSrc.getCarModel(), carDst.getCarModel());
 
     }
 
@@ -143,27 +136,27 @@ class CarControllerTestIT {
         // when
         int result = carService.deleteCar(id);
         // then
-        assertTrue(1 == result);
+        assertEquals(1, result);
 
         List<Car> currentCars = carService.findAllCars();
         assertNotNull(currentCars);
 
-        assertTrue(cars.size()-1 == currentCars.size());
+        assertEquals(cars.size() - 1, currentCars.size());
     }
 
     @Test
     public void shouldReturnCarNotFoundError() throws Exception {
-//        log.info("Method shouldReturnCarNotFoundError() started of class {}", getClass().getName());
-//
-//        MockHttpServletResponse response =
-//                mockMvc.perform(MockMvcRequestBuilders.get(CARS_ENDPOINT + "/9999")
-//                                .accept(MediaType.APPLICATION_JSON)
-//                        ).andExpect(status().isNotFound())
-//                        .andReturn().getResponse();
-//        assertNotNull(response);
-//        ErrorResponse errorResponse = objectMapper.readValue(response.getContentAsString(), ErrorResponse.class);
-//        assertNotNull(errorResponse);
-//        assertEquals(errorResponse.getMessage(), CAR_NOT_FOUND);
+        log.info("Method shouldReturnCarNotFoundError() started of class {}", getClass().getName());
+
+        MockHttpServletResponse response =
+                mockMvc.perform(MockMvcRequestBuilders.get(CARS_ENDPOINT + "/9999")
+                                .accept(MediaType.APPLICATION_JSON)
+                        ).andExpect(status().isNotFound())
+                        .andReturn().getResponse();
+        assertNotNull(response);
+        ErrorResponse errorResponse = objectMapper.readValue(response.getContentAsString(), ErrorResponse.class);
+        assertNotNull(errorResponse);
+        assertEquals(errorResponse.getMessage(), CAR_NOT_FOUND);
     }
 
     class MockMvcCarService {
@@ -212,8 +205,8 @@ class CarControllerTestIT {
             log.info("Method saveCar() with car: {} started of class {}", car, getClass().getName());
 
             MockHttpServletResponse response =
-                    mockMvc.perform(MockMvcRequestBuilders.patch(new StringBuilder(CARS_ENDPOINT).append("/")
-                                            .append(id).toString())
+                    mockMvc.perform(MockMvcRequestBuilders.patch(CARS_ENDPOINT + "/" +
+                                            id)
                                     .accept(MediaType.APPLICATION_JSON)
                                     .contentType(MediaType.APPLICATION_JSON)
                                     .content(objectMapper.writeValueAsString(car))
@@ -227,8 +220,8 @@ class CarControllerTestIT {
             log.info("Method deleteCar() with id: {} started of class {}", id, getClass().getName());
 
             MockHttpServletResponse response = mockMvc.perform(
-                            MockMvcRequestBuilders.delete(new StringBuilder(CARS_ENDPOINT).append("/")
-                                            .append(id).append("/delete-car").toString())
+                            MockMvcRequestBuilders.delete(CARS_ENDPOINT + "/" +
+                                            id + "/delete-car")
                                     .accept(MediaType.APPLICATION_JSON)
                     ).andExpect(status().isOk())
                     .andReturn().getResponse();

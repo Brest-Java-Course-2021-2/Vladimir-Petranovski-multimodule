@@ -1,26 +1,18 @@
 package com.epam.brest.rest.controller;
 
-import com.epam.brest.model.Car;
 import com.epam.brest.model.Driver;
-import com.epam.brest.model.constant.DriverConstants;
 import com.epam.brest.rest.controller.exception.CustomExceptionHandler;
 import com.epam.brest.rest.controller.exception.ErrorResponse;
-import com.fasterxml.jackson.core.JsonGenerator;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.datatype.jsr310.JSR310Module;
 import org.apache.commons.lang3.RandomStringUtils;
-import org.apache.commons.lang3.RandomUtils;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
-import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.mock.web.MockHttpServletResponse;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
@@ -35,12 +27,10 @@ import java.time.Instant;
 import java.util.List;
 
 import static com.epam.brest.logger.ProjectLogger.log;
-import static com.epam.brest.model.constant.CarConstants.CAR_MODEL_SIZE;
-import static com.epam.brest.model.constant.DriverConstants.*;
+import static com.epam.brest.model.constant.DriverConstants.DRIVER_NAME_SIZE;
 import static com.epam.brest.rest.controller.exception.CustomExceptionHandler.DRIVER_NOT_FOUND;
 import static com.epam.brest.rest.controller.exception.CustomExceptionHandler.VALIDATION_ERROR;
 import static org.junit.jupiter.api.Assertions.*;
-import static org.springframework.mock.http.server.reactive.MockServerHttpRequest.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @ExtendWith(SpringExtension.class)
@@ -138,7 +128,7 @@ class DriverControllerTestIT {
         int result = driverService.updateDriver(id, driverSrc);
 
         // then
-        assertTrue(1 == result);
+        assertEquals(1, result);
 
         Driver driverDst = driverService.findDriverById(id);
         assertNotNull(driverDst);
@@ -163,12 +153,12 @@ class DriverControllerTestIT {
         int result = driverService.deleteDriver(id);
 
         // then
-        assertTrue(1 == result);
+        assertEquals(1, result);
 
         List<Driver> currentDrivers = driverService.findAllDrivers();
         assertNotNull(currentDrivers);
 
-        assertTrue(drivers.size() - 1 == currentDrivers.size());
+        assertEquals(drivers.size() - 1, currentDrivers.size());
     }
 
     @Test
@@ -256,8 +246,8 @@ class DriverControllerTestIT {
             log.info("Method updateDriver() with driver: {} and with id: {} started of class {}", driver, id, getClass().getName());
 
             MockHttpServletResponse response =
-                    mockMvc.perform(MockMvcRequestBuilders.patch(new StringBuilder(DRIVERS_ENDPOINT).append("/")
-                                            .append(id).toString())
+                    mockMvc.perform(MockMvcRequestBuilders.patch(DRIVERS_ENDPOINT + "/" +
+                                            id)
                                     .accept(MediaType.APPLICATION_JSON)
                                     .contentType(MediaType.APPLICATION_JSON)
                                     .content(objectMapper.writeValueAsString(driver))
@@ -271,8 +261,8 @@ class DriverControllerTestIT {
             log.info("Method deleteDriver() with id: {} started of class {}", id, getClass().getName());
 
             MockHttpServletResponse response = mockMvc.perform(
-                            MockMvcRequestBuilders.delete(new StringBuilder(DRIVERS_ENDPOINT).append("/")
-                                            .append(id).append("/delete-driver").toString())
+                            MockMvcRequestBuilders.delete(DRIVERS_ENDPOINT + "/" +
+                                            id + "/delete-driver")
                                     .accept(MediaType.APPLICATION_JSON)
                     ).andExpect(status().isOk())
                     .andReturn().getResponse();
