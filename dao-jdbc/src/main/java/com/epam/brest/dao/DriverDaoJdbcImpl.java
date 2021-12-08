@@ -5,6 +5,7 @@ import com.epam.brest.dao_api.DriverDao;
 import com.epam.brest.model.Driver;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
+import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.stereotype.Component;
 
 import java.util.Collections;
@@ -64,6 +65,10 @@ public class DriverDaoJdbcImpl implements DriverDao {
         return namedParameterJdbcTemplate.update(DRIVER_UPDATE_BY_ID, params);
     }
 
+    /**
+     * Delete driver by id.
+     */
+
     @Override
     public Integer deleteDriverById(Integer id) {
         log.info("Method deleteDriverById( with id={}) of class {} started", id, getClass().getName());
@@ -72,10 +77,22 @@ public class DriverDaoJdbcImpl implements DriverDao {
         return namedParameterJdbcTemplate.update(DRIVER_DELETE_BY_ID, param);
     }
 
+    /**
+     * Get count of records.
+     *
+     * @return count of records.
+     */
+
     @Override
     public Integer count() {
         return namedParameterJdbcTemplate.queryForObject(DRIVER_COUNT, new MapSqlParameterSource(), Integer.class);
     }
+
+    /**
+     * Get list of driver's name.
+     *
+     * @return list of driver's name.
+     */
 
     private List<String> findAllNameDrivers() {
         log.info("Method findAllNameDrivers() of class {} started", getClass().getName());

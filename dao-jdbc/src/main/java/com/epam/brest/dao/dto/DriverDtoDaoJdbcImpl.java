@@ -18,6 +18,12 @@ public class DriverDtoDaoJdbcImpl implements DriverDtoDao {
         this.namedParameterJdbcTemplate = namedParameterJdbcTemplate;
     }
 
+    /**
+     * Find all drivers Dto.
+     *
+     * @return list of driver Dto.
+     */
+
     @Override
     public List<DriverDto> findAllDriversWithCountCars() {
         log.info("Method findAllDriversWithCountCars() of class {} started", getClass().getName());

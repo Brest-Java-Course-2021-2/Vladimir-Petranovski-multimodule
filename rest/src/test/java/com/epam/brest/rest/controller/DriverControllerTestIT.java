@@ -8,6 +8,7 @@ import com.epam.brest.rest.controller.exception.ErrorResponse;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.datatype.jsr310.JSR310Module;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.commons.lang3.RandomUtils;
 import org.junit.jupiter.api.BeforeEach;
@@ -41,7 +42,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @ExtendWith(SpringExtension.class)
 @ContextConfiguration(locations = {"classpath*:rest-test-app-context.xml"})
-@Transactional
 class DriverControllerTestIT {
 
     public static final String DRIVERS_ENDPOINT = "/drivers";
@@ -61,8 +61,6 @@ class DriverControllerTestIT {
     private Instant driverDateStartWork;
     private BigDecimal driverSalary;
 
-    private
-
     @BeforeEach
     void setUp() {
         mockMvc = MockMvcBuilders.standaloneSetup(driverController)
@@ -71,7 +69,7 @@ class DriverControllerTestIT {
                 .alwaysDo(MockMvcResultHandlers.print())
                 .build();
 
-        objectMapper = new ObjectMapper();
+        objectMapper = new ObjectMapper().registerModule(new JSR310Module());
 
         driverDateStartWork = Instant.MIN;
         driverSalary = new BigDecimal(250);
@@ -105,7 +103,6 @@ class DriverControllerTestIT {
     @Test
     void findDriverById() throws Exception {
         log.info("Method findDriverById() started of class {}", getClass().getName());
-
         //given
         Driver driver = new Driver(RandomStringUtils.randomAlphabetic(DRIVER_NAME_SIZE), driverDateStartWork, driverSalary);
         assertNotNull(driver);
@@ -142,7 +139,7 @@ class DriverControllerTestIT {
         Driver driverDst = driverService.findDriverById(id);
         assertNotNull(driverDst);
         assertEquals(driverDst.getDriverId(), id);
-        assertEquals(driverSrc.getDriverName(),driverDst.getDriverName());
+        assertEquals(driverSrc.getDriverName(), driverDst.getDriverName());
 
     }
 
@@ -167,7 +164,7 @@ class DriverControllerTestIT {
         List<Driver> currentDrivers = driverService.findAllDrivers();
         assertNotNull(currentDrivers);
 
-        assertTrue(drivers.size()-1 == currentDrivers.size());
+        assertTrue(drivers.size() - 1 == currentDrivers.size());
     }
 
     @Test
@@ -187,6 +184,8 @@ class DriverControllerTestIT {
 
     @Test
     public void shouldFailOnCreateDriverWithDuplicateName() throws Exception {
+        log.info("Method shouldFailOnCreateDriverWithDuplicateName() started of class {}", getClass().getName());
+
         Driver driver = new Driver(RandomStringUtils.randomAlphabetic(DRIVER_NAME_SIZE), driverDateStartWork, driverSalary);
         Integer id = driverService.saveDriver(driver);
         assertNotNull(id);
@@ -213,10 +212,9 @@ class DriverControllerTestIT {
             log.info("Method findAllDrivers() started of class {}", getClass().getName());
 
             MockHttpServletResponse response = mockMvc.perform(
-                    MockMvcRequestBuilders.get(DRIVERS_ENDPOINT)
-                            .accept(MediaType.APPLICATION_JSON)
-            ).andDo(MockMvcResultHandlers.print())
-                    .andExpect(status().isOk())
+                            MockMvcRequestBuilders.get(DRIVERS_ENDPOINT)
+                                    .accept(MediaType.APPLICATION_JSON)
+                    ).andExpect(status().isOk())
                     .andReturn().getResponse();
             assertNotNull(response);
             return objectMapper.readValue(response.getContentAsString(), new TypeReference<List<Driver>>() {
@@ -227,10 +225,9 @@ class DriverControllerTestIT {
             log.info("Method findDriverById() with id: {} started of class {}", id, getClass().getName());
 
             MockHttpServletResponse response = mockMvc.perform(
-                    MockMvcRequestBuilders.get(DRIVERS_ENDPOINT + "/" + id)
-                            .accept(MediaType.APPLICATION_JSON)
-            ).andDo(MockMvcResultHandlers.print())
-                    .andExpect(status().isOk())
+                            MockMvcRequestBuilders.get(DRIVERS_ENDPOINT + "/" + id)
+                                    .accept(MediaType.APPLICATION_JSON)
+                    ).andExpect(status().isOk())
                     .andReturn().getResponse();
             assertNotNull(response);
             return objectMapper.readValue(response.getContentAsString(), Driver.class);
@@ -241,11 +238,11 @@ class DriverControllerTestIT {
 
             String json = objectMapper.writeValueAsString(driver);
             MockHttpServletResponse response = mockMvc.perform(
-                    MockMvcRequestBuilders.post(DRIVERS_ENDPOINT)
-                            .contentType(MediaType.APPLICATION_JSON)
-                            .content(json)
-                            .accept(MediaType.APPLICATION_JSON)
-            ).andExpect(status().isOk())
+                            MockMvcRequestBuilders.post(DRIVERS_ENDPOINT)
+                                    .contentType(MediaType.APPLICATION_JSON)
+                                    .content(json)
+                                    .accept(MediaType.APPLICATION_JSON)
+                    ).andExpect(status().isOk())
                     .andReturn().getResponse();
             assertNotNull(response);
             return objectMapper.readValue(response.getContentAsString(), Integer.class);

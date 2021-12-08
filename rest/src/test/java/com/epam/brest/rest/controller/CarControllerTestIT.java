@@ -91,7 +91,6 @@ class CarControllerTestIT {
     @Test
     public void shouldFindCarById() throws Exception {
         log.info("Method shouldFindCarById() started of class {}", getClass().getName());
-
         // given
         Car car = new Car(RandomStringUtils.randomAlphabetic(CAR_MODEL_SIZE), carService.findAllCars().get(0).getDriverId());
         Integer id =  carService.saveCar(car);
@@ -134,7 +133,6 @@ class CarControllerTestIT {
     @Test
     public void shouldDeleteCar() throws Exception {
         log.info("Method shouldDeleteCar() started of class {}", getClass().getName());
-
         // given
         Car car = new Car(RandomStringUtils.randomAlphabetic(CAR_MODEL_SIZE), carService.findAllCars().get(0).getDriverId());
         Integer id = carService.saveCar(car);
@@ -142,10 +140,8 @@ class CarControllerTestIT {
 
         List<Car> cars = carService.findAllCars();
         assertNotNull(cars);
-
         // when
         int result = carService.deleteCar(id);
-
         // then
         assertTrue(1 == result);
 

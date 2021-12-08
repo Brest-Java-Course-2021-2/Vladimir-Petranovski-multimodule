@@ -53,6 +53,7 @@ public class CarController {
     @PostMapping(consumes = "application/json", produces = "application/json")
     public ResponseEntity<Integer> saveCar(@RequestBody Car car) {
         log.info("Method saveCar() with car: {} started of class {}", car, getClass().getName());
+
         Integer id = carService.saveCar(car);
         return new ResponseEntity<>(id, HttpStatus.OK);
     }

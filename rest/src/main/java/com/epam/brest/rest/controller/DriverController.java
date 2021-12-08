@@ -1,5 +1,6 @@
 package com.epam.brest.rest.controller;
 
+import com.epam.brest.model.Car;
 import com.epam.brest.model.Driver;
 import com.epam.brest.service_api.DriverService;
 import org.springframework.http.HttpStatus;
@@ -38,14 +39,11 @@ public class DriverController {
      * @return Driver Dao by id.
      */
 
-    @GetMapping(value = "/{id}", consumes = "application/json", produces = "application/json")
-    public final ResponseEntity<Driver> findDriverById(@PathVariable("id") Integer id) {
+    @GetMapping(value = "/{id}")
+    public final Driver findDriverById(@PathVariable("id") Integer id) {
         log.info("Method findDriverById() with id {} started of class {}", id, getClass().getName());
-        Driver driver = driverService.findDriverById(id);
-        if(driver == null) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-        return new ResponseEntity<>(driver, HttpStatus.OK);
+
+        return driverService.findDriverById(id);
     }
 
     /**
@@ -57,14 +55,14 @@ public class DriverController {
         log.info("Method findDriverById() with driver {} started of class {}", driver, getClass().getName());
 
         Integer id = driverService.saveDriver(driver);
-        return new ResponseEntity<>(id, HttpStatus.CREATED);
+        return new ResponseEntity<>(id, HttpStatus.OK);
     }
 
     /**
      * Update driver Dao by id.
      */
 
-    @PatchMapping(value = "{id}", consumes = "application/json", produces = "application/json")
+    @PatchMapping(value = "/{id}", consumes = "application/json", produces = "application/json")
     public ResponseEntity<Integer> updateDriver(@RequestBody Driver driver, @PathVariable Integer id) {
         log.info("Method updateDriver() with id: {} and driver: {} started of class {}", id, driver, getClass().getName());
 
