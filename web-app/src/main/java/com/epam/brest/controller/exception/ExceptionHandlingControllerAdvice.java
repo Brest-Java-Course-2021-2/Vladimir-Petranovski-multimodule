@@ -9,14 +9,27 @@ import javax.servlet.http.HttpServletRequest;
 import java.sql.SQLException;
 import java.util.Date;
 
-import static com.epam.brest.logger.ProjectLogger.log;
+import static com.epam.brest.logger.ProjectLogger.LOG;
 
 @ControllerAdvice
 public class ExceptionHandlingControllerAdvice {
 
-    @ExceptionHandler({SQLException.class, DataAccessException.class})
-    public ModelAndView handleDataIntegrityViolationException(HttpServletRequest req, Exception ex) {
-        log.error("Method handleDataIntegrityViolationException() with request: {} raised: {} started in {}", req.getRequestURL(), ex, getClass().getName());
+    /**
+     * Exception handler of data base.
+     *
+     * @param req HttpServletRequest.
+     * @param ex Exception.
+     * @return view exception.
+     */
+
+    @ExceptionHandler({SQLException.class,
+            DataAccessException.class})
+    public ModelAndView handleDataIntegrityViolationException(
+            final HttpServletRequest req,
+            final Exception ex) {
+        LOG.error("Method handleDataIntegrityViolationException()"
+                        + " with request: {} raised: {} started in {}",
+                req.getRequestURL(), ex, getClass().getName());
 
         ModelAndView mav = new ModelAndView();
         mav.addObject("exception", ex);
@@ -25,9 +38,21 @@ public class ExceptionHandlingControllerAdvice {
         mav.setViewName("exception/error-db");
         return mav;
     }
+
+    /**
+     * Exception handler.
+     *
+     * @param req HttpServletRequest.
+     * @param ex Exception.
+     * @return view exception.
+     */
+
     @ExceptionHandler(Exception.class)
-    public ModelAndView handleError(HttpServletRequest req, Exception ex) {
-        log.error("Method handleError() with request: {} raised: {} started in {}", req.getRequestURL(), ex, getClass().getName());
+    public ModelAndView handleError(final HttpServletRequest req,
+                                    final Exception ex) {
+        LOG.error("Method handleError() with request:"
+                        + " {} raised: {} started in {}",
+                req.getRequestURL(), ex, getClass().getName());
 
         ModelAndView mav = new ModelAndView();
         mav.addObject("exception", ex);

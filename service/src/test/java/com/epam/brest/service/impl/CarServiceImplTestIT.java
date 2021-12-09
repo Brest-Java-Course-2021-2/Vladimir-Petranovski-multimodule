@@ -11,7 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
-import static com.epam.brest.logger.ProjectLogger.log;
+import static com.epam.brest.logger.ProjectLogger.LOG;
 import static org.junit.jupiter.api.Assertions.*;
 
 @ExtendWith({SpringExtension.class})
@@ -25,15 +25,15 @@ class CarServiceImplTestIT {
 
     @Test
     void findAllCars() {
-        log.info("Method started: findAllCars() of {}", getClass().getName());
+        LOG.info("Method started: findAllCars() of {}", getClass().getName());
         assertNotNull(carService);
         assertNotNull(carService.findAllCars());
-        log.info("{}", carService.findAllCars());
+        LOG.info("{}", carService.findAllCars());
     }
 
     @Test
     void findCarById() {
-        log.info("Method started: findCarById() of {}", getClass().getName());
+        LOG.info("Method started: findCarById() of {}", getClass().getName());
         assertNotNull(carService);
         List<Car> cars = carService.findAllCars();
         if(cars.size() == 0) {
@@ -43,26 +43,24 @@ class CarServiceImplTestIT {
         Car carSrc = cars.get(0);
         Car carDst = carService.findCarById(carSrc.getCarId());
         assertEquals(carSrc.getCarModel(), carDst.getCarModel());
-        log.info("Car's name first from list: {} equals car's name after finding by id {}: {}",
+        LOG.info("Car's name first from list: {} equals car's name after finding by id {}: {}",
                 carSrc.getCarModel(), carSrc.getCarId(), carDst.getCarModel());
     }
 
     @Test
     void saveCar() {
-        log.info("Method started: saveCar() of {}", getClass().getName());
+        LOG.info("Method started: saveCar() of {}", getClass().getName());
         assertNotNull(carService);
         Integer countCarBeforeSave = carService.count();
-        carService.saveCar(new Car("LADA", 1));
-        Integer countCarAfterSave = carService.count();
+        Integer countCarAfterSave = carService.saveCar(new Car("LADA", 1));
         assertNotNull(countCarAfterSave);
-        assertEquals(countCarBeforeSave, countCarAfterSave - 1);
-        log.info("Size car's list before save():{} equals after save minus one {}",
-                countCarBeforeSave, countCarAfterSave - 1);
+        assertEquals(countCarBeforeSave, carService.count() - 1);
+        LOG.info("Size driver's list before save():{} equals after save minus one {}", countCarBeforeSave, carService.count() - 1);
     }
 
     @Test
     void updateCarById() {
-        log.info("Method started: updateCarById() of {}", getClass().getName());
+        LOG.info("Method started: updateCarById() of {}", getClass().getName());
         assertNotNull(carService);
         List<Car> cars = carService.findAllCars();
         if(cars.size() == 0) {
@@ -75,12 +73,12 @@ class CarServiceImplTestIT {
 
         Car carDst = carService.findCarById(carSrc.getCarId());
         assertEquals(carSrc.getCarModel(), carDst.getCarModel());
-        log.info("Car's name first from list: {} equals car's name after updating: {}", carSrc.getCarModel(), carDst.getCarModel());
+        LOG.info("Car's name first from list: {} equals car's name after updating: {}", carSrc.getCarModel(), carDst.getCarModel());
     }
 
     @Test
     void deleteCarById() {
-        log.info("Method started: deleteCarById() of {}", getClass().getName());
+        LOG.info("Method started: deleteCarById() of {}", getClass().getName());
         assertNotNull(carService);
         carService.saveCar(new Car("MUSTANG", 1));
         Integer countRecordsBeforeDelete = carService.count();
@@ -89,15 +87,15 @@ class CarServiceImplTestIT {
         Car carSrc = cars.get(cars.size() - 1);
         carService.deleteCarById(carSrc.getCarId());
         assertEquals(countRecordsBeforeDelete - 1, carService.findAllCars().size());
-        log.info("Count records before deleting minus one: {} equals car's size list after deleting {}", countRecordsBeforeDelete - 1, carService.findAllCars().size());
+        LOG.info("Count records before deleting minus one: {} equals car's size list after deleting {}", countRecordsBeforeDelete - 1, carService.findAllCars().size());
     }
 
     @Test
     void count() {
-        log.info("Method started: count() of {}", getClass().getName());
+        LOG.info("Method started: count() of {}", getClass().getName());
         assertNotNull(carService);
         List<Car> cars = carService.findAllCars();
         assertEquals(cars.size(), carService.count());
-        log.info("Quantity of records {} equals size of car's list {}", carService.count(), cars.size());
+        LOG.info("Quantity of records {} equals size of car's list {}", carService.count(), cars.size());
     }
 }

@@ -10,19 +10,24 @@ import org.springframework.validation.Validator;
 import static com.epam.brest.model.constant.DriverConstants.DRIVER_NAME_SIZE;
 
 @Component
-public class DriverValidator implements Validator {
+public final class DriverValidator implements Validator {
 
     @Override
-    public boolean supports(Class<?> clazz) {
+    public boolean supports(final Class<?> clazz) {
         return Driver.class.equals(clazz);
     }
 
     @Override
-    public void validate(Object target, Errors errors) {
+    public void validate(final Object target, final Errors errors) {
 
-        ValidationUtils.rejectIfEmpty(errors, "driverName", "driverName.empty");
-        ValidationUtils.rejectIfEmpty(errors, "driverDateStartWork", "driverDateStartWork.empty");
-        ValidationUtils.rejectIfEmpty(errors, "driverSalary", "driverSalary.empty", "Please provide driver salary");
+        ValidationUtils.rejectIfEmpty(errors,
+                "driverName", "driverName.empty");
+        ValidationUtils.rejectIfEmpty(errors,
+                "driverDateStartWork",
+                "driverDateStartWork.empty");
+        ValidationUtils.rejectIfEmpty(errors,
+                "driverSalary", "driverSalary.empty",
+                "Please provide driver salary");
         Driver driver = (Driver) target;
 
         if (StringUtils.hasLength(driver.getDriverName())

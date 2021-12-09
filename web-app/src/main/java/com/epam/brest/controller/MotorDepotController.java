@@ -8,6 +8,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/")
 public class MotorDepotController {
 
+    /**
+     * Goto motor depot page.
+     *
+     * @return view name.
+     */
+
     @GetMapping
     public String showMotorDepotPage() {
         return "motor-depot";

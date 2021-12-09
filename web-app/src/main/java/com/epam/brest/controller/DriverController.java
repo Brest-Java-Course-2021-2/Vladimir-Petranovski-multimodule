@@ -7,42 +7,97 @@ import com.epam.brest.service_api.dto.DriverDtoService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.ModelAttribute;
 
-import static com.epam.brest.logger.ProjectLogger.log;
+import static com.epam.brest.logger.ProjectLogger.LOG;
 
 @Controller
 @RequestMapping("/drivers")
 public class DriverController {
 
+    /**
+     * Field driverDtoService.
+     */
+
     private final DriverDtoService driverDtoService;
+
+    /**
+     * Field driverService.
+     */
 
     private final DriverService driverService;
 
+    /**
+     * Field driverValidator.
+     */
+
     private final DriverValidator driverValidator;
 
-    public DriverController(DriverDtoService driverDtoService, DriverService driverService, DriverValidator driverValidator) {
+    /**
+     * Constructor.
+     *
+     * @param driverDtoService driverDto Service.
+     * @param driverService driverService.
+     * @param driverValidator driverValidator.
+     */
+
+    public DriverController(final DriverDtoService driverDtoService,
+                            final DriverService driverService,
+                            final DriverValidator driverValidator) {
         this.driverDtoService = driverDtoService;
         this.driverService = driverService;
         this.driverValidator = driverValidator;
     }
 
+    /**
+     * Goto driver's list page.
+     *
+     * @param model model.
+     * @return view name.
+     */
+
     @GetMapping()
-    public final String findAllDrivers(Model model) {
-        log.info("Method findAllDrivers() started of class {}", getClass().getName());
-        model.addAttribute("driverList", driverDtoService.findAllDriverWithCountCars());
+    public final String findAllDrivers(final Model model) {
+        LOG.info("Method findAllDrivers() started of class {}",
+                getClass().getName());
+        model.addAttribute("driverList",
+                driverDtoService.findAllDriverWithCountCars());
         return "drivers/drivers";
     }
 
+    /**
+     * Goto form adding new driver page.
+     *
+     * @param driver driver.
+     * @return view name.
+     */
+
     @GetMapping("/new-driver")
-    public final String showFormAddingDriver(@ModelAttribute("driver") Driver driver) {
-        log.info("Method showFormAddingDriver() with driver {} started of class {}", driver, getClass().getName());
+    public final String showFormAddingDriver(
+            @ModelAttribute("driver") final Driver driver) {
+        LOG.info("Method showFormAddingDriver() "
+                        + "with driver {} started of class {}",
+                driver, getClass().getName());
         return "drivers/new-driver";
     }
 
+    /**
+     * Goto driver's list after adding new driver page.
+     *
+     * @param driver driver.
+     * @param result for validate.
+     * @return view name.
+     */
+
     @PostMapping()
-    public String saveDriver(@ModelAttribute("driver") Driver driver, BindingResult result) {
-        log.info("Method saveDriver() with driver {} started of class {}", driver, getClass().getName());
+    public String saveDriver(@ModelAttribute("driver") final Driver driver,
+                             final BindingResult result) {
+        LOG.info("Method saveDriver() with driver {} started of class {}",
+                driver, getClass().getName());
 
         driverValidator.validate(driver, result);
         if (result.hasErrors()) {
@@ -53,16 +108,41 @@ public class DriverController {
         return "redirect:/drivers";
     }
 
+    /**
+     * Goto form updating driver page.
+     *
+     * @param id driver for updating.
+     * @param model model.
+     * @return view name.
+     */
+
     @GetMapping("/{id}/update-driver")
-    public String showFormForUpdatingDriver(@PathVariable("id") Integer id, Model model) {
-        log.info("Method showFormForUpdatingDriver() with id {} started of class {}", id, getClass().getName());
+    public String showFormForUpdatingDriver(
+            @PathVariable("id") final Integer id,
+            final Model model) {
+        LOG.info("Method showFormForUpdatingDriver()"
+                        + " with id {} started of class {}",
+                id, getClass().getName());
         model.addAttribute("driver", driverService.findDriverById(id));
         return "drivers/update-driver";
     }
 
+    /**
+     * Goto driver's list page after updating driver.
+     *
+     * @param driver driver.
+     * @param result for validate.
+     * @param id driver for updating.
+     * @return view name.
+     */
+
     @PostMapping("/{id}")
-    public String updateDriver(@ModelAttribute("driver") Driver driver, BindingResult result, @PathVariable("id") Integer id) {
-        log.info("Method updateDriver() with driver {} and id {} started of class {}", driver, id, getClass().getName());
+    public String updateDriver(@ModelAttribute("driver") final Driver driver,
+                               final BindingResult result,
+                               @PathVariable("id") final Integer id) {
+        LOG.info("Method updateDriver() with driver {}"
+                        + " and id {} started of class {}",
+                driver, id, getClass().getName());
 
         driverValidator.validate(driver, result);
         if (result.hasErrors()) {
@@ -72,9 +152,17 @@ public class DriverController {
         return "redirect:/drivers";
     }
 
+    /**
+     * Goto driver's list page after deleting driver.
+     *
+     * @param id driver for deleting.
+     * @return view name.
+     */
+
     @GetMapping("/{id}/delete-driver")
-    public String deleteDriver(@PathVariable("id") Integer id) {
-        log.info("Method deleteDriver() with id {} started of class {}", id, getClass().getName());
+    public String deleteDriver(@PathVariable("id") final Integer id) {
+        LOG.info("Method deleteDriver() with id {} started of class {}",
+                id, getClass().getName());
         driverService.deleteDriverById(id);
         return "redirect:/drivers";
     }

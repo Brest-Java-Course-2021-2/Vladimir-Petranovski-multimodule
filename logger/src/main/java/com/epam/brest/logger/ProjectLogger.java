@@ -4,5 +4,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class ProjectLogger {
-    public static final Logger log = LoggerFactory.getLogger(ProjectLogger.class);
+    /**
+     * Field constant LOG.
+     */
+    public static final Logger LOG =
+            LoggerFactory.getLogger(ProjectLogger.class);
 }

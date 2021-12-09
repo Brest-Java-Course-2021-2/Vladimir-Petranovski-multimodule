@@ -15,8 +15,7 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.context.WebApplicationContext;
 
-import static com.epam.brest.logger.ProjectLogger.log;
-import static org.junit.jupiter.api.Assertions.*;
+import static com.epam.brest.logger.ProjectLogger.LOG;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
 
@@ -38,7 +37,7 @@ class MotorDepotControllerTestIT {
 
     @Test
     void shouldReturnPageMotorDepotPage() throws Exception {
-        log.info("Method shouldReturnPageMotorDepotPage() started of class {}", getClass().getName());
+        LOG.info("Method shouldReturnPageMotorDepotPage() started of class {}", getClass().getName());
         mockMvc.perform(
                 MockMvcRequestBuilders.get("/")
                 ).andDo(MockMvcResultHandlers.print())

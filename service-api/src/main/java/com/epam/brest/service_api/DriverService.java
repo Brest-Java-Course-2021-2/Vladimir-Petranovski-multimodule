@@ -7,43 +7,54 @@ import java.util.List;
 public interface DriverService {
 
     /**
-     * Get list of driver.
+     * Find all drivers.
      *
-     * @return list of driver.
+     * @return list of drivers.
      */
 
     List<Driver> findAllDrivers();
 
     /**
-     * Get driver by id.
+     * Find driver by Id.
      *
-     * @return driver by id.
+     * @param id driver Id.
+     * @return driver.
      */
 
     Driver findDriverById(Integer id);
 
     /**
-     * Save driver.
-     */
-
-    void saveDriver(Driver driver);
-
-    /**
-     * Update driver by id.
-     */
-
-    void updateDriverById(Integer id, Driver driver);
-
-    /**
-     * Delete driver by id.
-     */
-
-    void deleteDriverById(Integer id);
-
-    /**
-     * Get count of records.
+     * Persist new driver.
      *
-     * @return count of records.
+     * @param driver driver.
+     * @return persisted driver id.
+     */
+
+    Integer saveDriver(Driver driver);
+
+    /**
+     * Update department.
+     *
+     * @param id driver id.
+     * @param driver driver.
+     * @return number of updated records in the database.
+     */
+
+    Integer updateDriverById(Integer id, Driver driver);
+
+    /**
+     * Delete driver.
+     *
+     * @param id driver id.
+     * @return number of updated records in the database.
+     */
+
+    Integer deleteDriverById(Integer id);
+
+    /**
+     * Count drivers.
+     *
+     * @return quantity of the drivers.
      */
 
     Integer count();
