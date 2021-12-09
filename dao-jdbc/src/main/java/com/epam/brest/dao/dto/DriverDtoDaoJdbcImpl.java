@@ -8,13 +8,24 @@ import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import java.util.List;
 
 import static com.epam.brest.dao.Queries.DRIVER_COUNT_CAR;
-import static com.epam.brest.logger.ProjectLogger.log;
+import static com.epam.brest.logger.ProjectLogger.LOG;
 
 public class DriverDtoDaoJdbcImpl implements DriverDtoDao {
 
+    /**
+     * Field namedParameterJdbcTemplate.
+     */
+
     private final NamedParameterJdbcTemplate namedParameterJdbcTemplate;
 
-    public DriverDtoDaoJdbcImpl(NamedParameterJdbcTemplate namedParameterJdbcTemplate) {
+    /**
+     * Constructor
+     *
+     * @param namedParameterJdbcTemplate namedParameterJdbcTemplate.
+     */
+
+    public DriverDtoDaoJdbcImpl(
+            final NamedParameterJdbcTemplate namedParameterJdbcTemplate) {
         this.namedParameterJdbcTemplate = namedParameterJdbcTemplate;
     }
 
@@ -26,7 +37,9 @@ public class DriverDtoDaoJdbcImpl implements DriverDtoDao {
 
     @Override
     public List<DriverDto> findAllDriversWithCountCars() {
-        log.info("Method findAllDriversWithCountCars() of class {} started", getClass().getName());
-        return namedParameterJdbcTemplate.query(DRIVER_COUNT_CAR, BeanPropertyRowMapper.newInstance(DriverDto.class));
+        LOG.info("Method findAllDriversWithCountCars() of class {} started",
+                getClass().getName());
+        return namedParameterJdbcTemplate.query(DRIVER_COUNT_CAR,
+                BeanPropertyRowMapper.newInstance(DriverDto.class));
     }
 }

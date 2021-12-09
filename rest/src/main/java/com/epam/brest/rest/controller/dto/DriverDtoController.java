@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Collection;
 
-import static com.epam.brest.logger.ProjectLogger.log;
+import static com.epam.brest.logger.ProjectLogger.LOG;
 
 @RestController
 @RequestMapping("/drivers_dto")
@@ -38,7 +38,7 @@ public class DriverDtoController {
 
     @GetMapping()
     public final Collection<DriverDto> findAllDriversWithCountCars() {
-        log.info("Method findAllDriversWithCountCars() started of class {}",
+        LOG.info("Method findAllDriversWithCountCars() started of class {}",
                 getClass().getName());
         return driverDtoService.findAllDriverWithCountCars();
     }

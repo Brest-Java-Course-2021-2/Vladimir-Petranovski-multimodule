@@ -10,29 +10,55 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
-import static com.epam.brest.logger.ProjectLogger.log;
+import static com.epam.brest.logger.ProjectLogger.LOG;
 
 @Service
 public class DriverServiceImpl implements DriverService {
 
+    /**
+     * Field driverDao.
+     */
+
     private final DriverDao driverDao;
 
-    public DriverServiceImpl(DriverDao driverDao) {
+    /**
+     * Constructor.
+     *
+     * @param driverDao driverDao.
+     */
+
+    public DriverServiceImpl(final DriverDao driverDao) {
         this.driverDao = driverDao;
     }
+
+    /**
+     * Find all drivers.
+     *
+     * @return list of drivers.
+     */
 
     @Override
     @Transactional(readOnly = true)
     public List<Driver> findAllDrivers() {
-        log.info("Method findAllDrivers() started of class {}", getClass().getName());
+        LOG.info("Method findAllDrivers() started of class {}",
+                getClass().getName());
 
         return driverDao.findAllDrivers();
     }
 
+    /**
+     * Find driver by id.
+     *
+     * @param id driver Id.
+     * @return driver.
+     */
+
     @Override
     @Transactional(readOnly = true)
-    public Driver findDriverById(Integer id) {
-        log.info("Method findDriverById() with id: {} started of class {}", id, getClass().getName());
+    public Driver findDriverById(final Integer id) {
+        LOG.info("Method findDriverById()"
+                + " with id: {} started of class {}",
+                id, getClass().getName());
         try {
             return this.driverDao.findDriverById(id);
         } catch (EmptyResultDataAccessException e) {
@@ -40,34 +66,70 @@ public class DriverServiceImpl implements DriverService {
         }
     }
 
+    /**
+     * Persist new driver.
+     *
+     * @param driver driver.
+     * @return persisted driver id.
+     */
+
     @Override
     @Transactional
-    public Integer saveDriver(Driver driver) {
-        log.info("Method saveDriver() with driver: {} started of class {}", driver, getClass().getName());
+    public Integer saveDriver(final Driver driver) {
+        LOG.info("Method saveDriver()"
+                + " with driver: {} started of class {}",
+                driver, getClass().getName());
 
         return driverDao.saveDriver(driver);
     }
 
+    /**
+     * Update department.
+     *
+     * @param id driver id.
+     * @param driver driver.
+     * @return number of updated records in the database.
+     */
+
     @Override
     @Transactional
-    public Integer updateDriverById(Integer id, Driver driver) {
-        log.info("Method updateDriverById() with id {} and with driver: {} started of class {}", id, driver, getClass().getName());
+    public Integer updateDriverById(final Integer id,
+                                    final Driver driver) {
+        LOG.info("Method updateDriverById()"
+                + " with id {} and with driver: {} started of class {}",
+                id, driver, getClass().getName());
 
         return driverDao.updateDriverById(id, driver);
     }
 
+    /**
+     * Delete driver.
+     *
+     * @param id driver id.
+     * @return number of updated records in the database.
+     */
+
     @Override
     @Transactional
-    public Integer deleteDriverById(Integer id) {
-        log.info("Method deleteDriverById() with id: {} started of class {}", id, getClass().getName());
+    public Integer deleteDriverById(final Integer id) {
+        LOG.info("Method deleteDriverById()"
+                + " with id: {} started of class {}",
+                id, getClass().getName());
 
         return driverDao.deleteDriverById(id);
     }
 
+    /**
+     * Count drivers.
+     *
+     * @return quantity of the drivers.
+     */
+
     @Override
     @Transactional(readOnly = true)
     public Integer count() {
-        log.info("Method count() started of class {}", getClass().getName());
+        LOG.info("Method count() started of class {}",
+                getClass().getName());
 
         return driverDao.count();
     }

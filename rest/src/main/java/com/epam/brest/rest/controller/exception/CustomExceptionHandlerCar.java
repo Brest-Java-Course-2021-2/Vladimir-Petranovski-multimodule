@@ -11,6 +11,8 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.epam.brest.logger.ProjectLogger.LOG;
+
 @ControllerAdvice
 public class CustomExceptionHandlerCar extends ResponseEntityExceptionHandler {
 
@@ -37,6 +39,9 @@ public class CustomExceptionHandlerCar extends ResponseEntityExceptionHandler {
     @ExceptionHandler(CarNotFoundException.class)
     public final ResponseEntity<ErrorResponse> handleCarNotFoundException(
             final CarNotFoundException ex, final WebRequest webRequest) {
+
+        LOG.info("Method handleCarNotFoundException() started of class {}",
+                getClass().getName());
         List<String> details = new ArrayList<>();
         details.add(ex.getLocalizedMessage());
         ErrorResponse error = new ErrorResponse(CAR_NOT_FOUND, details);
@@ -54,6 +59,9 @@ public class CustomExceptionHandlerCar extends ResponseEntityExceptionHandler {
     @ExceptionHandler(IllegalArgumentException.class)
     public final ResponseEntity<ErrorResponse> handleIllegalArgumentException(
             final Exception ex, final WebRequest webRequest) {
+
+        LOG.info("Method handleIllegalArgumentException() started of class {}",
+                getClass().getName());
         ErrorResponse error = new ErrorResponse(CAR_VALIDATION_ERROR, ex);
         return new ResponseEntity<>(error, HttpStatus.UNPROCESSABLE_ENTITY);
     }

@@ -25,11 +25,11 @@ class DriverDtoServiceImplTestIT {
 
     @Test
     void findAllDriverWithCountCars() {
-        log.info("Method started: findAllDriverWithCountCars() of {}", getClass().getName());
+        LOG.info("Method started: findAllDriverWithCountCars() of {}", getClass().getName());
         List<DriverDto> drivers = driverDtoService.findAllDriverWithCountCars();
         assertNotNull(drivers);
         assertTrue(drivers.size() > 0);
-        log.info("Test passed, list driver Dto equals {}", drivers);
+        LOG.info("Test passed, list driver Dto equals {}", drivers);
         assertTrue(drivers.get(0).getCountOfCarsAssignedToDriver() > 0);
     }
 }

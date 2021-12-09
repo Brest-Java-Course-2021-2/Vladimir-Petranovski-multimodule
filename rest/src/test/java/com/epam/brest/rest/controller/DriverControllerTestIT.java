@@ -26,7 +26,7 @@ import java.math.BigDecimal;
 import java.time.Instant;
 import java.util.List;
 
-import static com.epam.brest.logger.ProjectLogger.log;
+import static com.epam.brest.logger.ProjectLogger.LOG;
 import static com.epam.brest.model.constant.DriverConstants.DRIVER_NAME_SIZE;
 import static com.epam.brest.rest.controller.exception.CustomExceptionHandler.DRIVER_NOT_FOUND;
 import static com.epam.brest.rest.controller.exception.CustomExceptionHandler.VALIDATION_ERROR;
@@ -71,7 +71,7 @@ class DriverControllerTestIT {
 
     @Test
     void findAllDrivers() throws Exception {
-        log.info("Method findAllDrivers() started of class {}", getClass().getName());
+        LOG.info("Method findAllDrivers() started of class {}", getClass().getName());
         //given
         Driver driver = new Driver(RandomStringUtils.randomAlphabetic(DRIVER_NAME_SIZE), driverDateStartWork, driverSalary);
         assertNotNull(driver);
@@ -86,7 +86,7 @@ class DriverControllerTestIT {
 
     @Test
     public void shouldSaveDriver() throws Exception {
-        log.info("Method shouldSaveDriver() started of class {}", getClass().getName());
+        LOG.info("Method shouldSaveDriver() started of class {}", getClass().getName());
 
         Driver driver = new Driver(RandomStringUtils.randomAlphabetic(DRIVER_NAME_SIZE), driverDateStartWork, driverSalary);
         assertNotNull(driver);
@@ -96,7 +96,7 @@ class DriverControllerTestIT {
 
     @Test
     void findDriverById() throws Exception {
-        log.info("Method findDriverById() started of class {}", getClass().getName());
+        LOG.info("Method findDriverById() started of class {}", getClass().getName());
         //given
         Driver driver = new Driver(RandomStringUtils.randomAlphabetic(DRIVER_NAME_SIZE), driverDateStartWork, driverSalary);
         assertNotNull(driver);
@@ -112,7 +112,7 @@ class DriverControllerTestIT {
 
     @Test
     public void shouldUpdateDriver() throws Exception {
-        log.info("Method shouldUpdateDriver() started of class {}", getClass().getName());
+        LOG.info("Method shouldUpdateDriver() started of class {}", getClass().getName());
 
         // given
         Driver driver = new Driver(RandomStringUtils.randomAlphabetic(DRIVER_NAME_SIZE), driverDateStartWork, driverSalary);
@@ -139,7 +139,7 @@ class DriverControllerTestIT {
 
     @Test
     public void shouldDeleteDriver() throws Exception {
-        log.info("Method shouldDeleteDriver() started of class {}", getClass().getName());
+        LOG.info("Method shouldDeleteDriver() started of class {}", getClass().getName());
 
         // given
         Driver driver = new Driver(RandomStringUtils.randomAlphabetic(DRIVER_NAME_SIZE), driverDateStartWork, driverSalary);
@@ -163,7 +163,7 @@ class DriverControllerTestIT {
 
     @Test
     public void shouldReturnDriverNotFoundError() throws Exception {
-        log.info("Method shouldReturnDriverNotFoundError() started of class {}", getClass().getName());
+        LOG.info("Method shouldReturnDriverNotFoundError() started of class {}", getClass().getName());
 
         MockHttpServletResponse response =
                 mockMvc.perform(MockMvcRequestBuilders.get(DRIVERS_ENDPOINT + "/999999")
@@ -178,7 +178,7 @@ class DriverControllerTestIT {
 
     @Test
     public void shouldFailOnCreateDriverWithDuplicateName() throws Exception {
-        log.info("Method shouldFailOnCreateDriverWithDuplicateName() started of class {}", getClass().getName());
+        LOG.info("Method shouldFailOnCreateDriverWithDuplicateName() started of class {}", getClass().getName());
 
         Driver driver = new Driver(RandomStringUtils.randomAlphabetic(DRIVER_NAME_SIZE), driverDateStartWork, driverSalary);
         Integer id = driverService.saveDriver(driver);
@@ -203,7 +203,7 @@ class DriverControllerTestIT {
     class MockMvcDriverService {
 
         public List<Driver> findAllDrivers() throws Exception {
-            log.info("Method findAllDrivers() started of class {}", getClass().getName());
+            LOG.info("Method findAllDrivers() started of class {}", getClass().getName());
 
             MockHttpServletResponse response = mockMvc.perform(
                             MockMvcRequestBuilders.get(DRIVERS_ENDPOINT)
@@ -216,7 +216,7 @@ class DriverControllerTestIT {
         }
 
         public Driver findDriverById(Integer id) throws Exception {
-            log.info("Method findDriverById() with id: {} started of class {}", id, getClass().getName());
+            LOG.info("Method findDriverById() with id: {} started of class {}", id, getClass().getName());
 
             MockHttpServletResponse response = mockMvc.perform(
                             MockMvcRequestBuilders.get(DRIVERS_ENDPOINT + "/" + id)
@@ -228,7 +228,7 @@ class DriverControllerTestIT {
         }
 
         public Integer saveDriver(Driver driver) throws Exception {
-            log.info("Method saveDriver() with driver: {} started of class {}", driver, getClass().getName());
+            LOG.info("Method saveDriver() with driver: {} started of class {}", driver, getClass().getName());
 
             String json = objectMapper.writeValueAsString(driver);
             MockHttpServletResponse response = mockMvc.perform(
@@ -243,7 +243,7 @@ class DriverControllerTestIT {
         }
 
         public Integer updateDriver(Integer id, Driver driver) throws Exception {
-            log.info("Method updateDriver() with driver: {} and with id: {} started of class {}", driver, id, getClass().getName());
+            LOG.info("Method updateDriver() with driver: {} and with id: {} started of class {}", driver, id, getClass().getName());
 
             MockHttpServletResponse response =
                     mockMvc.perform(MockMvcRequestBuilders.patch(DRIVERS_ENDPOINT + "/" +
@@ -258,7 +258,7 @@ class DriverControllerTestIT {
         }
 
         public Integer deleteDriver(Integer id) throws Exception {
-            log.info("Method deleteDriver() with id: {} started of class {}", id, getClass().getName());
+            LOG.info("Method deleteDriver() with id: {} started of class {}", id, getClass().getName());
 
             MockHttpServletResponse response = mockMvc.perform(
                             MockMvcRequestBuilders.delete(DRIVERS_ENDPOINT + "/" +

@@ -9,7 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.sql.SQLException;
 import java.util.Date;
 
-import static com.epam.brest.logger.ProjectLogger.log;
+import static com.epam.brest.logger.ProjectLogger.LOG;
 
 @ControllerAdvice
 public class ExceptionHandlingControllerAdvice {
@@ -27,7 +27,7 @@ public class ExceptionHandlingControllerAdvice {
     public ModelAndView handleDataIntegrityViolationException(
             final HttpServletRequest req,
             final Exception ex) {
-        log.error("Method handleDataIntegrityViolationException()"
+        LOG.error("Method handleDataIntegrityViolationException()"
                         + " with request: {} raised: {} started in {}",
                 req.getRequestURL(), ex, getClass().getName());
 
@@ -50,7 +50,7 @@ public class ExceptionHandlingControllerAdvice {
     @ExceptionHandler(Exception.class)
     public ModelAndView handleError(final HttpServletRequest req,
                                     final Exception ex) {
-        log.error("Method handleError() with request:"
+        LOG.error("Method handleError() with request:"
                         + " {} raised: {} started in {}",
                 req.getRequestURL(), ex, getClass().getName());
 

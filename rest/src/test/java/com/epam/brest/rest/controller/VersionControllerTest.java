@@ -10,7 +10,7 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
-import static com.epam.brest.logger.ProjectLogger.log;
+import static com.epam.brest.logger.ProjectLogger.LOG;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -28,7 +28,7 @@ class VersionControllerTest {
 
     @Test
     void version() throws Exception {
-        log.info("Method shouldFailUpdateCarOnEmptyDriverId() started of class {}", getClass().getName());
+        LOG.info("Method shouldFailUpdateCarOnEmptyDriverId() started of class {}", getClass().getName());
 
         mockMvc.perform(
                 MockMvcRequestBuilders.get("/version")

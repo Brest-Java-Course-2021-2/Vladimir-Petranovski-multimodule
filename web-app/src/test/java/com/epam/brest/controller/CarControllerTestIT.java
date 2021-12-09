@@ -20,7 +20,7 @@ import org.springframework.web.context.WebApplicationContext;
 
 import java.util.List;
 
-import static com.epam.brest.logger.ProjectLogger.log;
+import static com.epam.brest.logger.ProjectLogger.LOG;
 import static org.hamcrest.Matchers.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -47,7 +47,7 @@ class CarControllerTestIT {
 
     @Test
     void shouldReturnPageCars() throws Exception {
-        log.info("Method shouldReturnPageCars() started of class {}", getClass().getName());
+        LOG.info("Method shouldReturnPageCars() started of class {}", getClass().getName());
         mockMvc.perform(
                 MockMvcRequestBuilders.get("/cars")
         ).andDo(MockMvcResultHandlers.print())
@@ -93,7 +93,7 @@ class CarControllerTestIT {
 
     @Test
     void shouldShowFormAddingCars() throws Exception {
-        log.info("Method shouldShowFormAddingCars() started of class {}", getClass().getName());
+        LOG.info("Method shouldShowFormAddingCars() started of class {}", getClass().getName());
         assertNotNull(carService);
 
         mockMvc.perform(
@@ -106,7 +106,7 @@ class CarControllerTestIT {
 
     @Test
     void shouldSaveCar() throws Exception {
-        log.info("Method shouldSaveCar() started of class {}", getClass().getName());
+        LOG.info("Method shouldSaveCar() started of class {}", getClass().getName());
         assertNotNull(carService);
         Integer carSizeBefore = carService.count();
         assertNotNull(carSizeBefore);
@@ -122,12 +122,12 @@ class CarControllerTestIT {
                 .andExpect(redirectedUrl("/cars"));
 
         assertEquals(carSizeBefore, carService.count() - 1);
-        log.info("Car's size list before save {} equals car's size list after save minus one {}", carSizeBefore, carService.count() - 1);
+        LOG.info("Car's size list before save {} equals car's size list after save minus one {}", carSizeBefore, carService.count() - 1);
     }
 
     @Test
     void shouldFailAddCarOnEmptyName() throws Exception {
-        log.info("Method shouldFailAddCarOnEmptyName() started of class {}", getClass().getName());
+        LOG.info("Method shouldFailAddCarOnEmptyName() started of class {}", getClass().getName());
 
         // WHEN
         Car car = new Car("");
@@ -149,7 +149,7 @@ class CarControllerTestIT {
 
     @Test
     void shouldFailAddCarOnEmptyDriverId() throws Exception {
-        log.info("Method shouldFailAddCarOnEmptyDriverId() started of class {}", getClass().getName());
+        LOG.info("Method shouldFailAddCarOnEmptyDriverId() started of class {}", getClass().getName());
 
         // WHEN
         Car car = new Car("");
@@ -171,7 +171,7 @@ class CarControllerTestIT {
 
     @Test
     void shouldShowFormForUpdateCar() throws Exception {
-        log.info("Method shouldShowFormForUpdateCar() started of class {}", getClass().getName());
+        LOG.info("Method shouldShowFormForUpdateCar() started of class {}", getClass().getName());
         assertNotNull(carService);
         List<Car> cars = carService.findAllCars();
         if (cars.size() ==  0) {
@@ -189,12 +189,12 @@ class CarControllerTestIT {
 
         Car carDst = carService.findCarById(carSrc.getCarId());
         assertEquals(carSrc.getCarModel(), carDst.getCarModel());
-        log.info("Car's name first from list: {} equals car's name after updating: {}", carSrc.getCarModel(), carDst.getCarModel());
+        LOG.info("Car's name first from list: {} equals car's name after updating: {}", carSrc.getCarModel(), carDst.getCarModel());
     }
 
     @Test
     void shouldUpdateCar() throws Exception {
-        log.info("Method shouldUpdateCar() started of class {}", getClass().getName());
+        LOG.info("Method shouldUpdateCar() started of class {}", getClass().getName());
         assertNotNull(carService);
         List<Car> cars = carService.findAllCars();
         if(cars.size() == 0) {
@@ -217,13 +217,13 @@ class CarControllerTestIT {
         carService.updateCarById(carSrc.getCarId(), carSrc);
         Car carDst = carService.findCarById(carSrc.getCarId());
         assertEquals(carSrc.getCarModel(), carDst.getCarModel());
-        log.info("Car's name first from list: {} equals car's name after updating: {}", carSrc.getCarModel(), carDst.getCarModel());
+        LOG.info("Car's name first from list: {} equals car's name after updating: {}", carSrc.getCarModel(), carDst.getCarModel());
     }
 
     @Test
     void shouldFailUpdateCarOnEmptyName() throws Exception {
         // WHEN
-        log.info("Method shouldFailUpdateCarOnEmptyName() started of class {}", getClass().getName());
+        LOG.info("Method shouldFailUpdateCarOnEmptyName() started of class {}", getClass().getName());
         assertNotNull(carService);
         List<Car> cars = carService.findAllCars();
         if (cars.size() == 0) {
@@ -250,13 +250,13 @@ class CarControllerTestIT {
                 );
         Car carDst = carService.findCarById(carSrc.getCarId());
         assertEquals(carSrc.getCarModel(), carDst.getCarModel());
-        log.info("Car's name first from list: {} equals car's name after updating: {}", carSrc.getCarModel(), carDst.getCarModel());
+        LOG.info("Car's name first from list: {} equals car's name after updating: {}", carSrc.getCarModel(), carDst.getCarModel());
     }
 
     @Test
     void shouldFailUpdateCarOnEmptyDriverId() throws Exception {
         // WHEN
-        log.info("Method shouldFailUpdateCarOnEmptyDriverId() started of class {}", getClass().getName());
+        LOG.info("Method shouldFailUpdateCarOnEmptyDriverId() started of class {}", getClass().getName());
         assertNotNull(carService);
         List<Car> cars = carService.findAllCars();
         if (cars.size() == 0) {
@@ -283,12 +283,12 @@ class CarControllerTestIT {
                 );
         Car carDst = carService.findCarById(carSrc.getCarId());
         assertEquals(carSrc.getCarModel(), carDst.getCarModel());
-        log.info("Car's name first from list: {} equals car's name after updating: {}", carSrc.getCarModel(), carDst.getCarModel());
+        LOG.info("Car's name first from list: {} equals car's name after updating: {}", carSrc.getCarModel(), carDst.getCarModel());
     }
 
     @Test
     void shouldDeleteCar() throws Exception {
-        log.info("Method shouldDeleteCar() started of class {}", getClass().getName());
+        LOG.info("Method shouldDeleteCar() started of class {}", getClass().getName());
         assertNotNull(carService);
         carService.saveCar(new Car("NIVA_TEST", 2));
         List<Car> cars = carService.findAllCars();
@@ -302,6 +302,6 @@ class CarControllerTestIT {
 
         carService.deleteCarById(cars.get(cars.size() - 1).getCarId());
         assertEquals(cars.size() - 1, carService.findAllCars().size());
-        log.info("First car's size list minus one: {} equals car's size list after deleting {}", cars.size() - 1, carService.findAllCars().size());
+        LOG.info("First car's size list minus one: {} equals car's size list after deleting {}", cars.size() - 1, carService.findAllCars().size());
     }
 }

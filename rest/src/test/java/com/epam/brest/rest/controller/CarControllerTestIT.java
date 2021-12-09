@@ -22,7 +22,7 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import java.util.List;
 
-import static com.epam.brest.logger.ProjectLogger.log;
+import static com.epam.brest.logger.ProjectLogger.LOG;
 import static com.epam.brest.model.constant.CarConstants.CAR_MODEL_SIZE;
 import static com.epam.brest.rest.controller.exception.CustomExceptionHandlerCar.CAR_NOT_FOUND;
 import static org.junit.jupiter.api.Assertions.*;
@@ -60,7 +60,7 @@ class CarControllerTestIT {
 
     @Test
     void findAllCars() throws Exception {
-        log.info("Method findAllCars() started of class {}", getClass().getName());
+        LOG.info("Method findAllCars() started of class {}", getClass().getName());
         //given
         Car car = new Car(RandomStringUtils.randomAlphabetic(CAR_MODEL_SIZE), carService.findAllCars().get(0).getDriverId());
         Integer id = carService.saveCar(car);
@@ -74,7 +74,7 @@ class CarControllerTestIT {
 
     @Test
     public void shouldSaveCar() throws Exception {
-        log.info("Method shouldSaveCar() started of class {}", getClass().getName());
+        LOG.info("Method shouldSaveCar() started of class {}", getClass().getName());
 
         Car car = new Car(RandomStringUtils.randomAlphabetic(CAR_MODEL_SIZE), carService.findAllCars().get(0).getDriverId());
         Integer id = carService.saveCar(car);
@@ -83,7 +83,7 @@ class CarControllerTestIT {
 
     @Test
     public void shouldFindCarById() throws Exception {
-        log.info("Method shouldFindCarById() started of class {}", getClass().getName());
+        LOG.info("Method shouldFindCarById() started of class {}", getClass().getName());
         // given
         Car car = new Car(RandomStringUtils.randomAlphabetic(CAR_MODEL_SIZE), carService.findAllCars().get(0).getDriverId());
         Integer id = carService.saveCar(car);
@@ -98,7 +98,7 @@ class CarControllerTestIT {
 
     @Test
     public void shouldUpdateCar() throws Exception {
-        log.info("Method shouldUpdateCar() started of class {}", getClass().getName());
+        LOG.info("Method shouldUpdateCar() started of class {}", getClass().getName());
 
         // given
         Car car = new Car(RandomStringUtils.randomAlphabetic(CAR_MODEL_SIZE), carService.findAllCars().get(0).getDriverId());
@@ -125,7 +125,7 @@ class CarControllerTestIT {
 
     @Test
     public void shouldDeleteCar() throws Exception {
-        log.info("Method shouldDeleteCar() started of class {}", getClass().getName());
+        LOG.info("Method shouldDeleteCar() started of class {}", getClass().getName());
         // given
         Car car = new Car(RandomStringUtils.randomAlphabetic(CAR_MODEL_SIZE), carService.findAllCars().get(0).getDriverId());
         Integer id = carService.saveCar(car);
@@ -146,7 +146,7 @@ class CarControllerTestIT {
 
     @Test
     public void shouldReturnCarNotFoundError() throws Exception {
-        log.info("Method shouldReturnCarNotFoundError() started of class {}", getClass().getName());
+        LOG.info("Method shouldReturnCarNotFoundError() started of class {}", getClass().getName());
 
         MockHttpServletResponse response =
                 mockMvc.perform(MockMvcRequestBuilders.get(CARS_ENDPOINT + "/9999")
@@ -161,7 +161,7 @@ class CarControllerTestIT {
 
     class MockMvcCarService {
         public List<Car> findAllCars() throws Exception {
-            log.info("Method findAllCars() started of class {}", getClass().getName());
+            LOG.info("Method findAllCars() started of class {}", getClass().getName());
 
             MockHttpServletResponse response = mockMvc.perform(
                             MockMvcRequestBuilders.get(CARS_ENDPOINT)
@@ -175,7 +175,7 @@ class CarControllerTestIT {
         }
 
         public Car findCarById(Integer id) throws Exception {
-            log.info("Method findCarById() with id: {} started of class {}", id, getClass().getName());
+            LOG.info("Method findCarById() with id: {} started of class {}", id, getClass().getName());
 
             MockHttpServletResponse response = mockMvc.perform(
                             MockMvcRequestBuilders.get(CARS_ENDPOINT + "/" + id)
@@ -188,7 +188,7 @@ class CarControllerTestIT {
         }
 
         public Integer saveCar(Car car) throws Exception {
-            log.info("Method saveCar() with car: {} started of class {}", car, getClass().getName());
+            LOG.info("Method saveCar() with car: {} started of class {}", car, getClass().getName());
 
             String json = objectMapper.writeValueAsString(car);
             MockHttpServletResponse response =
@@ -202,7 +202,7 @@ class CarControllerTestIT {
         }
 
         public Integer updateCar(Integer id, Car car) throws Exception {
-            log.info("Method saveCar() with car: {} started of class {}", car, getClass().getName());
+            LOG.info("Method saveCar() with car: {} started of class {}", car, getClass().getName());
 
             MockHttpServletResponse response =
                     mockMvc.perform(MockMvcRequestBuilders.patch(CARS_ENDPOINT + "/" +
@@ -217,7 +217,7 @@ class CarControllerTestIT {
         }
 
         public Integer deleteCar(Integer id) throws Exception {
-            log.info("Method deleteCar() with id: {} started of class {}", id, getClass().getName());
+            LOG.info("Method deleteCar() with id: {} started of class {}", id, getClass().getName());
 
             MockHttpServletResponse response = mockMvc.perform(
                             MockMvcRequestBuilders.delete(CARS_ENDPOINT + "/" +

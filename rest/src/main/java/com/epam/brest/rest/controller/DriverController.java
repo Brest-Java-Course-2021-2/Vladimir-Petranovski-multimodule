@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.Collection;
 
-import static com.epam.brest.logger.ProjectLogger.log;
+import static com.epam.brest.logger.ProjectLogger.LOG;
 
 @RestController
 @RequestMapping("/drivers")
@@ -44,7 +44,7 @@ public class DriverController {
 
     @GetMapping()
     public Collection<Driver> findAllDrivers() {
-        log.info("Method findAllDrivers() started of class {}",
+        LOG.info("Method findAllDrivers() started of class {}",
                 getClass().getName());
         return driverService.findAllDrivers();
     }
@@ -58,7 +58,7 @@ public class DriverController {
 
     @GetMapping(value = "/{id}")
     public final Driver findDriverById(@PathVariable("id") final Integer id) {
-        log.info("Method findDriverById() with id {} started of class {}",
+        LOG.info("Method findDriverById() with id {} started of class {}",
                 id, getClass().getName());
 
         return driverService.findDriverById(id);
@@ -75,7 +75,7 @@ public class DriverController {
             produces = "application/json")
     public ResponseEntity<Integer> saveDriver(
             @RequestBody final Driver driver) {
-        log.info("Method findDriverById() with driver {} started of class {}",
+        LOG.info("Method findDriverById() with driver {} started of class {}",
                 driver, getClass().getName());
 
         Integer id = driverService.saveDriver(driver);
@@ -95,7 +95,7 @@ public class DriverController {
     public ResponseEntity<Integer> updateDriver(
             @RequestBody final Driver driver,
             @PathVariable final Integer id) {
-        log.info("Method updateDriver() with id: {}"
+        LOG.info("Method updateDriver() with id: {}"
                         + " and driver: {} started of class {}",
                 id, driver, getClass().getName());
 
@@ -114,7 +114,7 @@ public class DriverController {
             produces = "application/json")
     public ResponseEntity<Integer> deleteDriverById(
             @PathVariable final Integer id) {
-        log.info("Method deleteDriverById() with id: {} started of class {}",
+        LOG.info("Method deleteDriverById() with id: {} started of class {}",
                 id, getClass().getName());
 
         Integer quantity = driverService.deleteDriverById(id);

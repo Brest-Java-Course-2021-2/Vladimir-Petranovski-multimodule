@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.Collection;
 
-import static com.epam.brest.logger.ProjectLogger.log;
+import static com.epam.brest.logger.ProjectLogger.LOG;
 
 @RestController
 @RequestMapping("/cars")
@@ -44,7 +44,7 @@ public class CarController {
 
     @GetMapping()
     public final Collection<Car> findAllCars() {
-        log.info("Method findAllCars() started of class {}",
+        LOG.info("Method findAllCars() started of class {}",
                 getClass().getName());
         return carService.findAllCars();
     }
@@ -58,7 +58,7 @@ public class CarController {
 
     @GetMapping(value = "/{id}")
     public final Car findCarById(@PathVariable final Integer id) {
-        log.info("Method findCarById() with id: {} started of class {}",
+        LOG.info("Method findCarById() with id: {} started of class {}",
                 id, getClass().getName());
 
         return carService.findCarById(id);
@@ -74,7 +74,7 @@ public class CarController {
     @PostMapping(consumes = "application/json",
             produces = "application/json")
     public ResponseEntity<Integer> saveCar(@RequestBody final Car car) {
-        log.info("Method saveCar() with car: {} started of class {}",
+        LOG.info("Method saveCar() with car: {} started of class {}",
                 car, getClass().getName());
 
         Integer id = carService.saveCar(car);
@@ -93,7 +93,7 @@ public class CarController {
             produces = {"application/json"})
     public ResponseEntity<Integer> updateCar(@RequestBody final Car car,
                                              @PathVariable final Integer id) {
-        log.info("Method updateCar() with car: {} started of class {}",
+        LOG.info("Method updateCar() with car: {} started of class {}",
                 car, getClass().getName());
 
         int result = carService.updateCarById(id, car);
@@ -111,7 +111,7 @@ public class CarController {
             produces = "application/json")
     public ResponseEntity<Integer> deleteCar(
             @PathVariable final Integer id) {
-        log.info("Method updateCar() with id: {} started of class {}",
+        LOG.info("Method updateCar() with id: {} started of class {}",
                 id, getClass().getName());
 
         int result = carService.deleteCarById(id);

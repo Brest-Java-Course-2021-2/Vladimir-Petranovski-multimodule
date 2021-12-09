@@ -20,7 +20,7 @@ import java.util.List;
 import java.util.Map;
 
 import static com.epam.brest.dao.Queries.*;
-import static com.epam.brest.logger.ProjectLogger.log;
+import static com.epam.brest.logger.ProjectLogger.LOG;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
@@ -66,7 +66,7 @@ class DriverDaoJdbcImplTest {
 
     @Test
     void findAllDrivers() {
-        log.info("Method findAllDrivers() of class {} started", getClass().getName());
+        LOG.info("Method findAllDrivers() of class {} started", getClass().getName());
 
         when(namedParameterJdbcTemplate.query(any(), ArgumentMatchers.<RowMapper<Driver>>any())).thenReturn(driversListSrc);
 
@@ -81,12 +81,12 @@ class DriverDaoJdbcImplTest {
         assertFalse(driversListSrc.isEmpty());
         assertSame(driverTwo, driversDst.get(1));
         assertSame(driversDst.size(), driversListSrc.size());
-        log.info("Size driver's list after findAllDrivers() {} the same before {}", driversDst.size(), driversListSrc.size());
+        LOG.info("Size driver's list after findAllDrivers() {} the same before {}", driversDst.size(), driversListSrc.size());
     }
 
     @Test
     void findDriverById() {
-        log.info("Method findDriverById() of class {} started", getClass().getName());
+        LOG.info("Method findDriverById() of class {} started", getClass().getName());
 
         when(namedParameterJdbcTemplate.queryForObject(anyString(), ArgumentMatchers.<SqlParameterSource>any(), ArgumentMatchers.<RowMapper<Driver>>any())).thenReturn(driverOne);
 
@@ -100,12 +100,12 @@ class DriverDaoJdbcImplTest {
         assertNotNull(sqlParameterSource);
         assertNotNull(driver);
         assertEquals(driver, driverOne);
-        log.info("Driver after findDriverById() {} with id id = {} equals driver {}", driver, driverOne.getDriverId(), driverOne);
+        LOG.info("Driver after findDriverById() {} with id id = {} equals driver {}", driver, driverOne.getDriverId(), driverOne);
     }
 
     @Test
     void saveDriver() {
-        log.info("Method saveDriver() of class {} started", getClass().getName());
+        LOG.info("Method saveDriver() of class {} started", getClass().getName());
         int key = 3;
         when(namedParameterJdbcTemplate.queryForObject(any(), any(SqlParameterSource.class), eq(Integer.class))).thenReturn(0);
         Mockito.doAnswer(a -> {
@@ -124,7 +124,7 @@ class DriverDaoJdbcImplTest {
 
     @Test
     void updateDriverById() {
-        log.info("Method updateDriverById() of class {} started", getClass().getName());
+        LOG.info("Method updateDriverById() of class {} started", getClass().getName());
 
         when(namedParameterJdbcTemplate.update(anyString(), ArgumentMatchers.<SqlParameterSource>any())).thenReturn(returnRow);
 
@@ -139,7 +139,7 @@ class DriverDaoJdbcImplTest {
 
     @Test
     void deleteDriverById() {
-        log.info("Method deleteDriverById() of class {} started", getClass().getName());
+        LOG.info("Method deleteDriverById() of class {} started", getClass().getName());
 
         when(namedParameterJdbcTemplate.update(anyString(), ArgumentMatchers.<SqlParameterSource>any())).thenReturn(1);
 
@@ -154,7 +154,7 @@ class DriverDaoJdbcImplTest {
 
     @Test
     void count() {
-        log.info("Method count() of class {} started", getClass().getName());
+        LOG.info("Method count() of class {} started", getClass().getName());
 
         when(namedParameterJdbcTemplate.queryForObject(anyString(), ArgumentMatchers.<SqlParameterSource>any(), eq(Integer.class))).thenReturn(driversListSrc.size());
 
@@ -166,6 +166,6 @@ class DriverDaoJdbcImplTest {
 
         assertNotNull(sqlParameterSource);
         assertEquals(count, driversListSrc.size());
-        log.info("Quantity records in list: {} equal size driver's list: {}", count, driversListSrc.size());
+        LOG.info("Quantity records in list: {} equal size driver's list: {}", count, driversListSrc.size());
     }
 }

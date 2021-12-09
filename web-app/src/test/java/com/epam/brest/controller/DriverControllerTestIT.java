@@ -22,7 +22,7 @@ import java.math.BigDecimal;
 import java.time.Instant;
 import java.util.List;
 
-import static com.epam.brest.logger.ProjectLogger.log;
+import static com.epam.brest.logger.ProjectLogger.LOG;
 import static org.hamcrest.Matchers.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -49,7 +49,7 @@ class DriverControllerTestIT {
 
     @Test
     void shouldReturnDriverPage() throws Exception {
-        log.info("Method shouldReturnDriverPage() started of class {}", getClass().getName());
+        LOG.info("Method shouldReturnDriverPage() started of class {}", getClass().getName());
         mockMvc.perform(
                         MockMvcRequestBuilders.get("/drivers")
                 ).andDo(MockMvcResultHandlers.print())
@@ -87,7 +87,7 @@ class DriverControllerTestIT {
 
     @Test
     void shouldShowFormAddingDriver() throws Exception {
-        log.info("Method showFormAddingDriver() started of class {}", getClass().getName());
+        LOG.info("Method showFormAddingDriver() started of class {}", getClass().getName());
         assertNotNull(driverService);
 
         mockMvc.perform(
@@ -100,7 +100,7 @@ class DriverControllerTestIT {
 
     @Test
     void shouldSaveDriver() throws Exception {
-        log.info("Method shouldSaveDriver() started of class {}", getClass().getName());
+        LOG.info("Method shouldSaveDriver() started of class {}", getClass().getName());
         assertNotNull(driverService);
         Integer driverSizeBefore = driverService.count();
         assertNotNull(driverSizeBefore);
@@ -118,12 +118,12 @@ class DriverControllerTestIT {
                 .andExpect(redirectedUrl("/drivers"));
 
         assertEquals(driverSizeBefore, driverService.count() - 1);
-        log.info("Driver's size list before save {} equals driver's size list after save minus one {}", driverSizeBefore, driverService.count() - 1);
+        LOG.info("Driver's size list before save {} equals driver's size list after save minus one {}", driverSizeBefore, driverService.count() - 1);
     }
 
     @Test
     void shouldFailAddDriverOnEmptyName() throws Exception {
-        log.info("Method shouldFailAddDriverOnEmptyName() started of class {}", getClass().getName());
+        LOG.info("Method shouldFailAddDriverOnEmptyName() started of class {}", getClass().getName());
 
         // WHEN
         Driver driver = new Driver("");
@@ -145,7 +145,7 @@ class DriverControllerTestIT {
 
     @Test
     void shouldFailAddDriverOnEmptyDRiverDateStartWork() throws Exception {
-        log.info("Method shouldFailAddDriverOnEmptyName() started of class {}", getClass().getName());
+        LOG.info("Method shouldFailAddDriverOnEmptyName() started of class {}", getClass().getName());
 
         // WHEN
         Driver driver = new Driver("TEST", null, new BigDecimal(300));
@@ -167,7 +167,7 @@ class DriverControllerTestIT {
 
     @Test
     void shouldFailAddDriverOnEmptySalary() throws Exception {
-        log.info("Method shouldFailAddDriverOnEmptySalary() started of class {}", getClass().getName());
+        LOG.info("Method shouldFailAddDriverOnEmptySalary() started of class {}", getClass().getName());
 
         // WHEN
         Driver driver = new Driver("TEST", Instant.parse("1996-10-10T00:00:00.001Z"), null);
@@ -189,7 +189,7 @@ class DriverControllerTestIT {
 
     @Test
     void shouldShowPageUpdatingDriver() throws Exception {
-        log.info("Method shouldShowPageUpdatingDriver() started of class {}", getClass().getName());
+        LOG.info("Method shouldShowPageUpdatingDriver() started of class {}", getClass().getName());
         assertNotNull(driverService);
         List<Driver> drivers = driverService.findAllDrivers();
         if(drivers.size() == 0) {
@@ -209,12 +209,12 @@ class DriverControllerTestIT {
                 .andExpect(view().name("drivers/update-driver"));
 
         assertEquals(driverSrc.getDriverName(), driverDst.getDriverName());
-        log.info("Driver's name first from list: {} equals driver's name after updating: {}", driverSrc.getDriverName(), driverDst.getDriverName());
+        LOG.info("Driver's name first from list: {} equals driver's name after updating: {}", driverSrc.getDriverName(), driverDst.getDriverName());
     }
 
     @Test
     void shouldUpdateDriver() throws Exception {
-        log.info("Method shouldUpdateDriver() started of class {}", getClass().getName());
+        LOG.info("Method shouldUpdateDriver() started of class {}", getClass().getName());
         assertNotNull(driverService);
         List<Driver> drivers = driverService.findAllDrivers();
         if (drivers.size() == 0) {
@@ -239,13 +239,13 @@ class DriverControllerTestIT {
 
         Driver driverDst = driverService.findDriverById(driverSrc.getDriverId());
         assertEquals(driverSrc.getDriverName(), driverDst.getDriverName());
-        log.info("Driver's name first from list: {} equals driver's name after updating: {}", driverSrc.getDriverName(), driverDst.getDriverName());
+        LOG.info("Driver's name first from list: {} equals driver's name after updating: {}", driverSrc.getDriverName(), driverDst.getDriverName());
     }
 
     @Test
     void shouldFailUpdateDriverOnEmptyName() throws Exception {
         // WHEN
-        log.info("Method shouldFailUpdateDriverOnEmptyName() started of class {}", getClass().getName());
+        LOG.info("Method shouldFailUpdateDriverOnEmptyName() started of class {}", getClass().getName());
         assertNotNull(driverService);
         List<Driver> drivers = driverService.findAllDrivers();
         if (drivers.size() == 0) {
@@ -272,13 +272,13 @@ class DriverControllerTestIT {
                 );
         Driver driverDst = driverService.findDriverById(driverSrc.getDriverId());
         assertEquals(driverSrc.getDriverName(), driverDst.getDriverName());
-        log.info("Driver's name first from list: {} equals driver's name after updating: {}", driverSrc.getDriverName(), driverDst.getDriverName());
+        LOG.info("Driver's name first from list: {} equals driver's name after updating: {}", driverSrc.getDriverName(), driverDst.getDriverName());
     }
 
     @Test
     void shouldFailUpdateDriverOnEmptyDriverDateStartWork() throws Exception {
         // WHEN
-        log.info("Method shouldFailUpdateDriverOnEmptyDriverDateStartWork() started of class {}", getClass().getName());
+        LOG.info("Method shouldFailUpdateDriverOnEmptyDriverDateStartWork() started of class {}", getClass().getName());
         assertNotNull(driverService);
         List<Driver> drivers = driverService.findAllDrivers();
         if (drivers.size() == 0) {
@@ -304,13 +304,13 @@ class DriverControllerTestIT {
 
         Driver driverDst = driverService.findDriverById(driverSrc.getDriverId());
         assertEquals(driverSrc.getDriverName(), driverDst.getDriverName());
-        log.info("Driver's name first from list: {} equals driver's name after updating: {}", driverSrc.getDriverName(), driverDst.getDriverName());
+        LOG.info("Driver's name first from list: {} equals driver's name after updating: {}", driverSrc.getDriverName(), driverDst.getDriverName());
     }
 
     @Test
     void shouldFailUpdateDriverOnEmptySalary() throws Exception {
         // WHEN
-        log.info("Method shouldFailUpdateDriverOnEmptyName() started of class {}", getClass().getName());
+        LOG.info("Method shouldFailUpdateDriverOnEmptyName() started of class {}", getClass().getName());
         assertNotNull(driverService);
         List<Driver> drivers = driverService.findAllDrivers();
         if (drivers.size() == 0) {
@@ -335,12 +335,12 @@ class DriverControllerTestIT {
                 );
         Driver driverDst = driverService.findDriverById(driverSrc.getDriverId());
         assertEquals(driverSrc.getDriverName(), driverDst.getDriverName());
-        log.info("Driver's name first from list: {} equals driver's name after updating: {}", driverSrc.getDriverName(), driverDst.getDriverName());
+        LOG.info("Driver's name first from list: {} equals driver's name after updating: {}", driverSrc.getDriverName(), driverDst.getDriverName());
     }
 
     @Test
     void shouldDeleteDriver() throws Exception {
-        log.info("Method started: checkDeleteDriverById() of {}", getClass().getName());
+        LOG.info("Method started: checkDeleteDriverById() of {}", getClass().getName());
         assertNotNull(driverService);
         driverService.saveDriver(new Driver("VERANICA", Instant.parse("2002-09-15T08:09:12.4342Z"), new BigDecimal(720)));
         List<Driver> drivers = driverService.findAllDrivers();
@@ -356,7 +356,7 @@ class DriverControllerTestIT {
         driverService.deleteDriverById(driver.getDriverId());
 
         assertEquals(drivers.size() - 1, driverService.findAllDrivers().size());
-        log.info("First driver's size list minus one: {} equals driver's size list after deleting {}", drivers.size() - 1, driverService.findAllDrivers().size());
+        LOG.info("First driver's size list minus one: {} equals driver's size list after deleting {}", drivers.size() - 1, driverService.findAllDrivers().size());
     }
 
 }

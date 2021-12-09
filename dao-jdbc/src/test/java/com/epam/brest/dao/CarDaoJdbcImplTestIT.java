@@ -11,7 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
-import static com.epam.brest.logger.ProjectLogger.log;
+import static com.epam.brest.logger.ProjectLogger.LOG;
 import static org.junit.jupiter.api.Assertions.*;
 
 @ExtendWith(SpringExtension.class)
@@ -25,15 +25,15 @@ class CarDaoJdbcImplTestIT {
 
     @Test
     void findAllCars() {
-        log.info("Method started: findAllCars() of {}", getClass().getName());
+        LOG.info("Method started: findAllCars() of {}", getClass().getName());
         assertNotNull(carDaoJdbc);
         assertNotNull(carDaoJdbc.findAllCars());
-        log.info("{}", carDaoJdbc.findAllCars());
+        LOG.info("{}", carDaoJdbc.findAllCars());
     }
 
     @Test
     void findCarById() {
-        log.info("Method started: findCarById() of {}", getClass().getName());
+        LOG.info("Method started: findCarById() of {}", getClass().getName());
         assertNotNull(carDaoJdbc);
         List<Car> cars = carDaoJdbc.findAllCars();
         if(cars.size() == 0) {
@@ -43,25 +43,25 @@ class CarDaoJdbcImplTestIT {
         Car carSrc = cars.get(0);
         Car carDst = carDaoJdbc.findCarById(carSrc.getCarId());
         assertEquals(carSrc.getCarModel(), carDst.getCarModel());
-        log.info("Car's model first from list: {} equals car's model after finding: {}", carSrc.getCarModel(), carDst.getCarModel());
+        LOG.info("Car's model first from list: {} equals car's model after finding: {}", carSrc.getCarModel(), carDst.getCarModel());
     }
 
     @Test
     void saveCar() {
-        log.info("Method started: saveCar() of {}", getClass().getName());
+        LOG.info("Method started: saveCar() of {}", getClass().getName());
         assertNotNull(carDaoJdbc);
         int countCarBeforeSave = carDaoJdbc.count();
         Car car = new Car("GAZON", 3);
         carDaoJdbc.saveCar(car);
         int countCarAfterSave = carDaoJdbc.count();
         assertEquals(countCarBeforeSave, countCarAfterSave - 1);
-        log.info("Record's count before save():{} equals record's count after save minus one: {}", countCarBeforeSave, countCarAfterSave - 1);
+        LOG.info("Record's count before save():{} equals record's count after save minus one: {}", countCarBeforeSave, countCarAfterSave - 1);
 
     }
 
     @Test
     void updateCarById() {
-        log.info("Method started: updateCarById() of {}", getClass().getName());
+        LOG.info("Method started: updateCarById() of {}", getClass().getName());
         assertNotNull(carDaoJdbc);
         List<Car> cars = carDaoJdbc.findAllCars();
         if(cars.size() == 0) {
@@ -74,12 +74,12 @@ class CarDaoJdbcImplTestIT {
 
         Car carDst = carDaoJdbc.findCarById(carSrc.getCarId());
         assertEquals(carSrc.getCarModel(), carDst.getCarModel());
-        log.info("Driver's name first from list: {} equals driver's name after updating: {}", carSrc.getCarModel(), carDst.getCarModel());
+        LOG.info("Driver's name first from list: {} equals driver's name after updating: {}", carSrc.getCarModel(), carDst.getCarModel());
     }
 
     @Test
     void deleteCarById() {
-        log.info("Method started: deleteCarById() of {}", getClass().getName());
+        LOG.info("Method started: deleteCarById() of {}", getClass().getName());
         assertNotNull(carDaoJdbc);
         carDaoJdbc.saveCar(new Car("LUAZ", 3));
         List<Car> cars = carDaoJdbc.findAllCars();
@@ -87,18 +87,18 @@ class CarDaoJdbcImplTestIT {
         Car carSrc = carDaoJdbc.findCarById(cars.size() - 1);
         carDaoJdbc.deleteCarById(carSrc.getCarId());
         assertEquals(cars.size() -1, carDaoJdbc.findAllCars().size());
-        log.info("First car's size list minus one: {} equals car's size list after deleting {}", cars.size() -1, carDaoJdbc.findAllCars().size());
+        LOG.info("First car's size list minus one: {} equals car's size list after deleting {}", cars.size() -1, carDaoJdbc.findAllCars().size());
     }
 
     @Test
     void checkCount() {
-        log.info("Method started: checkCount() of {}", getClass().getName());
+        LOG.info("Method started: checkCount() of {}", getClass().getName());
         assertNotNull(carDaoJdbc);
         Integer quantity = carDaoJdbc.count();
         assertNotNull(quantity);
         assertTrue(quantity > 0);
-        log.info("Quantity equals {}", quantity);
+        LOG.info("Quantity equals {}", quantity);
         assertEquals(carDaoJdbc.findAllCars().size(), quantity);
-        log.info("Size of collection {} equals record's quantity {}", carDaoJdbc.findAllCars().size(), quantity);
+        LOG.info("Size of collection {} equals record's quantity {}", carDaoJdbc.findAllCars().size(), quantity);
     }
 }

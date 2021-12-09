@@ -11,6 +11,8 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.epam.brest.logger.ProjectLogger.LOG;
+
 @ControllerAdvice
 public class CustomExceptionHandler extends ResponseEntityExceptionHandler {
 
@@ -37,6 +39,9 @@ public class CustomExceptionHandler extends ResponseEntityExceptionHandler {
     @ExceptionHandler(DriverNotFoundException.class)
     public final ResponseEntity<ErrorResponse> handleDriverNotFoundException(
             final DriverNotFoundException ex, final WebRequest webRequest) {
+
+        LOG.info("Method handleDriverNotFoundException() started of class {}",
+                getClass().getName());
         List<String> details = new ArrayList<>();
         details.add(ex.getLocalizedMessage());
         ErrorResponse error = new ErrorResponse(DRIVER_NOT_FOUND, details);
@@ -54,6 +59,9 @@ public class CustomExceptionHandler extends ResponseEntityExceptionHandler {
     @ExceptionHandler(IllegalArgumentException.class)
     public final ResponseEntity<ErrorResponse> handleIllegalArgumentException(
             final Exception ex, final WebRequest webRequest) {
+
+        LOG.info("Method handleIllegalArgumentException() started of class {}",
+                getClass().getName());
         ErrorResponse error = new ErrorResponse(VALIDATION_ERROR, ex);
         return new ResponseEntity<>(error, HttpStatus.UNPROCESSABLE_ENTITY);
     }

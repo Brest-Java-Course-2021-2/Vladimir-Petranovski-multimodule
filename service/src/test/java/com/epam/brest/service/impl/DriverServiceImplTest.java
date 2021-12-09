@@ -14,7 +14,7 @@ import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.epam.brest.logger.ProjectLogger.log;
+import static com.epam.brest.logger.ProjectLogger.LOG;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
@@ -49,7 +49,7 @@ class DriverServiceImplTest {
 
     @Test
     void findAllDrivers() {
-        log.info("Method findAllDrivers() of class {} started", getClass().getName());
+        LOG.info("Method findAllDrivers() of class {} started", getClass().getName());
 
         when(driverDao.findAllDrivers()).thenReturn(driversListSrc);
 
@@ -61,14 +61,14 @@ class DriverServiceImplTest {
         assertFalse(driversListSrc.isEmpty());
         assertSame(driverTwo, driversDst.get(1));
         assertSame(driversDst.size(), driversListSrc.size());
-        log.info("Size driver's list after findAllDrivers() {} the same before {}", driversDst.size(), driversListSrc.size());
+        LOG.info("Size driver's list after findAllDrivers() {} the same before {}", driversDst.size(), driversListSrc.size());
     }
 
     @Test
     void findDriverById() {
 
         Integer id = driverOne.getDriverId();
-        log.info("Method findDriverById() of class {} started", getClass().getName());
+        LOG.info("Method findDriverById() of class {} started", getClass().getName());
 
         when(driverDao.findDriverById(anyInt())).thenReturn(driverOne);
 
@@ -78,12 +78,12 @@ class DriverServiceImplTest {
 
         assertNotNull(driverDst);
         assertEquals(driverDst, driverOne);
-        log.info("Driver after findDriverById() {} with id id = {} equals driver {}", driverDst, driverOne.getDriverId(), driverOne);
+        LOG.info("Driver after findDriverById() {} with id id = {} equals driver {}", driverDst, driverOne.getDriverId(), driverOne);
     }
 
     @Test
     void saveDriver() {
-        log.info("Method saveDriver() of class {} started", getClass().getName());
+        LOG.info("Method saveDriver() of class {} started", getClass().getName());
 
         when(driverDao.saveDriver(any(Driver.class))).thenReturn(anyInt());
 
@@ -97,7 +97,7 @@ class DriverServiceImplTest {
 
     @Test
     void updateDriverById() {
-        log.info("Method updateDriverById() of class {} started", getClass().getName());
+        LOG.info("Method updateDriverById() of class {} started", getClass().getName());
 
         when(driverDao.updateDriverById(anyInt(), any(Driver.class))).thenReturn(1);
 
@@ -111,7 +111,7 @@ class DriverServiceImplTest {
 
     @Test
     void deleteDriverById() {
-        log.info("Method deleteDriverById() of class {} started", getClass().getName());
+        LOG.info("Method deleteDriverById() of class {} started", getClass().getName());
 
         when(driverDao.deleteDriverById(anyInt())).thenReturn(anyInt());
 
@@ -125,7 +125,7 @@ class DriverServiceImplTest {
 
     @Test
     void count() {
-        log.info("Method count() of class {} started", getClass().getName());
+        LOG.info("Method count() of class {} started", getClass().getName());
 
         when(driverDao.count()).thenReturn(driversListSrc.size());
 
@@ -136,6 +136,6 @@ class DriverServiceImplTest {
         assertNotNull(driverDao);
         assertNotNull(driverService);
         assertEquals(count, driversListSrc.size());
-        log.info("Quantity records in list: {} equal size driver's list: {}", count, driversListSrc.size());
+        LOG.info("Quantity records in list: {} equal size driver's list: {}", count, driversListSrc.size());
     }
 }

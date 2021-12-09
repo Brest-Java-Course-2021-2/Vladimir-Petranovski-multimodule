@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.ModelAttribute;
 
-import static com.epam.brest.logger.ProjectLogger.log;
+import static com.epam.brest.logger.ProjectLogger.LOG;
 
 @Controller
 @RequestMapping("/drivers")
@@ -62,7 +62,7 @@ public class DriverController {
 
     @GetMapping()
     public final String findAllDrivers(final Model model) {
-        log.info("Method findAllDrivers() started of class {}",
+        LOG.info("Method findAllDrivers() started of class {}",
                 getClass().getName());
         model.addAttribute("driverList",
                 driverDtoService.findAllDriverWithCountCars());
@@ -79,7 +79,7 @@ public class DriverController {
     @GetMapping("/new-driver")
     public final String showFormAddingDriver(
             @ModelAttribute("driver") final Driver driver) {
-        log.info("Method showFormAddingDriver() "
+        LOG.info("Method showFormAddingDriver() "
                         + "with driver {} started of class {}",
                 driver, getClass().getName());
         return "drivers/new-driver";
@@ -96,7 +96,7 @@ public class DriverController {
     @PostMapping()
     public String saveDriver(@ModelAttribute("driver") final Driver driver,
                              final BindingResult result) {
-        log.info("Method saveDriver() with driver {} started of class {}",
+        LOG.info("Method saveDriver() with driver {} started of class {}",
                 driver, getClass().getName());
 
         driverValidator.validate(driver, result);
@@ -120,7 +120,7 @@ public class DriverController {
     public String showFormForUpdatingDriver(
             @PathVariable("id") final Integer id,
             final Model model) {
-        log.info("Method showFormForUpdatingDriver()"
+        LOG.info("Method showFormForUpdatingDriver()"
                         + " with id {} started of class {}",
                 id, getClass().getName());
         model.addAttribute("driver", driverService.findDriverById(id));
@@ -140,7 +140,7 @@ public class DriverController {
     public String updateDriver(@ModelAttribute("driver") final Driver driver,
                                final BindingResult result,
                                @PathVariable("id") final Integer id) {
-        log.info("Method updateDriver() with driver {}"
+        LOG.info("Method updateDriver() with driver {}"
                         + " and id {} started of class {}",
                 driver, id, getClass().getName());
 
@@ -161,7 +161,7 @@ public class DriverController {
 
     @GetMapping("/{id}/delete-driver")
     public String deleteDriver(@PathVariable("id") final Integer id) {
-        log.info("Method deleteDriver() with id {} started of class {}",
+        LOG.info("Method deleteDriver() with id {} started of class {}",
                 id, getClass().getName());
         driverService.deleteDriverById(id);
         return "redirect:/drivers";

@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 
-import static com.epam.brest.logger.ProjectLogger.log;
+import static com.epam.brest.logger.ProjectLogger.LOG;
 
 @Controller
 @RequestMapping("/cars")
@@ -52,7 +52,7 @@ public class CarController {
 
     @GetMapping()
     public String getAllCars(final Model model) {
-        log.info("Method findAllCars() started of class {}",
+        LOG.info("Method findAllCars() started of class {}",
                 getClass().getName());
         model.addAttribute("carList", carService.findAllCars());
         return "cars/cars";
@@ -67,7 +67,7 @@ public class CarController {
 
     @GetMapping("/new-car")
     public String showFormAddingCar(@ModelAttribute("car") final Car car) {
-        log.info("Method showFormAddingCar() with car {} started of class {}",
+        LOG.info("Method showFormAddingCar() with car {} started of class {}",
                 car, getClass().getName());
         return "cars/new-car";
     }
@@ -83,7 +83,7 @@ public class CarController {
     @PostMapping()
     public String saveCar(@ModelAttribute("car") final Car car,
                           final BindingResult result) {
-        log.info("Method saveCar() with car {} started of class {}",
+        LOG.info("Method saveCar() with car {} started of class {}",
                 car, getClass().getName());
 
         carValidator.validate(car, result);
@@ -105,7 +105,7 @@ public class CarController {
     @GetMapping("/{id}/update-car")
     public String showFormUpdatingCar(@PathVariable("id") final Integer id,
                                       final Model model) {
-        log.info("Method showFormUpdatingCar() with id {} started of class {}",
+        LOG.info("Method showFormUpdatingCar() with id {} started of class {}",
                 id, getClass().getName());
         model.addAttribute("car", carService.findCarById(id));
         return "cars/update-car";
@@ -124,7 +124,7 @@ public class CarController {
     public String updateCar(@ModelAttribute("car") final Car car,
                             final BindingResult result,
                             @PathVariable("id") final Integer id) {
-        log.info("Method updateCar() with car {} and id {} started of class {}",
+        LOG.info("Method updateCar() with car {} and id {} started of class {}",
                 car, id, getClass().getName());
 
         carValidator.validate(car, result);
@@ -144,7 +144,7 @@ public class CarController {
 
     @GetMapping("/{id}/delete-car")
     public String deleteCar(@PathVariable("id") final Integer id) {
-        log.info("Method deleteCar() with id {} started of class {}",
+        LOG.info("Method deleteCar() with id {} started of class {}",
                 id, getClass().getName());
         carService.deleteCarById(id);
         return "redirect:/cars";

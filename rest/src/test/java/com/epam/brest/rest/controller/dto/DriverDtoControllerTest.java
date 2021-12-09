@@ -19,7 +19,7 @@ import java.math.BigDecimal;
 import java.util.Arrays;
 import java.util.Date;
 
-import static com.epam.brest.logger.ProjectLogger.log;
+import static com.epam.brest.logger.ProjectLogger.LOG;
 import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
@@ -47,7 +47,7 @@ class DriverDtoControllerTest {
 
     @Test
     void findAllDriversWithCountCars() throws Exception {
-        log.info("Method findAllDriversWithCountCars() started of class {}", getClass().getName());
+        LOG.info("Method findAllDriversWithCountCars() started of class {}", getClass().getName());
 
         when(driverDtoService.findAllDriverWithCountCars()).thenReturn(Arrays.asList(create(0), create(1)));
 

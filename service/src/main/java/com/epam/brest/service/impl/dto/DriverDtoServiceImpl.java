@@ -9,16 +9,32 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 @Service
-@Transactional
 public class DriverDtoServiceImpl implements DriverDtoService {
+
+    /**
+     * Field driverDtoDao.
+     */
 
     private final DriverDtoDao driverDtoDao;
 
-    public DriverDtoServiceImpl(DriverDtoDao driverDtoDao) {
+    /**
+     * Constructor.
+     *
+     * @param driverDtoDao driverDtoDao.
+     */
+
+    public DriverDtoServiceImpl(final DriverDtoDao driverDtoDao) {
         this.driverDtoDao = driverDtoDao;
     }
 
+    /**
+     * Find driver's list Dto.
+     *
+     * @return driver's list Dto.
+     */
+
     @Override
+    @Transactional(readOnly = true)
     public List<DriverDto> findAllDriverWithCountCars() {
         return driverDtoDao.findAllDriversWithCountCars();
     }

@@ -11,7 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
-import static com.epam.brest.logger.ProjectLogger.log;
+import static com.epam.brest.logger.ProjectLogger.LOG;
 import static org.junit.jupiter.api.Assertions.*;
 
 @ExtendWith(SpringExtension.class)
@@ -27,11 +27,11 @@ class DriverDtoDaoJdbcImplTestIT {
 
     @Test
     void findWithCountCars() {
-        log.info("Method started: findWithCountCars() of {}", getClass().getName());
+        LOG.info("Method started: findWithCountCars() of {}", getClass().getName());
         List<DriverDto> drivers = driverDtoDaoJdbc.findAllDriversWithCountCars();
         assertNotNull(drivers);
         assertTrue(drivers.size() > 0);
-        log.info("List of driver Dto was created {}", drivers);
+        LOG.info("List of driver Dto was created {}", drivers);
         assertTrue(drivers.get(0).getCountOfCarsAssignedToDriver() > 0);
     }
 }
