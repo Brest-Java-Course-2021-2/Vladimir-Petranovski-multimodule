@@ -95,8 +95,8 @@ public class DriverController {
     public ResponseEntity<Integer> updateDriver(
             @RequestBody final Driver driver,
             @PathVariable final Integer id) {
-        log.info("Method updateDriver() with id: {}" +
-                        " and driver: {} started of class {}",
+        log.info("Method updateDriver() with id: {}"
+                        + " and driver: {} started of class {}",
                 id, driver, getClass().getName());
 
         Integer quantity = driverService.updateDriverById(id, driver);

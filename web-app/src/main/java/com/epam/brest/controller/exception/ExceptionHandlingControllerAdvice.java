@@ -17,6 +17,8 @@ public class ExceptionHandlingControllerAdvice {
     /**
      * Exception handler of data base.
      *
+     * @param req HttpServletRequest.
+     * @param ex Exception.
      * @return view exception.
      */
 
@@ -25,8 +27,8 @@ public class ExceptionHandlingControllerAdvice {
     public ModelAndView handleDataIntegrityViolationException(
             final HttpServletRequest req,
             final Exception ex) {
-        log.error("Method handleDataIntegrityViolationException()" +
-                        " with request: {} raised: {} started in {}",
+        log.error("Method handleDataIntegrityViolationException()"
+                        + " with request: {} raised: {} started in {}",
                 req.getRequestURL(), ex, getClass().getName());
 
         ModelAndView mav = new ModelAndView();
@@ -40,13 +42,16 @@ public class ExceptionHandlingControllerAdvice {
     /**
      * Exception handler.
      *
+     * @param req HttpServletRequest.
+     * @param ex Exception.
      * @return view exception.
      */
 
     @ExceptionHandler(Exception.class)
     public ModelAndView handleError(final HttpServletRequest req,
                                     final Exception ex) {
-        log.error("Method handleError() with request: {} raised: {} started in {}",
+        log.error("Method handleError() with request:"
+                        + " {} raised: {} started in {}",
                 req.getRequestURL(), ex, getClass().getName());
 
         ModelAndView mav = new ModelAndView();

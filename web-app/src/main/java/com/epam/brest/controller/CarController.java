@@ -32,6 +32,7 @@ public class CarController {
 
     /**
      * Constructor.
+     *
      * @param carService carService.
      * @param  carValidator carValidator.
      */
@@ -44,6 +45,7 @@ public class CarController {
 
     /**
      * Goto car's list page.
+     *
      * @param model model.
      * @return view name.
      */
