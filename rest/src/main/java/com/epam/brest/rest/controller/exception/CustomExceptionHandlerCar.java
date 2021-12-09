@@ -14,19 +14,46 @@ import java.util.List;
 @ControllerAdvice
 public class CustomExceptionHandlerCar extends ResponseEntityExceptionHandler {
 
+    /**
+     * Field CAR_NOT_FOUND.
+     */
+
     public static final String CAR_NOT_FOUND = "car.not_found";
+
+    /**
+     * Field CAR_VALIDATION_ERROR.
+     */
+
     public static final String CAR_VALIDATION_ERROR = "car.validation_error";
 
+    /**
+     * Exception handler not found exception.
+     *
+     * @param ex DriverNotFoundException class.
+     * @param webRequest WebRequest class.
+     * @return 404 not found.
+     */
+
     @ExceptionHandler(CarNotFoundException.class)
-    public final ResponseEntity<ErrorResponse> handleCarNotFoundException(CarNotFoundException ex, WebRequest webRequest) {
+    public final ResponseEntity<ErrorResponse> handleCarNotFoundException(
+            final CarNotFoundException ex, final WebRequest webRequest) {
         List<String> details = new ArrayList<>();
         details.add(ex.getLocalizedMessage());
         ErrorResponse error = new ErrorResponse(CAR_NOT_FOUND, details);
         return new ResponseEntity<>(error, HttpStatus.NOT_FOUND);
     }
 
+    /**
+     * Exception handler IllegalArgumentException.
+     *
+     * @param ex Exception class.
+     * @param webRequest WebRequest class.
+     * @return 422 Unprocessable Entity.
+     */
+
     @ExceptionHandler(IllegalArgumentException.class)
-    public final ResponseEntity<ErrorResponse> handleIllegalArgumentException(Exception ex, WebRequest webRequest) {
+    public final ResponseEntity<ErrorResponse> handleIllegalArgumentException(
+            final Exception ex, final WebRequest webRequest) {
         ErrorResponse error = new ErrorResponse(CAR_VALIDATION_ERROR, ex);
         return new ResponseEntity<>(error, HttpStatus.UNPROCESSABLE_ENTITY);
     }

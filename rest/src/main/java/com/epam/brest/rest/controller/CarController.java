@@ -4,7 +4,14 @@ import com.epam.brest.model.Car;
 import com.epam.brest.service_api.CarService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PatchMapping;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.Collection;
 
@@ -14,71 +21,98 @@ import static com.epam.brest.logger.ProjectLogger.log;
 @RequestMapping("/cars")
 public class CarController {
 
+    /**
+     * Field carService.
+     */
+
     private final CarService carService;
 
-    public CarController(CarService carService) {
+    /**
+     * Constructor.
+     * @param carService carService.
+     */
+
+    public CarController(final CarService carService) {
         this.carService = carService;
     }
 
     /**
-     * Get car's list Dao.
+     * Goto car's list.
      *
-     * @return car list Dao.
+     * @return car's list in json.
      */
 
     @GetMapping()
     public final Collection<Car> findAllCars() {
-        log.info("Method findAllCars() started of class {}", getClass().getName());
+        log.info("Method findAllCars() started of class {}",
+                getClass().getName());
         return carService.findAllCars();
     }
 
     /**
-     * Get car by id Dao.
+     * Goto car by id.
      *
-     * @return car by id Dao.
+     * @param id car.
+     * @return car in json.
      */
 
     @GetMapping(value = "/{id}")
-    public final Car findCarById(@PathVariable Integer id) {
-        log.info("Method findCarById() with id: {} started of class {}", id, getClass().getName());
+    public final Car findCarById(@PathVariable final Integer id) {
+        log.info("Method findCarById() with id: {} started of class {}",
+                id, getClass().getName());
 
         return carService.findCarById(id);
     }
 
     /**
-     * Save car Dao.
+     * Persist car.
      *
+     * @param car car.
+     * @return 200 ok.
      */
 
-    @PostMapping(consumes = "application/json", produces = "application/json")
-    public ResponseEntity<Integer> saveCar(@RequestBody Car car) {
-        log.info("Method saveCar() with car: {} started of class {}", car, getClass().getName());
+    @PostMapping(consumes = "application/json",
+            produces = "application/json")
+    public ResponseEntity<Integer> saveCar(@RequestBody final Car car) {
+        log.info("Method saveCar() with car: {} started of class {}",
+                car, getClass().getName());
 
         Integer id = carService.saveCar(car);
         return new ResponseEntity<>(id, HttpStatus.OK);
     }
 
     /**
-     * Update car Dao.
+     * Update car.
      *
+     * @param car car.
+     * @param id car.
+     * @return 200 ok.
      */
 
-    @PatchMapping(value = "/{id}", consumes = {"application/json"}, produces = {"application/json"})
-    public ResponseEntity<Integer> updateCar(@RequestBody Car car, @PathVariable Integer id) {
-        log.info("Method updateCar() with car: {} started of class {}", car, getClass().getName());
+    @PatchMapping(value = "/{id}", consumes = {"application/json"},
+            produces = {"application/json"})
+    public ResponseEntity<Integer> updateCar(@RequestBody final Car car,
+                                             @PathVariable final Integer id) {
+        log.info("Method updateCar() with car: {} started of class {}",
+                car, getClass().getName());
 
         int result = carService.updateCarById(id, car);
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
     /**
-     * Delete car Dao.
+     * Delete car.
      *
+     * @param id car.
+     * @return 200 ok.
      */
 
-    @DeleteMapping(value = "/{id}/delete-car", produces = "application/json")
-    public ResponseEntity<Integer> deleteCar(@PathVariable Integer id) {
-        log.info("Method updateCar() with id: {} started of class {}", id, getClass().getName());
+    @DeleteMapping(value = "/{id}/delete-car",
+            produces = "application/json")
+    public ResponseEntity<Integer> deleteCar(
+            @PathVariable final Integer id) {
+        log.info("Method updateCar() with id: {} started of class {}",
+                id, getClass().getName());
 
         int result = carService.deleteCarById(id);
         return new ResponseEntity<>(result, HttpStatus.OK);

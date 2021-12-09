@@ -14,21 +14,32 @@ import static com.epam.brest.logger.ProjectLogger.log;
 @RequestMapping("/drivers_dto")
 public class DriverDtoController {
 
+    /**
+     * Field driverDtoService.
+     */
+
     private final DriverDtoService driverDtoService;
 
-    public DriverDtoController(DriverDtoService driverDtoService) {
+    /**
+     * Constructor.
+     *
+     * @param driverDtoService driverDtoService.
+     */
+
+    public DriverDtoController(final DriverDtoService driverDtoService) {
         this.driverDtoService = driverDtoService;
     }
 
     /**
-     * Get driver's list Dto.
+     * Fid driver's list Dto.
      *
-     * @return Driver Dto collection.
+     * @return Driver Dto collection in json format.
      */
 
     @GetMapping()
     public final Collection<DriverDto> findAllDriversWithCountCars() {
-        log.info("Method findAllDriversWithCountCars() started of class {}", getClass().getName());
+        log.info("Method findAllDriversWithCountCars() started of class {}",
+                getClass().getName());
         return driverDtoService.findAllDriverWithCountCars();
     }
 }
