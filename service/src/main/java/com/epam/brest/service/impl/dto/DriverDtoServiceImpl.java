@@ -1,6 +1,6 @@
 package com.epam.brest.service.impl.dto;
 
-import com.epam.brest.dao_api.DriverDtoDao;
+import com.epam.brest.dao_api.dto.DriverDtoDao;
 import com.epam.brest.model.dto.DriverDto;
 import com.epam.brest.service_api.dto.DriverDtoService;
 import org.springframework.stereotype.Service;

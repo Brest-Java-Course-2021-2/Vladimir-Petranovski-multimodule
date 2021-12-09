@@ -106,19 +106,20 @@ class DriverDaoJdbcImplTest {
     @Test
     void saveDriver() {
         log.info("Method saveDriver() of class {} started", getClass().getName());
-//
-//        doReturn(true).when(spy(driverDaoJdbc), "isDriverUnique", ArgumentMatchers.anyBoolean());
-//
-//        when(namedParameterJdbcTemplate.update(any(), ArgumentMatchers.<SqlParameterSource>any(), ArgumentMatchers.<KeyHolder>any())).thenReturn(returnRow);
-//
-//        Integer quantity = driverDaoJdbc.saveDriver(driverTest);
-//        assertNotNull(quantity);
-//
-//        verify(namedParameterJdbcTemplate, times(1)).update(eq(DRIVER_SAVE), sqlParameterSourceArgumentCaptor.capture());
-//        verify(namedParameterJdbcTemplate).update(eq(DRIVER_SAVE), sqlParameterSourceArgumentCaptor.capture());
-//        SqlParameterSource sqlParameterSource = sqlParameterSourceArgumentCaptor.getValue();
-//
-//        assertNotNull(sqlParameterSource);
+        int key = 3;
+        when(namedParameterJdbcTemplate.queryForObject(any(), any(SqlParameterSource.class), eq(Integer.class))).thenReturn(0);
+        Mockito.doAnswer(a -> {
+            KeyHolder keyHolder = a.getArgument(2);
+            keyHolder.getKeyList().add(Map.of("", key));
+            return null;
+        }).when(namedParameterJdbcTemplate).update(any(),any(),any());
+        Integer result = driverDaoJdbc.saveDriver(driverTest);
+        assertEquals(key, result);
+        verify(namedParameterJdbcTemplate).queryForObject(eq(DRIVER_CHECK_UNIQUE_NAME), sqlParameterSourceArgumentCaptor.capture(), eq(Integer.class));
+        verify(namedParameterJdbcTemplate, times(1)).update(eq(DRIVER_SAVE), sqlParameterSourceArgumentCaptor.capture(), any(KeyHolder.class));
+        verify(namedParameterJdbcTemplate).update(eq(DRIVER_SAVE), sqlParameterSourceArgumentCaptor.capture(), any(KeyHolder.class));
+        List<SqlParameterSource> sqlParameterSources = sqlParameterSourceArgumentCaptor.getAllValues();
+        assertEquals(3, sqlParameterSources.size());
     }
 
     @Test

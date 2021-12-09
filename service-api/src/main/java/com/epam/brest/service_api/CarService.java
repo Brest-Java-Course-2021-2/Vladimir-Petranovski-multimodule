@@ -7,43 +7,53 @@ import java.util.List;
 public interface CarService {
 
     /**
-     * Get list of car.
+     * Find all cars.
      *
-     * @return list of car.
+     * @return list of cars.
      */
 
     List<Car> findAllCars();
 
     /**
-     * Get car by id.
+     * Find car by Id.
      *
-     * @return car by id.
+     * @param id car Id.
+     * @return car.
      */
 
     Car findCarById(Integer id);
 
     /**
-     * Save car.
+     * Persist new car.
+     *
+     * @param car car.
+     * @return persisted car id.
      */
 
     Integer saveCar(Car car);
 
     /**
-     * Update car by id.
+     * Update car.
+     *
+     * @param id car id.
+     * @param car car.
+     * @return number of updated records in the database.
      */
 
     Integer updateCarById(Integer id, Car car);
 
     /**
-     * Delete car by id.
+     * Delete car.
+     *
+     * @param id car id.
+     * @return number of updated records in the database.
      */
-
     Integer deleteCarById(Integer id);
 
     /**
-     * Get count of records.
+     * Count cars.
      *
-     * @return count of records.
+     * @return quantity of the cars.
      */
 
     Integer count();

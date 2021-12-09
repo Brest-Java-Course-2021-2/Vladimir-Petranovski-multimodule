@@ -10,7 +10,7 @@ public interface DriverDao {
     /**
      * Find all drivers.
      *
-     * @return list of driver.
+     * @return list of drivers.
      */
 
     List<Driver> findAllDrivers();

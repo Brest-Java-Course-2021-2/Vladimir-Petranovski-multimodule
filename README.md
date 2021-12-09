@@ -14,6 +14,7 @@ ${project}/documents/src/motor_depot.md
 
 * JDK 11
 * Apache Maven
+* Clone repository from https://github.com/Brest-Java-Course-2021-2/Vladimir-Petranovski-multimodule
 
 ## Build application:
 ```
