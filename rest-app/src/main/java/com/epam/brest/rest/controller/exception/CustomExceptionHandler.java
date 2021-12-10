@@ -17,13 +17,13 @@ import static com.epam.brest.logger.ProjectLogger.LOG;
 public class CustomExceptionHandler extends ResponseEntityExceptionHandler {
 
     /**
-     * Field DRIVER_NOT_FOUND.
+     * Field constant DRIVER_NOT_FOUND.
      */
 
     public static final String DRIVER_NOT_FOUND = "driver.not_found";
 
     /**
-     * Field VALIDATION_ERROR.
+     * Field constant VALIDATION_ERROR.
      */
 
     public static final String VALIDATION_ERROR = "validation_error";

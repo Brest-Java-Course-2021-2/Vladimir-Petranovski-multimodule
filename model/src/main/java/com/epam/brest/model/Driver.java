@@ -35,16 +35,18 @@ public class Driver {
         return driverId;
     }
 
-    public void setDriverId(Integer driverId) {
+    public Driver setDriverId(Integer driverId) {
         this.driverId = driverId;
+        return this;
     }
 
     public String getDriverName() {
         return driverName;
     }
 
-    public void setDriverName(String driverName) {
+    public Driver setDriverName(String driverName) {
         this.driverName = driverName;
+        return this;
     }
 
     public Instant getDriverDateStartWork() {
