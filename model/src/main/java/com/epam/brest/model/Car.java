@@ -24,16 +24,18 @@ public class Car {
         return carId;
     }
 
-    public void setCarId(Integer carId) {
+    public Car setCarId(Integer carId) {
         this.carId = carId;
+        return this;
     }
 
     public String getCarModel() {
         return carModel;
     }
 
-    public void setCarModel(String carModel) {
+    public Car setCarModel(String carModel) {
         this.carModel = carModel;
+        return this;
     }
 
     public Integer getDriverId() {

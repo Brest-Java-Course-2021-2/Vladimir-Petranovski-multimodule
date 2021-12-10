@@ -1,7 +1,7 @@
 package com.epam.brest.service_rest.service;
 
-import com.epam.brest.model.Driver;
-import com.epam.brest.service_api.DriverService;
+import com.epam.brest.model.Car;
+import com.epam.brest.service_api.CarService;
 import org.springframework.http.*;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
@@ -12,7 +12,7 @@ import java.util.List;
 import static com.epam.brest.logger.ProjectLogger.LOG;
 
 @Service
-public class DriverServiceRest implements DriverService {
+public class CarServiceRest implements CarService {
 
     /**
      * Field url String.
@@ -30,7 +30,7 @@ public class DriverServiceRest implements DriverService {
      * Constructor without parameters.
      */
 
-    public DriverServiceRest() {
+    public CarServiceRest() {
     }
 
     /**
@@ -40,119 +40,117 @@ public class DriverServiceRest implements DriverService {
      * @param restTemplate RestTemplate.
      */
 
-    public DriverServiceRest(final String url,
-                             final RestTemplate restTemplate) {
+    public CarServiceRest(final String url,
+                          final RestTemplate restTemplate) {
         this.url = url;
         this.restTemplate = restTemplate;
     }
 
     /**
-     * Find all drivers.
+     * Find all cars.
      *
-     * @return list of drivers.
+     * @return list of cars.
      */
 
     @Override
-    public List<Driver> findAllDrivers() {
-        LOG.info("Method findAllDrivers() started of class {}",
+    public List<Car> findAllCars() {
+        LOG.info("Method findAllCars() started of class {}",
                 getClass().getName());
         ResponseEntity responseEntity = restTemplate.getForEntity(
                 url, List.class);
-        return (List<Driver>) responseEntity.getBody();
+        return (List<Car>) responseEntity.getBody();
     }
 
     /**
-     * Find driver by Id.
+     * Find car by id.
      *
-     * @param id driver Id.
-     * @return driver.
+     * @param id car Id.
+     * @return car by id.
      */
 
     @Override
-    public Driver findDriverById(final Integer id) {
-        LOG.info("Method findDriverById()"
+    public Car findCarById(final Integer id) {
+        LOG.info("Method findCarById()"
                         + " with id: {} started of class {}",
                 id, getClass().getName());
-        ResponseEntity<Driver> responseEntity =
+        ResponseEntity<Car> responseEntity =
                 restTemplate.getForEntity(url + "/" + id,
-                        Driver.class);
+                        Car.class);
         return responseEntity.getBody();
     }
 
     /**
-     * Persist new driver.
+     * Persist new car.
      *
-     * @param driver driver.
-     * @return persisted driver id.
+     * @param car car.
+     * @return persisted car id.
      */
 
     @Override
-    public Integer saveDriver(final Driver driver) {
+    public Integer saveCar(final Car car) {
         LOG.info("Method saveDriver()"
                         + " with driver: {} started of class {}",
-                driver, getClass().getName());
+                car, getClass().getName());
         ResponseEntity responseEntity = restTemplate.postForEntity(
-                url, driver, Integer.class);
+                url, car, Integer.class);
         return (Integer) responseEntity.getBody();
     }
 
     /**
-     * Update driver.
+     * Update car.
      *
-     * @param id driver id.
-     * @param driver driver.
+     * @param id  car id.
+     * @param car car.
      * @return number of updated records in the database.
      */
 
     @Override
-    public Integer updateDriverById(final Integer id,
-                                    final Driver driver) {
-        LOG.info("Method updateDriverById()"
+    public Integer updateCarById(final Integer id, final Car car) {
+        LOG.info("Method updateCarById()"
                         + " with id {} and with driver: {} started of class {}",
-                id, driver, getClass().getName());
-        // restTemplate.put(url, driver) // may be mistakes
-
+                id, car, getClass().getName());
+        // restTemplate.put(url, car) // may be mistakes
         HttpHeaders headers = new HttpHeaders();
         headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
-        HttpEntity<Driver> entity = new HttpEntity<>(driver, headers);
+        HttpEntity<Car> entity = new HttpEntity<>(car, headers);
         ResponseEntity<Integer> result = restTemplate.exchange(
                 url + "/" + id, HttpMethod.PATCH, entity, Integer.class);
         return result.getBody();
     }
 
     /**
-     * Delete driver.
+     * Delete car by id.
      *
-     * @param id driver id.
+     * @param id car.
      * @return number of updated records in the database.
      */
 
     @Override
-    public Integer deleteDriverById(final Integer id) {
-        LOG.info("Method deleteDriverById()"
+    public Integer deleteCarById(final Integer id) {
+        LOG.info("Method deleteCarById()"
                         + " with id: {} started of class {}",
                 id, getClass().getName());
-        // restTemplate.delete(url, driver) // may be mistakes
+        // restTemplate.delete(url, car) // may be mistakes
         HttpHeaders headers = new HttpHeaders();
         headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
-        HttpEntity<Driver> entity = new HttpEntity<>(headers);
+        HttpEntity<Car> entity = new HttpEntity<>(headers);
         ResponseEntity<Integer> result = restTemplate.exchange(
-                url + "/" + id + "/delete-driver", HttpMethod.DELETE, entity, Integer.class);
+                url + "/" + id + "/delete-car", HttpMethod.DELETE, entity, Integer.class);
         return result.getBody();
     }
 
     /**
-     * Count drivers.
+     * Count cars.
      *
-     * @return quantity of the drivers.
+     * @return quantity of the cars.
      */
 
     @Override
     public Integer count() {
         LOG.info("Method count() started of class {}",
                 getClass().getName());
-        ResponseEntity<Integer> responseEntity = restTemplate.getForEntity(
-                url + "/count", Integer.class);
+        ResponseEntity<Integer> responseEntity =
+                restTemplate.getForEntity(url + "/count", Integer.class);
         return responseEntity.getBody();
     }
 }
