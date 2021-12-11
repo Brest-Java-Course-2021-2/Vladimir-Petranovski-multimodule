@@ -2,7 +2,11 @@ package com.epam.brest.service_rest.service;
 
 import com.epam.brest.model.Driver;
 import com.epam.brest.service_api.DriverService;
-import org.springframework.http.*;
+import org.springframework.http.ResponseEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpMethod;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
@@ -36,14 +40,14 @@ public class DriverServiceRest implements DriverService {
     /**
      * Constructor.
      *
-     * @param url          String.
-     * @param restTemplate RestTemplate.
+     * @param enterUrl String.
+     * @param enterRestTemplate RestTemplate.
      */
 
-    public DriverServiceRest(final String url,
-                             final RestTemplate restTemplate) {
-        this.url = url;
-        this.restTemplate = restTemplate;
+    public DriverServiceRest(final String enterUrl,
+                             final RestTemplate enterRestTemplate) {
+        this.url = enterUrl;
+        this.restTemplate = enterRestTemplate;
     }
 
     /**
@@ -137,7 +141,8 @@ public class DriverServiceRest implements DriverService {
         headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
         HttpEntity<Driver> entity = new HttpEntity<>(headers);
         ResponseEntity<Integer> result = restTemplate.exchange(
-                url + "/" + id + "/delete-driver", HttpMethod.DELETE, entity, Integer.class);
+                url + "/" + id + "/delete-driver", HttpMethod.DELETE,
+                entity, Integer.class);
         return result.getBody();
     }
 

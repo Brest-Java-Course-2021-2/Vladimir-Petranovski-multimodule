@@ -18,13 +18,15 @@ public class Driver {
         this.driverName = driverName;
     }
 
-    public Driver(String driverName, Instant driverDateStartWork, BigDecimal driverSalary) {
+    public Driver(String driverName, Instant driverDateStartWork,
+                  BigDecimal driverSalary) {
         this.driverName = driverName;
         this.driverDateStartWork = driverDateStartWork;
         this.driverSalary = driverSalary;
     }
 
-    public Driver(Integer driverId, String driverName, Instant driverDateStartWork, BigDecimal driverSalary) {
+    public Driver(Integer driverId, String driverName,
+                  Instant driverDateStartWork, BigDecimal driverSalary) {
         this.driverId = driverId;
         this.driverName = driverName;
         this.driverDateStartWork = driverDateStartWork;
@@ -70,21 +72,26 @@ public class Driver {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Driver driver = (Driver) o;
-        return Objects.equals(driverId, driver.driverId) && Objects.equals(driverName, driver.driverName) && Objects.equals(driverDateStartWork, driver.driverDateStartWork) && Objects.equals(driverSalary, driver.driverSalary);
+        return Objects.equals(driverId, driver.driverId)
+                && Objects.equals(driverName, driver.driverName)
+                && Objects.equals(driverDateStartWork,
+                driver.driverDateStartWork) && Objects.equals(
+                        driverSalary, driver.driverSalary);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(driverId, driverName, driverDateStartWork, driverSalary);
+        return Objects.hash(driverId, driverName,
+                driverDateStartWork, driverSalary);
     }
 
     @Override
     public String toString() {
-        return "Driver{" +
-                "driverId=" + driverId +
-                ", driverName='" + driverName + '\'' +
-                ", driverDateStartWork=" + driverDateStartWork +
-                ", driverSalary=" + driverSalary +
-                '}';
+        return "Driver{"
+                + "driverId=" + driverId
+                + ", driverName='" + driverName + '\''
+                + ", driverDateStartWork=" + driverDateStartWork
+                + ", driverSalary=" + driverSalary
+                + '}';
     }
 }

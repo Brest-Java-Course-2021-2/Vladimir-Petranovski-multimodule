@@ -25,20 +25,24 @@ public class DriverDtoServiceRest implements DriverDtoService {
 
     private RestTemplate restTemplate;
 
+    /**
+     * Constructor without parameters.
+     */
+
     public DriverDtoServiceRest() {
     }
 
     /**
      * Constructor.
      *
-     * @param url String.
-     * @param restTemplate RestTemplate.
+     * @param enterUrl String.
+     * @param enterRestTemplate RestTemplate.
      */
 
-    public DriverDtoServiceRest(final String url, final RestTemplate restTemplate) {
-//        this();
-        this.url = url;
-        this.restTemplate = restTemplate;
+    public DriverDtoServiceRest(final String enterUrl,
+                                final RestTemplate enterRestTemplate) {
+        this.url = enterUrl;
+        this.restTemplate = enterRestTemplate;
     }
 
     /**
@@ -51,7 +55,8 @@ public class DriverDtoServiceRest implements DriverDtoService {
 
         LOG.info("Method findAllDriverWithCountCars() started {}",
                 getClass().getName());
-        ResponseEntity responseEntity = restTemplate.getForEntity(url, List.class);
+        ResponseEntity responseEntity = restTemplate.getForEntity(
+                url, List.class);
         return (List<DriverDto>) responseEntity.getBody();
     }
 }

@@ -19,34 +19,68 @@
     <!-- Component scan for @Controller, @Service... annotations -->
     <context:component-scan base-package="com.epam.brest*"/>
 
-    <import resource="classpath*:test-db.xml"/>
+<!--    <import resource="classpath*:test-db.xml"/>-->
 
-    <bean id="namedParameterJdbcTemplate" class="org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate">
-        <constructor-arg ref="dataSource"/>
+<!--    <bean id="namedParameterJdbcTemplate" class="org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate">-->
+<!--        <constructor-arg ref="dataSource"/>-->
+<!--    </bean>-->
+
+<!--    <bean id="driverDtoDao" class="com.epam.brest.dao.dto.DriverDtoDaoJdbcImpl">-->
+<!--        <constructor-arg ref="namedParameterJdbcTemplate"/>-->
+<!--    </bean>-->
+
+<!--    <bean id="driverDtoService" class="com.epam.brest.service.impl.dto.DriverDtoServiceImpl">-->
+<!--        <constructor-arg name="driverDtoDao" ref="driverDtoDao"/>-->
+<!--    </bean>-->
+
+<!--    <bean id="driverDao" class="com.epam.brest.dao.DriverDaoJdbcImpl">-->
+<!--        <constructor-arg ref="namedParameterJdbcTemplate"/>-->
+<!--    </bean>-->
+
+<!--    <bean id="driverService" class="com.epam.brest.service.impl.DriverServiceImpl">-->
+<!--        <constructor-arg name="driverDao" ref="driverDao"/>-->
+<!--    </bean>-->
+
+<!--    <bean id="carDao" class="com.epam.brest.dao.CarDaoJdbcImpl">-->
+<!--        <constructor-arg ref="namedParameterJdbcTemplate"/>-->
+<!--    </bean>-->
+
+<!--    <bean id="carService" class="com.epam.brest.service.impl.CarServiceImpl">-->
+<!--        <constructor-arg name="carDao" ref="carDao"/>-->
+<!--    </bean>-->
+
+    <bean id="driverService" class="com.epam.brest.service_rest.service.DriverServiceRest">
+        <constructor-arg index="0" value="${protocol}://${host}:${port}/${point.drivers}"/>
+        <constructor-arg index="1" ref="restTemplate"/>
     </bean>
 
-    <bean id="driverDtoDao" class="com.epam.brest.dao.dto.DriverDtoDaoJdbcImpl">
-        <constructor-arg ref="namedParameterJdbcTemplate"/>
+    <bean id="driverDtoService" class="com.epam.brest.service_rest.service.dto.DriverDtoServiceRest">
+        <constructor-arg index="0" value="${protocol}://${host}:${port}/${point.drivers_dto}"/>
+        <constructor-arg index="1" ref="restTemplate"/>
     </bean>
 
-    <bean id="driverDtoService" class="com.epam.brest.service.impl.dto.DriverDtoServiceImpl">
-        <constructor-arg name="driverDtoDao" ref="driverDtoDao"/>
+    <bean id="carService" class="com.epam.brest.service_rest.service.CarServiceRest">
+        <constructor-arg index="0" value="${protocol}://${host}:${port}/${point.cars}"/>
+        <constructor-arg index="1" ref="restTemplate"/>
     </bean>
 
-    <bean id="driverDao" class="com.epam.brest.dao.DriverDaoJdbcImpl">
-        <constructor-arg ref="namedParameterJdbcTemplate"/>
+    <bean id="restTemplate" class="org.springframework.web.client.RestTemplate">
+        <property name="messageConverters">
+            <list>
+                <bean class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter"/>
+            </list>
+        </property>
+        <property name="requestFactory">
+                <bean class="org.springframework.http.client.HttpComponentsClientHttpRequestFactory"/>
+        </property>
     </bean>
 
-    <bean id="driverService" class="com.epam.brest.service.impl.DriverServiceImpl">
-        <constructor-arg name="driverDao" ref="driverDao"/>
-    </bean>
-
-    <bean id="carDao" class="com.epam.brest.dao.CarDaoJdbcImpl">
-        <constructor-arg ref="namedParameterJdbcTemplate"/>
-    </bean>
-
-    <bean id="carService" class="com.epam.brest.service.impl.CarServiceImpl">
-        <constructor-arg name="carDao" ref="carDao"/>
+    <bean class="org.springframework.context.support.PropertySourcesPlaceholderConfigurer">
+        <property name="locations">
+            <list>
+                <value>classpath:application.properties</value>
+            </list>
+        </property>
     </bean>
 
     <!-- Thymeleaf Template Resolver -->

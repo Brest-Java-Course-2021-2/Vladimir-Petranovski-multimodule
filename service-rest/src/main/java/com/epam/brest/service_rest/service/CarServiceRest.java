@@ -2,7 +2,11 @@ package com.epam.brest.service_rest.service;
 
 import com.epam.brest.model.Car;
 import com.epam.brest.service_api.CarService;
-import org.springframework.http.*;
+import org.springframework.http.ResponseEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpMethod;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
@@ -15,13 +19,13 @@ import static com.epam.brest.logger.ProjectLogger.LOG;
 public class CarServiceRest implements CarService {
 
     /**
-     * Field url String.
+     * @serialField  url String.
      */
 
     private String url;
 
     /**
-     * Field restTemplate RestTemplate.
+     * @serialField  restTemplate RestTemplate.
      */
 
     private RestTemplate restTemplate;
@@ -36,14 +40,14 @@ public class CarServiceRest implements CarService {
     /**
      * Constructor.
      *
-     * @param url          String.
-     * @param restTemplate RestTemplate.
+     * @param enterUrl String.
+     * @param enterRestTemplate RestTemplate.
      */
 
-    public CarServiceRest(final String url,
-                          final RestTemplate restTemplate) {
-        this.url = url;
-        this.restTemplate = restTemplate;
+    public CarServiceRest(final String enterUrl,
+                          final RestTemplate enterRestTemplate) {
+        this.url = enterUrl;
+        this.restTemplate = enterRestTemplate;
     }
 
     /**
@@ -135,7 +139,8 @@ public class CarServiceRest implements CarService {
         headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
         HttpEntity<Car> entity = new HttpEntity<>(headers);
         ResponseEntity<Integer> result = restTemplate.exchange(
-                url + "/" + id + "/delete-car", HttpMethod.DELETE, entity, Integer.class);
+                url + "/" + id + "/delete-car", HttpMethod.DELETE,
+                entity, Integer.class);
         return result.getBody();
     }
 

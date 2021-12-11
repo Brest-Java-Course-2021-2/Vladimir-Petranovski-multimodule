@@ -7,7 +7,8 @@
 <body>
 <h1>Form to update car</h1>
 <br>
-<form th:method="PATCH" th:action="@{/cars/{id}(id=${car.getCarId()})}" th:object="${car}">
+<form th:method="PATCH" th:action="@{/cars/{id}(id=${car.carId})}" th:object="${car}">
+    <input type="hidden" name="_method" value="PATCH"/>
     <label for="model">Update model: </label>
     <input type="text" th:field="*{carModel}" id="model"/>
     <div style="color: red" th:if="${#fields.hasErrors('carModel')}" th:errors="*{carModel}">Name error</div>

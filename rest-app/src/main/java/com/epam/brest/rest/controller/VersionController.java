@@ -12,7 +12,7 @@ public class VersionController {
      * Field VERSION.
      */
 
-    private final static String VERSION = "0.0.1";
+    private static final String VERSION = "0.0.1";
 
     /**
      * Goto version's page.
