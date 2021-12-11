@@ -1,10 +1,8 @@
 package com.epam.brest.service_rest.service;
 
 import com.epam.brest.model.Driver;
-import com.epam.brest.model.dto.DriverDto;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.datatype.jsr310.JSR310Module;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -52,7 +50,7 @@ class DriverServiceRestTest {
     void setUp() {
         driverServiceRest = new DriverServiceRest(DRIVERS_URL, restTemplate);
         mockRestServiceServer = MockRestServiceServer.createServer(restTemplate);
-        objectMapper = new ObjectMapper().registerModule(new JSR310Module());
+        objectMapper = new ObjectMapper().findAndRegisterModules();
     }
 
     @Test

@@ -28,29 +28,29 @@ public class ErrorResponse {
     /**
      * Constructor.
      *
-     * @param details List<String>.
-     * @param message String.
+     * @param enterDetails List<String>.
+     * @param enterMessage String.
      */
 
-    public ErrorResponse(final String message,
-                         final List<String> details) {
+    public ErrorResponse(final String enterMessage,
+                         final List<String> enterDetails) {
         super();
-        this.message = message;
-        this.details = details;
+        this.message = enterMessage;
+        this.details = enterDetails;
     }
 
     /**
      * Constructor.
      *
-     * @param message String.
-     * @param ex Exception.
+     * @param enterMessage String.
+     * @param enterEx Exception.
      */
 
-    public ErrorResponse(final String message, final Exception ex) {
+    public ErrorResponse(final String enterMessage, final Exception enterEx) {
         super();
-        this.message = message;
-        if (ex != null) {
-            this.details = Arrays.asList(ex.getMessage());
+        this.message = enterMessage;
+        if (enterEx != null) {
+            this.details = Arrays.asList(enterEx.getMessage());
         }
     }
 

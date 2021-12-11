@@ -51,7 +51,7 @@ class DriverControllerTestIT {
     void shouldReturnDriverPage() throws Exception {
         LOG.info("Method shouldReturnDriverPage() started of class {}", getClass().getName());
         mockMvc.perform(
-                        MockMvcRequestBuilders.get("/drivers")
+                        MockMvcRequestBuilders.get("/drivers_dto")
                 ).andDo(MockMvcResultHandlers.print())
                 .andExpect(status().isOk())
                 .andExpect(MockMvcResultMatchers.content().contentType("text/html;charset=UTF-8"))
@@ -107,15 +107,15 @@ class DriverControllerTestIT {
         Driver driver = new Driver("VLADIMIR", Instant.parse("1996-10-10T00:00:00.001Z"), new BigDecimal(840));
 
         mockMvc.perform(
-                        MockMvcRequestBuilders.post("/drivers")
+                        MockMvcRequestBuilders.post("/drivers_dto")
                                 .contentType(MediaType.APPLICATION_FORM_URLENCODED)
                                 .param("driverName", driver.getDriverName())
                                 .param("driverDateStartWork", String.valueOf(driver.getDriverDateStartWork()))
                                 .param("driverSalary", String.valueOf(driver.getDriverSalary()))
                 ).andDo(MockMvcResultHandlers.print())
                 .andExpect(status().is3xxRedirection())
-                .andExpect(view().name("redirect:/drivers"))
-                .andExpect(redirectedUrl("/drivers"));
+                .andExpect(view().name("redirect:/drivers_dto"))
+                .andExpect(redirectedUrl("/drivers_dto"));
 
         assertEquals(driverSizeBefore, driverService.count() - 1);
         LOG.info("Driver's size list before save {} equals driver's size list after save minus one {}", driverSizeBefore, driverService.count() - 1);
@@ -130,7 +130,7 @@ class DriverControllerTestIT {
 
         // THEN
         mockMvc.perform(
-                        MockMvcRequestBuilders.post("/drivers")
+                        MockMvcRequestBuilders.post("/drivers_dto")
                                 .contentType(MediaType.APPLICATION_FORM_URLENCODED)
                                 .param("driverName", driver.getDriverName())
                 ).andDo(MockMvcResultHandlers.print())
@@ -152,7 +152,7 @@ class DriverControllerTestIT {
 
         // THEN
         mockMvc.perform(
-                        MockMvcRequestBuilders.post("/drivers")
+                        MockMvcRequestBuilders.post("/drivers_dto")
                                 .contentType(MediaType.APPLICATION_FORM_URLENCODED)
                                 .param("driverName", driver.getDriverName())
                 ).andDo(MockMvcResultHandlers.print())
@@ -174,7 +174,7 @@ class DriverControllerTestIT {
 
         // THEN
         mockMvc.perform(
-                        MockMvcRequestBuilders.post("/drivers")
+                        MockMvcRequestBuilders.post("/drivers_dto")
                                 .contentType(MediaType.APPLICATION_FORM_URLENCODED)
                                 .param("driverSalary", String.valueOf(driver.getDriverSalary()))
                 ).andDo(MockMvcResultHandlers.print())
@@ -234,8 +234,8 @@ class DriverControllerTestIT {
                                 .param("driverSalary", String.valueOf(driverSrc.getDriverSalary()))
                 ).andDo(MockMvcResultHandlers.print())
                 .andExpect(status().is3xxRedirection())
-                .andExpect(view().name("redirect:/drivers"))
-                .andExpect(redirectedUrl("/drivers"));
+                .andExpect(view().name("redirect:/drivers_dto"))
+                .andExpect(redirectedUrl("/drivers_dto"));
 
         Driver driverDst = driverService.findDriverById(driverSrc.getDriverId());
         assertEquals(driverSrc.getDriverName(), driverDst.getDriverName());
@@ -350,8 +350,8 @@ class DriverControllerTestIT {
                 MockMvcRequestBuilders.get("/drivers/" + driver.getDriverId() + "/delete-driver")
         ).andDo(MockMvcResultHandlers.print())
                 .andExpect(status().is3xxRedirection())
-                .andExpect(view().name("redirect:/drivers"))
-                .andExpect(redirectedUrl("/drivers"));
+                .andExpect(view().name("redirect:/drivers_dto"))
+                .andExpect(redirectedUrl("/drivers_dto"));
 
         driverService.deleteDriverById(driver.getDriverId());
 

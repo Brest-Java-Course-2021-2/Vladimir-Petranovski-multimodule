@@ -49,17 +49,17 @@
 <!--        <constructor-arg name="carDao" ref="carDao"/>-->
 <!--    </bean>-->
 
-    <bean id="driverService" class="com.epam.brest.service_rest.service.DriverServiceRest">
+    <bean id="driverServiceRest" class="com.epam.brest.service_rest.service.DriverServiceRest">
         <constructor-arg index="0" value="${protocol}://${host}:${port}/${point.drivers}"/>
         <constructor-arg index="1" ref="restTemplate"/>
     </bean>
 
-    <bean id="driverDtoService" class="com.epam.brest.service_rest.service.dto.DriverDtoServiceRest">
+    <bean id="driverDtoServiceRest" class="com.epam.brest.service_rest.service.dto.DriverDtoServiceRest">
         <constructor-arg index="0" value="${protocol}://${host}:${port}/${point.drivers_dto}"/>
         <constructor-arg index="1" ref="restTemplate"/>
     </bean>
 
-    <bean id="carService" class="com.epam.brest.service_rest.service.CarServiceRest">
+    <bean id="carServiceRest" class="com.epam.brest.service_rest.service.CarServiceRest">
         <constructor-arg index="0" value="${protocol}://${host}:${port}/${point.cars}"/>
         <constructor-arg index="1" ref="restTemplate"/>
     </bean>

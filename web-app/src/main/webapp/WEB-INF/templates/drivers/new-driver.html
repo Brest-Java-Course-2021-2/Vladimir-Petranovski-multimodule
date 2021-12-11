@@ -6,7 +6,7 @@
 </head>
 <body>
 <h1>Form for adding driver</h1>
-<form th:method="POST" th:action="@{/drivers}" th:object="${driver}">
+<form th:method="POST" th:action="@{/drivers_dto}" th:object="${driver}">
     <input type="hidden" name="_method" value="POST"/>
     <label for="name">Enter name: </label>
     <input type="text" th:field="*{driverName}" id="name"/>
@@ -22,7 +22,7 @@
     <br/>
     <input type="submit" value="Add driver"/>
     <br/>
-    <button><a th:href="@{/drivers}">Cancel</a></button>
+    <button><a th:href="@{/drivers_dto}">Cancel</a></button>
 </form>
 </body>
 </html>

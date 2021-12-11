@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import static com.epam.brest.logger.ProjectLogger.LOG;
 
 @Controller
-@RequestMapping("/drivers")
+//@RequestMapping("/drivers")
 public class DriverController {
 
     /**
@@ -60,7 +60,7 @@ public class DriverController {
      * @return view name.
      */
 
-    @GetMapping()
+    @GetMapping("/drivers_dto")
     public final String findAllDrivers(final Model model) {
         LOG.info("Method findAllDrivers() started of class {}",
                 getClass().getName());
@@ -76,7 +76,7 @@ public class DriverController {
      * @return view name.
      */
 
-    @GetMapping("/new-driver")
+    @GetMapping("/drivers/new-driver")
     public final String showFormAddingDriver(
             @ModelAttribute("driver") final Driver driver) {
         LOG.info("Method showFormAddingDriver() "
@@ -93,7 +93,7 @@ public class DriverController {
      * @return view name.
      */
 
-    @PostMapping()
+    @PostMapping("/drivers_dto")
     public String saveDriver(@ModelAttribute("driver") final Driver driver,
                              final BindingResult result) {
         LOG.info("Method saveDriver() with driver {} started of class {}",
@@ -105,7 +105,7 @@ public class DriverController {
         }
 
         driverService.saveDriver(driver);
-        return "redirect:/drivers";
+        return "redirect:/drivers_dto";
     }
 
     /**
@@ -116,7 +116,7 @@ public class DriverController {
      * @return view name.
      */
 
-    @GetMapping("/{id}/update-driver")
+    @GetMapping("/drivers/{id}/update-driver")
     public String showFormForUpdatingDriver(
             @PathVariable("id") final Integer id,
             final Model model) {
@@ -136,7 +136,7 @@ public class DriverController {
      * @return view name.
      */
 
-    @PostMapping("/{id}")
+    @PostMapping("/drivers/{id}")
     public String updateDriver(@ModelAttribute("driver") final Driver driver,
                                final BindingResult result,
                                @PathVariable("id") final Integer id) {
@@ -149,7 +149,7 @@ public class DriverController {
             return "drivers/update-driver";
         }
         driverService.updateDriverById(id, driver);
-        return "redirect:/drivers";
+        return "redirect:/drivers_dto";
     }
 
     /**
@@ -159,11 +159,11 @@ public class DriverController {
      * @return view name.
      */
 
-    @GetMapping("/{id}/delete-driver")
+    @GetMapping("/drivers/{id}/delete-driver")
     public String deleteDriver(@PathVariable("id") final Integer id) {
         LOG.info("Method deleteDriver() with id {} started of class {}",
                 id, getClass().getName());
         driverService.deleteDriverById(id);
-        return "redirect:/drivers";
+        return "redirect:/drivers_dto";
     }
 }
