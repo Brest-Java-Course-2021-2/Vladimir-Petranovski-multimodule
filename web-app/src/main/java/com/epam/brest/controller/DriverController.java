@@ -2,6 +2,7 @@ package com.epam.brest.controller;
 
 import com.epam.brest.controller.validator.DriverValidator;
 import com.epam.brest.model.Driver;
+import com.epam.brest.model.dto.DriverDto;
 import com.epam.brest.service_api.DriverService;
 import com.epam.brest.service_api.dto.DriverDtoService;
 import org.springframework.stereotype.Controller;
@@ -12,6 +13,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.ModelAttribute;
+
+import java.time.Instant;
+import java.time.temporal.ChronoUnit;
 
 import static com.epam.brest.logger.ProjectLogger.LOG;
 
@@ -64,6 +68,17 @@ public class DriverController {
     public final String findAllDrivers(final Model model) {
         LOG.info("Method findAllDrivers() started of class {}",
                 getClass().getName());
+//        DriverDto driverDto = new DriverDto();
+////        driverDto.setDriverDateStartWork(Instant.now());
+//
+////        double secondsSinceEpoch = 1.511554592277516E9;
+////        long longSeconds = (long) secondsSinceEpoch;
+////        long micros = Math.round((secondsSinceEpoch - longSeconds) * 1_000_000);
+////        Instant inst = Instant.ofEpochSecond(longSeconds).plus(micros , ChronoUnit.MICROS);
+//        double secondsSinceEpoch1 = Double.parseDouble(String.valueOf(driverDto.getDriverDateStartWork()));
+//        long longSeconds1 = (long) secondsSinceEpoch1;
+//        long micros1 = Math.round((secondsSinceEpoch1 - longSeconds1) * 1_000_000);
+//        driverDto.setDriverDateStartWork(Instant.ofEpochSecond(longSeconds1).plus(micros1 , ChronoUnit.MICROS));
         model.addAttribute("driverList",
                 driverDtoService.findAllDriverWithCountCars());
         return "drivers/drivers";
