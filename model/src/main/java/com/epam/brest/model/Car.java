@@ -4,45 +4,109 @@ import java.util.Objects;
 
 public class Car {
 
+    /**
+     * @serialField carId Integer.
+     */
+
     private Integer carId;
+
+    /**
+     * @serialField carModel String.
+     */
+
     private String carModel;
+
+    /**
+     * @serialField driverId Integer.
+     */
+
     private Integer driverId;
+
+    /**
+     * Constructor without parameters.
+     */
 
     public Car() {
     }
 
-    public Car(String carModel) {
+    /**
+     * Constructor.
+     *
+     * @param carModel String.
+     */
+
+    public Car(final String carModel) {
         this.carModel = carModel;
     }
 
-    public Car(String carModel, Integer driverId) {
+    /**
+     * Constructor.
+     *
+     * @param carModel String.
+     * @param driverId Integer.
+     */
+
+    public Car(final String carModel, final Integer driverId) {
         this.carModel = carModel;
         this.driverId = driverId;
     }
+
+    /**
+     * Getter for carId.
+     *
+     * @return carId.
+     */
 
     public Integer getCarId() {
         return carId;
     }
 
-    public Car setCarId(Integer carId) {
+    /**
+     * Setter for carId.
+     * @param carId Integer.
+     */
+
+    public Car setCarId(final Integer carId) {
         this.carId = carId;
         return this;
     }
+
+    /**
+     * Getter for carModel.
+     *
+     * @return carModel.
+     */
 
     public String getCarModel() {
         return carModel;
     }
 
-    public Car setCarModel(String carModel) {
+    /**
+     * Setter for carModel.
+     * @param carModel String.
+     */
+
+    public Car setCarModel(final String carModel) {
         this.carModel = carModel;
         return this;
     }
+
+    /**
+     * Getter for driverId.
+     *
+     * @return driverId.
+     */
 
     public Integer getDriverId() {
         return driverId;
     }
 
-    public void setDriverId(Integer driverId) {
+    /**
+     * Setter for driverId.
+     * @param driverId Integer.
+     */
+
+    public void setDriverId(final Integer driverId) {
         this.driverId = driverId;
     }
 

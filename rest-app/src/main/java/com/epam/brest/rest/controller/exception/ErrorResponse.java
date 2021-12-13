@@ -67,11 +67,11 @@ public class ErrorResponse {
     /**
      * Setter for message.
      *
-     * @param message String.
+     * @param enterMessage String.
      */
 
-    public void setMessage(final String message) {
-        this.message = message;
+    public void setMessage(final String enterMessage) {
+        this.message = enterMessage;
     }
 
     /**
@@ -87,10 +87,10 @@ public class ErrorResponse {
     /**
      * Getter for details.
      *
-     * @param details List<String>.
+     * @param enterDetails List<String>.
      */
 
-    public void setDetails(final List<String> details) {
-        this.details = details;
+    public void setDetails(final List<String> enterDetails) {
+        this.details = enterDetails;
     }
 }

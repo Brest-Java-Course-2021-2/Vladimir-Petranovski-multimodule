@@ -72,7 +72,11 @@
         </property>
         <property name="requestFactory">
                 <bean class="org.springframework.http.client.HttpComponentsClientHttpRequestFactory"/>
+<!--            <bean class="com.fasterxml.jackson.datatype.jsr310"></bean>-->
         </property>
+<!--        <property name="jacksonDatatypeJsr310">-->
+<!--            <bean class="com.fasterxml.jackson.datatype.jsr310"/>-->
+<!--        </property>-->
     </bean>
 
     <bean class="org.springframework.context.support.PropertySourcesPlaceholderConfigurer">

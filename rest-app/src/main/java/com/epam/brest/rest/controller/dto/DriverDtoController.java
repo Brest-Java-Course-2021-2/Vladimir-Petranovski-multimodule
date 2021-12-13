@@ -2,6 +2,7 @@ package com.epam.brest.rest.controller.dto;
 
 import com.epam.brest.model.dto.DriverDto;
 import com.epam.brest.service_api.dto.DriverDtoService;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -23,11 +24,13 @@ public class DriverDtoController {
     /**
      * Constructor.
      *
-     * @param driverDtoService driverDtoService.
+     * @param enterDriverDtoService driverDtoService.
      */
 
-    public DriverDtoController(final DriverDtoService driverDtoService) {
-        this.driverDtoService = driverDtoService;
+    public DriverDtoController(
+            @Qualifier("driverDtoServiceImpl")
+            final DriverDtoService enterDriverDtoService) {
+        this.driverDtoService = enterDriverDtoService;
     }
 
     /**

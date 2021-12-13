@@ -2,6 +2,7 @@ package com.epam.brest.rest.controller;
 
 import com.epam.brest.model.Driver;
 import com.epam.brest.service_api.DriverService;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -29,11 +30,14 @@ public class DriverController {
 
     /**
      * Constructor.
-     * @param  driverService DriverService.
+     *
+     * @param  enterDriverService DriverService.
      */
 
-    public DriverController(final DriverService driverService) {
-        this.driverService = driverService;
+    public DriverController(
+            @Qualifier("driverServiceImpl")
+            final DriverService enterDriverService) {
+        this.driverService = enterDriverService;
     }
 
     /**

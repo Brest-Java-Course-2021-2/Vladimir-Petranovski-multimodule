@@ -2,6 +2,7 @@ package com.epam.brest.rest.controller;
 
 import com.epam.brest.model.Car;
 import com.epam.brest.service_api.CarService;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -29,11 +30,14 @@ public class CarController {
 
     /**
      * Constructor.
-     * @param carService carService.
+     *
+     * @param enterCarService carService.
      */
 
-    public CarController(final CarService carService) {
-        this.carService = carService;
+    public CarController(
+            @Qualifier("carServiceImpl")
+            final CarService enterCarService) {
+        this.carService = enterCarService;
     }
 
     /**

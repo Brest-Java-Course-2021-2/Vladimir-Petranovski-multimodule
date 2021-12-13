@@ -2,25 +2,20 @@ package com.epam.brest.controller;
 
 import com.epam.brest.controller.validator.DriverValidator;
 import com.epam.brest.model.Driver;
-import com.epam.brest.model.dto.DriverDto;
 import com.epam.brest.service_api.DriverService;
 import com.epam.brest.service_api.dto.DriverDtoService;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.ModelAttribute;
 
-import java.time.Instant;
-import java.time.temporal.ChronoUnit;
-
 import static com.epam.brest.logger.ProjectLogger.LOG;
 
 @Controller
-//@RequestMapping("/drivers")
 public class DriverController {
 
     /**
@@ -44,17 +39,20 @@ public class DriverController {
     /**
      * Constructor.
      *
-     * @param driverDtoService driverDto Service.
-     * @param driverService driverService.
-     * @param driverValidator driverValidator.
+     * @param enterDriverDtoService driverDto Service.
+     * @param enterDriverService driverService.
+     * @param enterDriverValidator driverValidator.
      */
 
-    public DriverController(final DriverDtoService driverDtoService,
-                            final DriverService driverService,
-                            final DriverValidator driverValidator) {
-        this.driverDtoService = driverDtoService;
-        this.driverService = driverService;
-        this.driverValidator = driverValidator;
+    public DriverController(@Qualifier("driverDtoServiceRest")
+                            final DriverDtoService enterDriverDtoService,
+                            @Qualifier("driverServiceRest")
+                            final DriverService enterDriverService,
+                            @Qualifier("driverValidator")
+                            final DriverValidator enterDriverValidator) {
+        this.driverDtoService = enterDriverDtoService;
+        this.driverService = enterDriverService;
+        this.driverValidator = enterDriverValidator;
     }
 
     /**
@@ -73,12 +71,18 @@ public class DriverController {
 //
 ////        double secondsSinceEpoch = 1.511554592277516E9;
 ////        long longSeconds = (long) secondsSinceEpoch;
-////        long micros = Math.round((secondsSinceEpoch - longSeconds) * 1_000_000);
-////        Instant inst = Instant.ofEpochSecond(longSeconds).plus(micros , ChronoUnit.MICROS);
-//        double secondsSinceEpoch1 = Double.parseDouble(String.valueOf(driverDto.getDriverDateStartWork()));
+////        long micros = Math.round(
+// (secondsSinceEpoch - longSeconds) * 1_000_000);
+////        Instant inst = Instant.ofEpochSecond(
+// longSeconds).plus(micros , ChronoUnit.MICROS);
+//        double secondsSinceEpoch1 = Double.parseDouble(
+//        String.valueOf(driverDto.getDriverDateStartWork()));
 //        long longSeconds1 = (long) secondsSinceEpoch1;
-//        long micros1 = Math.round((secondsSinceEpoch1 - longSeconds1) * 1_000_000);
-//        driverDto.setDriverDateStartWork(Instant.ofEpochSecond(longSeconds1).plus(micros1 , ChronoUnit.MICROS));
+//        long micros1 = Math.round(
+//        (secondsSinceEpoch1 - longSeconds1) * 1_000_000);
+//        driverDto.setDriverDateStartWork(
+//        Instant.ofEpochSecond(longSeconds1).plus(micros1 ,
+//        ChronoUnit.MICROS));
         model.addAttribute("driverList",
                 driverDtoService.findAllDriverWithCountCars());
         return "drivers/drivers";
