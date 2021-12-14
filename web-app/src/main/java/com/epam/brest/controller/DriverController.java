@@ -4,7 +4,6 @@ import com.epam.brest.controller.validator.DriverValidator;
 import com.epam.brest.model.Driver;
 import com.epam.brest.service_api.DriverService;
 import com.epam.brest.service_api.dto.DriverDtoService;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -22,7 +21,7 @@ public class DriverController {
      * Field driverDtoService.
      */
 
-    private final DriverDtoService driverDtoService;
+    private final DriverDtoService driverDtoServiceh;
 
     /**
      * Field driverService.
@@ -36,23 +35,39 @@ public class DriverController {
 
     private final DriverValidator driverValidator;
 
+//    /**
+//     * Constructor.
+//     *
+//     * @param enterDriverDtoService driverDto Service.
+//     * @param enterDriverService driverService.
+//     * @param enterDriverValidator driverValidator.
+//     */
+//
+//    public DriverController(@Qualifier("driverDtoServiceRest")
+//                            final DriverDtoService enterDriverDtoService,
+//                            @Qualifier("driverServiceRest")
+//                            final DriverService enterDriverService,
+//                            @Qualifier("driverValidator")
+//                            final DriverValidator enterDriverValidator) {
+//        this.driverDtoService = enterDriverDtoService;
+//        this.driverService = enterDriverService;
+//        this.driverValidator = enterDriverValidator;
+//    }
+
     /**
      * Constructor.
      *
-     * @param enterDriverDtoService driverDto Service.
-     * @param enterDriverService driverService.
-     * @param enterDriverValidator driverValidator.
+     * @param driverDtoService driverDto Service.
+     * @param driverService driverService.
+     * @param driverValidator driverValidator.
      */
 
-    public DriverController(@Qualifier("driverDtoServiceRest")
-                            final DriverDtoService enterDriverDtoService,
-                            @Qualifier("driverServiceRest")
-                            final DriverService enterDriverService,
-                            @Qualifier("driverValidator")
-                            final DriverValidator enterDriverValidator) {
-        this.driverDtoService = enterDriverDtoService;
-        this.driverService = enterDriverService;
-        this.driverValidator = enterDriverValidator;
+    public DriverController(final DriverDtoService driverDtoService,
+                            final DriverService driverService,
+                            final DriverValidator driverValidator) {
+        this.driverDtoServiceh = driverDtoService;
+        this.driverService = driverService;
+        this.driverValidator = driverValidator;
     }
 
     /**
@@ -66,25 +81,8 @@ public class DriverController {
     public final String findAllDrivers(final Model model) {
         LOG.info("Method findAllDrivers() started of class {}",
                 getClass().getName());
-//        DriverDto driverDto = new DriverDto();
-////        driverDto.setDriverDateStartWork(Instant.now());
-//
-////        double secondsSinceEpoch = 1.511554592277516E9;
-////        long longSeconds = (long) secondsSinceEpoch;
-////        long micros = Math.round(
-// (secondsSinceEpoch - longSeconds) * 1_000_000);
-////        Instant inst = Instant.ofEpochSecond(
-// longSeconds).plus(micros , ChronoUnit.MICROS);
-//        double secondsSinceEpoch1 = Double.parseDouble(
-//        String.valueOf(driverDto.getDriverDateStartWork()));
-//        long longSeconds1 = (long) secondsSinceEpoch1;
-//        long micros1 = Math.round(
-//        (secondsSinceEpoch1 - longSeconds1) * 1_000_000);
-//        driverDto.setDriverDateStartWork(
-//        Instant.ofEpochSecond(longSeconds1).plus(micros1 ,
-//        ChronoUnit.MICROS));
         model.addAttribute("driverList",
-                driverDtoService.findAllDriverWithCountCars());
+                driverDtoServiceh.findAllDriverWithCountCars());
         return "drivers/drivers";
     }
 

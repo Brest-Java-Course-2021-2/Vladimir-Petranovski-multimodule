@@ -3,7 +3,6 @@ package com.epam.brest.controller;
 import com.epam.brest.controller.validator.CarValidator;
 import com.epam.brest.model.Car;
 import com.epam.brest.service_api.CarService;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -39,26 +38,34 @@ public class CarController {
 
     private final CarValidator carValidator;
 
+//    /**
+//     * Constructor.
+//     *
+//     * @param enterCarService carService.
+//     * @param  enterCarValidator carValidator.
+//     */
+
+//    public CarController(@Qualifier("carServiceRest")
+//                         final CarService enterCarService,
+//                         @Qualifier("carValidator")
+//                         final CarValidator enterCarValidator) {
+//        this.carService = enterCarService;
+//        this.carValidator = enterCarValidator;
+//    }
+
     /**
      * Constructor.
      *
-     * @param enterCarService carService.
-     * @param  enterCarValidator carValidator.
+     * @param carService carService.
+     * @param  carValidator carValidator.
+     *
      */
 
-    public CarController(@Qualifier("carServiceRest")
-                         final CarService enterCarService,
-                         @Qualifier("carValidator")
-                         final CarValidator enterCarValidator) {
-        this.carService = enterCarService;
-        this.carValidator = enterCarValidator;
+    public CarController(final CarService carService,
+                         final CarValidator carValidator) {
+        this.carService = carService;
+        this.carValidator = carValidator;
     }
-
-//    public CarController(final CarService carService,
-//                         final CarValidator carValidator) {
-//        this.carService = carService;
-//        this.carValidator = carValidator;
-//    }
 
     /**
      * Goto car's list page.
