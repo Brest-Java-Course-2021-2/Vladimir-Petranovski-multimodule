@@ -7,13 +7,13 @@
 <body>
     <h1>Form of choose driver from date to date</h1>
     <div>
-        <form th:method="POST" th:action="@{/drivers/drivers-range}" th:object="${driver}"> <!--TODO -->
-            <input type="hidden" name="_method" value="POST"/>
+        <form th:method="GET" th:action="@{/drivers/drivers-range?fromDate=from&toDate=to" th:object="${driver}"> <!--TODO -->
+<!--            <input type="hidden" name="_method" value="POST"/>-->
             <label for="fromDate">From </label>
-            <input type="datetime-local" th:field="*{fromDateChoose}" id="fromDate"/>
+            <input type="datetime-local" value="from" name="fromDate" class="datepicker" id="fromDate"/>
             <br/>
             <label for="toDate"> to </label>
-            <input type="datetime-local" th:field="*{toDateChoose}" id="toDate">
+            <input type="datetime-local" value="to" name="toDate" class="datepicker" id="toDate">
             <br/>
             <input type="submit" value="Choose!">
             <br/>
