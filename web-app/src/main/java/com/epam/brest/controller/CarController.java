@@ -18,6 +18,14 @@ import static com.epam.brest.logger.ProjectLogger.LOG;
 @RequestMapping("/cars")
 public class CarController {
 
+    public static final String CARS_CARS = "cars/cars";
+
+    public static final String CARS_NEW_CARS = "cars/new-car";
+
+    public static final String CARS_UPDATE_CARS = "cars/update-car";
+
+    public static final String REDIRECT_CARS = "redirect:/cars";
+
     /**
      * Field carService.
      */
@@ -30,11 +38,27 @@ public class CarController {
 
     private final CarValidator carValidator;
 
+//    /**
+//     * Constructor.
+//     *
+//     * @param enterCarService carService.
+//     * @param  enterCarValidator carValidator.
+//     */
+
+//    public CarController(@Qualifier("carServiceRest")
+//                         final CarService enterCarService,
+//                         @Qualifier("carValidator")
+//                         final CarValidator enterCarValidator) {
+//        this.carService = enterCarService;
+//        this.carValidator = enterCarValidator;
+//    }
+
     /**
      * Constructor.
      *
      * @param carService carService.
      * @param  carValidator carValidator.
+     *
      */
 
     public CarController(final CarService carService,
@@ -55,7 +79,7 @@ public class CarController {
         LOG.info("Method findAllCars() started of class {}",
                 getClass().getName());
         model.addAttribute("carList", carService.findAllCars());
-        return "cars/cars";
+        return CARS_CARS;
     }
 
     /**
@@ -69,7 +93,7 @@ public class CarController {
     public String showFormAddingCar(@ModelAttribute("car") final Car car) {
         LOG.info("Method showFormAddingCar() with car {} started of class {}",
                 car, getClass().getName());
-        return "cars/new-car";
+        return CARS_NEW_CARS;
     }
 
     /**
@@ -88,7 +112,7 @@ public class CarController {
 
         carValidator.validate(car, result);
         if (result.hasErrors()) {
-            return "cars/new-car";
+            return CARS_NEW_CARS;
         }
         carService.saveCar(car);
         return "redirect:/cars";
@@ -108,7 +132,7 @@ public class CarController {
         LOG.info("Method showFormUpdatingCar() with id {} started of class {}",
                 id, getClass().getName());
         model.addAttribute("car", carService.findCarById(id));
-        return "cars/update-car";
+        return CARS_UPDATE_CARS;
     }
 
     /**
@@ -129,10 +153,10 @@ public class CarController {
 
         carValidator.validate(car, result);
         if (result.hasErrors()) {
-            return "cars/update-car";
+            return CARS_UPDATE_CARS;
         }
         carService.updateCarById(id, car);
-        return "redirect:/cars";
+        return REDIRECT_CARS;
     }
 
     /**
@@ -147,6 +171,6 @@ public class CarController {
         LOG.info("Method deleteCar() with id {} started of class {}",
                 id, getClass().getName());
         carService.deleteCarById(id);
-        return "redirect:/cars";
+        return REDIRECT_CARS;
     }
 }

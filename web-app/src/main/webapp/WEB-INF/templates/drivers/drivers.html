@@ -25,16 +25,16 @@
             </thead>
             <tbody>
             <tr th:each="driver : ${driverList}">
-                <td th:text="${driver.getDriverId()}"></td>
-                <td th:text="${driver.getDriverName()}"></td>
-                <td th:text="${driver.getDriverDateStartWork()}"></td>
-                <td th:text="${driver.getDriverSalary()}"></td>
-                <td th:text="${driver.getCountOfCarsAssignedToDriver()}"></td>
+                <td th:text="${driver.driverId}"></td>
+                <td th:text="${driver.driverName}"></td>
+                <td th:text="${driver.driverDateStartWork}"></td>
+                <td th:text="${driver.driverSalary}"></td>
+                <td th:text="${driver.countOfCarsAssignedToDriver}"></td>
                 <td>
-                    <a th:href="@{/drivers/{id}/update-driver(id=${driver.getDriverId()})}" th:text="'Update driver ' + ${driver.getDriverName()}"></a>
+                    <a th:href="@{/drivers/{id}/update-driver(id=${driver.driverId})}" th:text="'Update driver ' + ${driver.driverName}"></a>
                 </td>
                 <td>
-                    <a th:href="@{/drivers/{id}/delete-driver(id=${driver.getDriverId()})}" th:text="'Delete driver ' + ${driver.getDriverName()}"></a>
+                    <a th:href="@{/drivers/{id}/delete-driver(id=${driver.driverId})}" th:text="'Delete driver ' + ${driver.driverName}"></a>
                 </td>
             </tr>
             </tbody>

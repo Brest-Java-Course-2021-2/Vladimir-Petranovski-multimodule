@@ -19,34 +19,132 @@
     <!-- Component scan for @Controller, @Service... annotations -->
     <context:component-scan base-package="com.epam.brest*"/>
 
-    <import resource="classpath*:test-db.xml"/>
+<!--    <import resource="classpath*:test-db.xml"/>-->
 
-    <bean id="namedParameterJdbcTemplate" class="org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate">
-        <constructor-arg ref="dataSource"/>
+<!--    <bean id="namedParameterJdbcTemplate" class="org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate">-->
+<!--        <constructor-arg ref="dataSource"/>-->
+<!--    </bean>-->
+
+<!--    <bean id="driverDtoDao" class="com.epam.brest.dao.dto.DriverDtoDaoJdbcImpl">-->
+<!--        <constructor-arg ref="namedParameterJdbcTemplate"/>-->
+<!--    </bean>-->
+
+<!--    <bean id="driverDtoService" class="com.epam.brest.service.impl.dto.DriverDtoServiceImpl">-->
+<!--        <constructor-arg name="driverDtoDao" ref="driverDtoDao"/>-->
+<!--    </bean>-->
+
+<!--    <bean id="driverDao" class="com.epam.brest.dao.DriverDaoJdbcImpl">-->
+<!--        <constructor-arg ref="namedParameterJdbcTemplate"/>-->
+<!--    </bean>-->
+
+<!--    <bean id="driverService" class="com.epam.brest.service.impl.DriverServiceImpl">-->
+<!--        <constructor-arg name="driverDao" ref="driverDao"/>-->
+<!--    </bean>-->
+
+<!--    <bean id="carDao" class="com.epam.brest.dao.CarDaoJdbcImpl">-->
+<!--        <constructor-arg ref="namedParameterJdbcTemplate"/>-->
+<!--    </bean>-->
+
+<!--    <bean id="carService" class="com.epam.brest.service.impl.CarServiceImpl">-->
+<!--        <constructor-arg name="carDao" ref="carDao"/>-->
+<!--    </bean>-->
+
+    <bean id="driverServiceRest" class="com.epam.brest.service_rest.service.DriverServiceRest">
+        <constructor-arg index="0" value="${protocol}://${host}:${port}/${point.drivers}"/>
+        <constructor-arg index="1" ref="restTemplate"/>
     </bean>
 
-    <bean id="driverDtoDao" class="com.epam.brest.dao.dto.DriverDtoDaoJdbcImpl">
-        <constructor-arg ref="namedParameterJdbcTemplate"/>
+    <bean id="driverDtoServiceRest" class="com.epam.brest.service_rest.service.dto.DriverDtoServiceRest">
+        <constructor-arg index="0" value="${protocol}://${host}:${port}/${point.drivers_dto}"/>
+        <constructor-arg index="1" ref="restTemplate"/>
     </bean>
 
-    <bean id="driverDtoService" class="com.epam.brest.service.impl.dto.DriverDtoServiceImpl">
-        <constructor-arg name="driverDtoDao" ref="driverDtoDao"/>
+    <bean id="carServiceRest" class="com.epam.brest.service_rest.service.CarServiceRest">
+        <constructor-arg index="0" value="${protocol}://${host}:${port}/${point.cars}"/>
+        <constructor-arg index="1" ref="restTemplate"/>
     </bean>
 
-    <bean id="driverDao" class="com.epam.brest.dao.DriverDaoJdbcImpl">
-        <constructor-arg ref="namedParameterJdbcTemplate"/>
+    <bean id="restTemplate" class="org.springframework.web.client.RestTemplate">
+        <property name="messageConverters">
+            <list>
+                <bean class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter"/>
+                <bean class="org.springframework.http.converter.ByteArrayHttpMessageConverter"/>
+            </list>
+        </property>
+        <property name="requestFactory">
+                <bean class="org.springframework.http.client.HttpComponentsClientHttpRequestFactory"/>
+        </property>
+<!--        <property name="modulesToInstall"-->
+<!--                  value="-->
+<!--        com.fasterxml.jackson.datatype.jdk8.Jdk8Module,-->
+<!--    com.fasterxml.jackson.datatype.jsr310.JavaTimeModule,-->
+<!--    com.fasterxml.jackson.module.paramnames.ParameterNamesModule" />-->
     </bean>
 
-    <bean id="driverService" class="com.epam.brest.service.impl.DriverServiceImpl">
-        <constructor-arg name="driverDao" ref="driverDao"/>
-    </bean>
+<!--    <bean id="objectMapper"-->
+<!--          class="org.springframework.http.converter.json.Jackson2ObjectMapperFactoryBean">-->
+<!--        <property name="modulesToInstall"-->
+<!--                  value="-->
+<!--        com.fasterxml.jackson.datatype.jdk8.Jdk8Module,-->
+<!--        com.fasterxml.jackson.datatype.jsr310.JavaTimeModule,-->
+<!--        com.fasterxml.jackson.module.paramnames.ParameterNamesModule" />-->
+<!--    </bean>-->
 
-    <bean id="carDao" class="com.epam.brest.dao.CarDaoJdbcImpl">
-        <constructor-arg ref="namedParameterJdbcTemplate"/>
-    </bean>
+<!--    <context:annotation-config />-->
 
-    <bean id="carService" class="com.epam.brest.service.impl.CarServiceImpl">
-        <constructor-arg name="carDao" ref="carDao"/>
+<!--    <mvc:annotation-driven>-->
+<!--        <mvc:message-converters register-defaults="true">-->
+<!--            <bean-->
+<!--                    class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">-->
+<!--                <property name="objectMapper" ref="objectMapper" />-->
+<!--            </bean>-->
+<!--        </mvc:message-converters>-->
+<!--    </mvc:annotation-driven>-->
+
+<!--    <bean id="objectMapper"-->
+<!--          class="org.springframework.http.converter.json.Jackson2ObjectMapperFactoryBean">-->
+
+<!--        <property name="featuresToDisable">-->
+<!--            <array>-->
+<!--                <util:constant-->
+<!--                        static-field="com.fasterxml.jackson.databind.SerializationFeature.WRITE_DATES_AS_TIMESTAMPS" />-->
+<!--            </array>-->
+<!--        </property>-->
+
+<!--        <property name="dateFormat">-->
+<!--            <bean class="java.text.SimpleDateFormat">-->
+<!--                <constructor-arg type="java.lang.String" value="yyyy-MM-dd"></constructor-arg>-->
+<!--            </bean>-->
+<!--        </property>-->
+
+<!--        <property name="modulesToInstall"-->
+<!--                  value="-->
+<!--        com.fasterxml.jackson.datatype.jdk8.Jdk8Module,-->
+<!--    com.fasterxml.jackson.datatype.jsr310.JavaTimeModule,-->
+<!--    com.fasterxml.jackson.module.paramnames.ParameterNamesModule" />-->
+<!--    </bean>-->
+
+<!--    <bean id="jsonHttpMessageConverter"-->
+<!--          class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">-->
+<!--        <property name="supportedMediaTypes" value="application/json" />-->
+<!--        <property name="objectMapper" ref="objectMapper" />-->
+<!--    </bean>-->
+
+<!--    <bean-->
+<!--            class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter">-->
+<!--        <property name="messageConverters">-->
+<!--            <list>-->
+<!--                <ref bean="jsonHttpMessageConverter" />-->
+<!--            </list>-->
+<!--        </property>-->
+<!--    </bean>-->
+
+    <bean class="org.springframework.context.support.PropertySourcesPlaceholderConfigurer">
+        <property name="locations">
+            <list>
+                <value>classpath:application.properties</value>
+            </list>
+        </property>
     </bean>
 
     <!-- Thymeleaf Template Resolver -->
