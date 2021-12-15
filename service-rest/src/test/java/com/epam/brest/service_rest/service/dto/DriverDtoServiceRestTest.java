@@ -85,7 +85,7 @@ class DriverDtoServiceRestTest {
                 getClass().getName());
         // given
         mockRestServiceServer.expect(ExpectedCount.once(), requestTo(new URI(URL + "/drivers-range")))
-                .andExpect(method(HttpMethod.POST))
+                .andExpect(method(HttpMethod.GET))
                 .andRespond(withStatus(HttpStatus.OK)
                         .contentType(MediaType.APPLICATION_JSON)
                         .body(objectMapper.writeValueAsString(Arrays.asList(create(0), create(1))))

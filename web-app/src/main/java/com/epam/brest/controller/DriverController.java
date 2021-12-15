@@ -172,7 +172,7 @@ public class DriverController {
         return "drivers/form-range";
     }
 
-    @PostMapping("/drivers_dto/drivers-range")
+    @GetMapping("/drivers_dto/drivers-range")
     public String showDriversListOnRange(@ModelAttribute("driver") DriverDto driverDto, Model model) {
         LOG.info("Method showDriversListOnRange() started of class {}", getClass().getName());
         model.addAttribute("driverList", driverDtoService.chooseDriverOnDateRange(driverDto.getFromDateChoose(), driverDto.getToDateChoose()));

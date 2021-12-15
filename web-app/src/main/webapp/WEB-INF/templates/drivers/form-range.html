@@ -7,8 +7,8 @@
 <body>
 <h1>Form of choose driver from date to date</h1>
 <div>
-    <form th:method="POST" th:action="@{/drivers_dto/drivers-range}" th:object="${driver}">
-        <input type="hidden" name="_method" value="POST"/>
+    <form th:method="GET" th:action="@{/drivers_dto/drivers-range}" th:object="${driver}">
+        <input type="hidden" name="_method" value="GET"/>
         <label for="fromDate">From </label>
         <input type="datetime-local" th:field="*{fromDateChoose}" id="fromDate"/>
         <br/>

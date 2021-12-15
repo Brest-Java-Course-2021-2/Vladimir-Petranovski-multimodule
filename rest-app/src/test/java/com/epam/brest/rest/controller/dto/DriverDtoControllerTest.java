@@ -78,7 +78,7 @@ class DriverDtoControllerTest {
 //        when(driverDtoService.chooseDriverOnDateRange(anyString(), anyString())).thenReturn(Arrays.asList(create(0), create(1)));
 //
 //        mockMvc.perform(
-//                        MockMvcRequestBuilders.post("/drivers_dto/drivers-range")
+//                        MockMvcRequestBuilders.get("/drivers_dto/drivers-range")
 //                ).andDo(MockMvcResultHandlers.print())
 //                .andExpect(status().isOk())
 //                .andExpect(content().contentType("application/json"))

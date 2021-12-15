@@ -54,8 +54,7 @@ public class DriverDtoController {
      * @return Driver Dto collection in json format.
      */
 
-    @PostMapping(value = "/drivers-range", consumes = "application/json",
-            produces = "application/json")
+    @GetMapping(value = "/drivers-range")
     public Collection<DriverDto> showDriversListOnRange(@RequestBody DriverDto driverDto) {
         LOG.info("Method showDriversListOnRange() started of class {}",
                 getClass().getName());

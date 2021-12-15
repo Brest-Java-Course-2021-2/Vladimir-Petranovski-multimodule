@@ -74,8 +74,8 @@ public class DriverDtoServiceRest implements DriverDtoService {
         LOG.info("Method chooseDriverOnDateRange()"
                         + " with fromDate {} and toDate {} started {}",
                 fromDate, toDate, getClass().getName());
-        ResponseEntity responseEntity = restTemplate.postForEntity(
-                url + "/drivers-range", DriverDto.class, List.class);
+        ResponseEntity responseEntity = restTemplate.getForEntity(
+                url + "/drivers-range", List.class);
         return (List<DriverDto>) responseEntity.getBody();
     }
 }

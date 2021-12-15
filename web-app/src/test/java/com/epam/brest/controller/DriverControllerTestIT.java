@@ -390,7 +390,7 @@ class DriverControllerTestIT {
         List<DriverDto> driversDst = driverDtoService.chooseDriverOnDateRange(fromDate, toDate);
 
         mockMvc.perform(
-                MockMvcRequestBuilders.post("/drivers_dto/drivers-range")
+                MockMvcRequestBuilders.get("/drivers_dto/drivers-range")
         ).andDo(MockMvcResultHandlers.print())
                 .andExpect(status().is2xxSuccessful())
                 .andExpect(view().name("drivers/drivers-range"));
