@@ -50,6 +50,7 @@ public class DriverDtoServiceRest implements DriverDtoService {
      *
      * @return driver's list rest Dto.
      */
+
     @Override
     public List<DriverDto> findAllDriverWithCountCars() {
 
@@ -57,6 +58,24 @@ public class DriverDtoServiceRest implements DriverDtoService {
                 getClass().getName());
         ResponseEntity responseEntity = restTemplate.getForEntity(
                 url, List.class);
+        return (List<DriverDto>) responseEntity.getBody();
+    }
+
+    /**
+     * Find driver's list rest Dto from date to date.
+     *
+     * @return driver's list rest Dto.
+     */
+
+    @Override
+    public List<DriverDto> chooseDriverOnDateRange(final String fromDate,
+                                                   final String toDate) {
+
+        LOG.info("Method chooseDriverOnDateRange()"
+                        + " with fromDate {} and toDate {} started {}",
+                fromDate, toDate, getClass().getName());
+        ResponseEntity responseEntity = restTemplate.postForEntity(
+                url + "/drivers-range", DriverDto.class, List.class);
         return (List<DriverDto>) responseEntity.getBody();
     }
 }

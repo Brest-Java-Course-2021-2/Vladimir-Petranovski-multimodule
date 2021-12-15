@@ -13,4 +13,13 @@ public interface DriverDtoService {
      */
 
     List<DriverDto> findAllDriverWithCountCars();
+
+    /**
+     * Get  list of driver from date to date Dto.
+     *
+     * @return list of driver from date to date Dto.
+     */
+
+    List<DriverDto> chooseDriverOnDateRange(final String fromDate,
+                                            final String toDate);
 }

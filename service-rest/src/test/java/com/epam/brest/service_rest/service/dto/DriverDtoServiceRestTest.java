@@ -3,7 +3,7 @@ package com.epam.brest.service_rest.service.dto;
 import com.epam.brest.model.dto.DriverDto;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.datatype.jsr310.JSR310Module;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -45,11 +45,17 @@ class DriverDtoServiceRestTest {
 
     private ObjectMapper objectMapper;
 
+    private String fromDate;
+    private String toDate;
+
     @BeforeEach
     void setUp() {
-        objectMapper = new ObjectMapper().registerModule(new JSR310Module());
+        objectMapper = new ObjectMapper().registerModule(new JavaTimeModule());
         driverDtoServiceRest = new DriverDtoServiceRest(URL, restTemplate);
         mockRestServiceServer = MockRestServiceServer.createServer(restTemplate);
+
+        fromDate = "1990-01-02T10:10:10.002Z";
+        toDate = "2021-01-02T10:10:10.002Z";
     }
 
     @Test
@@ -70,7 +76,26 @@ class DriverDtoServiceRestTest {
         mockRestServiceServer.verify();
         assertNotNull(list);
         assertTrue(list.size() > 0);
+    }
 
+    @Test
+    void shouldChooseDriverOnDateRange() throws JsonProcessingException, URISyntaxException {
+
+        LOG.info("Method shouldChooseDriverOnDateRange() started {}",
+                getClass().getName());
+        // given
+        mockRestServiceServer.expect(ExpectedCount.once(), requestTo(new URI(URL + "/drivers-range")))
+                .andExpect(method(HttpMethod.POST))
+                .andRespond(withStatus(HttpStatus.OK)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .body(objectMapper.writeValueAsString(Arrays.asList(create(0), create(1))))
+                );
+        // when
+        List<DriverDto> listDst = driverDtoServiceRest.chooseDriverOnDateRange(fromDate, toDate);
+        // then
+        mockRestServiceServer.verify();
+        assertNotNull(listDst);
+        assertTrue(listDst.size() > 0);
     }
 
     private DriverDto create(Integer index) {

@@ -27,18 +27,6 @@ public class CarController {
 
     private final CarService carService;
 
-//    /**
-//     * Constructor.
-//     *
-//     * @param enterCarService carService.
-//     */
-//
-//    public CarController(
-//            @Qualifier("carServiceImpl")
-//            final CarService enterCarService) {
-//        this.carService = enterCarService;
-//    }
-
     /**
      * Constructor.
      *

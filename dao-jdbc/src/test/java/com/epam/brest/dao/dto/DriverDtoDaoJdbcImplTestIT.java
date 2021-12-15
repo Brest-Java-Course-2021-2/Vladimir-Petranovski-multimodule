@@ -34,4 +34,14 @@ class DriverDtoDaoJdbcImplTestIT {
         LOG.info("List of driver Dto was created {}", drivers);
         assertTrue(drivers.get(0).getCountOfCarsAssignedToDriver() > 0);
     }
+
+    @Test
+    void chooseDriverOnDateRange() {
+        LOG.info("Method started: chooseDriverOnDateRange() of {}", getClass().getName());
+        String fromDate = "1990-01-02T10:10:10.002Z";
+        String toDate = "2021-01-02T10:10:10.002Z";
+        List<DriverDto> drivers = driverDtoDaoJdbc.chooseDriverOnDateRange(fromDate, toDate);
+        assertNotNull(drivers);
+        LOG.info("List of driver Dto was created {}", drivers);
+    }
 }

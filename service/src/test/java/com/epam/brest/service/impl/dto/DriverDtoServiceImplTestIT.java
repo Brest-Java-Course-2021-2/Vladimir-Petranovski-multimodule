@@ -32,4 +32,14 @@ class DriverDtoServiceImplTestIT {
         LOG.info("Test passed, list driver Dto equals {}", drivers);
         assertTrue(drivers.get(0).getCountOfCarsAssignedToDriver() > 0);
     }
+
+    @Test
+    void chooseDriverOnDateRange() {
+        LOG.info("Method started: chooseDriverOnDateRange() of {}", getClass().getName());
+        String fromDate = "1990-01-02T10:10:10.002Z";
+        String toDate = "2021-01-02T10:10:10.002Z";
+        List<DriverDto> drivers = driverDtoService.chooseDriverOnDateRange(fromDate, toDate);
+        assertNotNull(drivers);
+        LOG.info("List of driver Dto was created {}", drivers);
+    }
 }

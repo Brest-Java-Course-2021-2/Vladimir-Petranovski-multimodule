@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Choose driver from date to date</title>
+</head>
+<body>
+<h1>Form of choose driver from date to date</h1>
+<div>
+    <form th:method="POST" th:action="@{/drivers_dto/drivers-range}" th:object="${driver}">
+        <input type="hidden" name="_method" value="POST"/>
+        <label for="fromDate">From </label>
+        <input type="datetime-local" th:field="*{fromDateChoose}" id="fromDate"/>
+        <br/>
+        <label for="toDate"> to </label>
+        <input type="datetime-local" th:field="*{toDateChoose}" id="toDate">
+        <br/>
+        <input type="submit" value="Choose!">
+        <br/>
+        <button><a th:href="@{/drivers_dto}">Cancel</a></button>
+    </form>
+</div>
+</body>
+</html>

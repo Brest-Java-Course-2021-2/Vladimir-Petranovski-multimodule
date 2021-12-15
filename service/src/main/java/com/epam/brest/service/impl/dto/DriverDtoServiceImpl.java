@@ -38,4 +38,16 @@ public class DriverDtoServiceImpl implements DriverDtoService {
     public List<DriverDto> findAllDriverWithCountCars() {
         return driverDtoDao.findAllDriversWithCountCars();
     }
+
+    /**
+     * Find driver's list Dto from date to date.
+     *
+     * @return driver's list Dto.
+     */
+
+    @Override
+    public List<DriverDto> chooseDriverOnDateRange(final String fromDate,
+                                                   final String toDate) {
+        return driverDtoDao.chooseDriverOnDateRange(fromDate, toDate);
+    }
 }
