@@ -90,7 +90,7 @@ public class DriverController {
         return "drivers/choose-date-range";
     }
 
-    @PostMapping("/drivers-range")
+    @GetMapping("/drivers-range")
     public String showDriversListOnRange(@ModelAttribute("driver") DriverDto driverDto, Model model) {
         log.info("Method showDriversListOnRange() started of class {}", getClass().getName());
 //        Timestamp fromDateTimestamp = Timestamp.valueOf(fromDate);

@@ -378,19 +378,19 @@ class DriverControllerTestIT {
     void shouldDoChooseDriverFromDateToDate() throws Exception {
         log.info("Method shouldDoChooseDriverFromDateToDate() started of class {}", getClass().getName());
         assertNotNull(driverService);
-//        List<Driver> drivers = driverService.findAllDrivers();
-//        if (drivers.size() == 0) {
-//            driverService.saveDriver(new Driver("PETIA", Instant.parse("2003-05-01T00:00:01.01Z"), new BigDecimal(790)));
-//            drivers = driverService.findAllDrivers();
-//        }
-//        assertNotNull(drivers);
-//        String fromDate = drivers.get(0).getDriverDateStartWork().toString();
-//        String toDate = drivers.get(drivers.size() - 1).getDriverDateStartWork().toString();
-//
-//        mockMvc.perform(
-//                MockMvcRequestBuilders.put("/drivers/" + fromDate + "/" + toDate + "/drivers-range")
-//        ).andDo(MockMvcResultHandlers.print())
-//                .andExpect(status().is2xxSuccessful())
-//                .andExpect(view().name("drivers/drivers-range"));
+        List<Driver> drivers = driverService.findAllDrivers();
+        if (drivers.size() == 0) {
+            driverService.saveDriver(new Driver("PETIA", Instant.parse("2003-05-01T00:00:01.01Z"), new BigDecimal(790)));
+            drivers = driverService.findAllDrivers();
+        }
+        assertNotNull(drivers);
+        String fromDate = drivers.get(0).getDriverDateStartWork().toString();
+        String toDate = drivers.get(drivers.size() - 1).getDriverDateStartWork().toString();
+
+        mockMvc.perform(
+                MockMvcRequestBuilders.get("/drivers/drivers-range")
+        ).andDo(MockMvcResultHandlers.print())
+                .andExpect(status().is2xxSuccessful())
+                .andExpect(view().name("drivers/drivers-range"));
     }
 }
