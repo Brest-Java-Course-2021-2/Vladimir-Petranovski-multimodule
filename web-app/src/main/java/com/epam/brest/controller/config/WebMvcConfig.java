@@ -3,6 +3,8 @@ package com.epam.brest.controller.config;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.converter.HttpMessageConverter;
@@ -18,6 +20,9 @@ import java.util.List;
 @ComponentScan(basePackages = "com.epam.brest")
 public class WebMvcConfig implements WebMvcConfigurer {
 
+    public static final Logger LOG = LogManager.getLogger(
+            WebMvcConfig.class);
+
     /**
      * Configuration objectMapper.
      *
@@ -27,6 +32,9 @@ public class WebMvcConfig implements WebMvcConfigurer {
     @Override
     public void configureMessageConverters(
             final List<HttpMessageConverter<?>> converters) {
+
+        LOG.info("Method configureMessageConverters() started in {}",
+                getClass().getName());
 
         ObjectMapper objectMapper = Jackson2ObjectMapperBuilder.json()
                 .modules(new JavaTimeModule()).build()

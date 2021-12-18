@@ -1,5 +1,7 @@
 package com.epam.brest.controller;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -15,7 +17,6 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.context.WebApplicationContext;
 
-import static com.epam.brest.logger.ProjectLogger.LOG;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
 
@@ -24,6 +25,9 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @ContextConfiguration(locations = {"classpath*:app-context-web-test.xml"})
 @Transactional
 class MotorDepotControllerTestIT {
+
+    public static final Logger LOG = LogManager.getLogger(
+            MotorDepotControllerTestIT.class);
 
     @Autowired
     private WebApplicationContext wac;

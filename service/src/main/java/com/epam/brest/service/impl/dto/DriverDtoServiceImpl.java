@@ -3,6 +3,8 @@ package com.epam.brest.service.impl.dto;
 import com.epam.brest.dao_api.dto.DriverDtoDao;
 import com.epam.brest.model.dto.DriverDto;
 import com.epam.brest.service_api.dto.DriverDtoService;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -10,6 +12,8 @@ import java.util.List;
 
 @Service
 public class DriverDtoServiceImpl implements DriverDtoService {
+
+    public static final Logger LOG = LogManager.getLogger(DriverDtoServiceImpl.class);
 
     /**
      * Field driverDtoDao.

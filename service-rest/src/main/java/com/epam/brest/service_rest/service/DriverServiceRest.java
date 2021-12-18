@@ -2,21 +2,20 @@ package com.epam.brest.service_rest.service;
 
 import com.epam.brest.model.Driver;
 import com.epam.brest.service_api.DriverService;
-import org.springframework.http.ResponseEntity;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.MediaType;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpMethod;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import org.springframework.http.*;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.Arrays;
 import java.util.List;
 
-import static com.epam.brest.logger.ProjectLogger.LOG;
-
 @Service
 public class DriverServiceRest implements DriverService {
+
+    public static final Logger LOG = LogManager.getLogger(
+            DriverServiceRest.class);
 
     /**
      * Field url String.

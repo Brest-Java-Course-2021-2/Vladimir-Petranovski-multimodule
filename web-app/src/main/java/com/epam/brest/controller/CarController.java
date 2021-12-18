@@ -3,20 +3,19 @@ package com.epam.brest.controller;
 import com.epam.brest.controller.validator.CarValidator;
 import com.epam.brest.model.Car;
 import com.epam.brest.service_api.CarService;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-
-import static com.epam.brest.logger.ProjectLogger.LOG;
+import org.springframework.web.bind.annotation.*;
 
 @Controller
 @RequestMapping("/cars")
 public class CarController {
+
+    public static final Logger LOG = LogManager.getLogger(
+            CarController.class);
 
     public static final String CARS_CARS = "cars/cars";
 
@@ -37,21 +36,6 @@ public class CarController {
      */
 
     private final CarValidator carValidator;
-
-//    /**
-//     * Constructor.
-//     *
-//     * @param enterCarService carService.
-//     * @param  enterCarValidator carValidator.
-//     */
-
-//    public CarController(@Qualifier("carServiceRest")
-//                         final CarService enterCarService,
-//                         @Qualifier("carValidator")
-//                         final CarValidator enterCarValidator) {
-//        this.carService = enterCarService;
-//        this.carValidator = enterCarValidator;
-//    }
 
     /**
      * Constructor.

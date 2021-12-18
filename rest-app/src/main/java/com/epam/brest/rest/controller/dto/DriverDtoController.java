@@ -2,20 +2,18 @@ package com.epam.brest.rest.controller.dto;
 
 import com.epam.brest.model.dto.DriverDto;
 import com.epam.brest.service_api.dto.DriverDtoService;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Collection;
-
-import static com.epam.brest.logger.ProjectLogger.LOG;
 
 @RestController
 @RequestMapping("/drivers_dto")
 public class DriverDtoController {
+
+    public static final Logger LOG = LogManager.getLogger(DriverDtoController.class);
 
     /**
      * Field driverDtoService.
@@ -54,10 +52,11 @@ public class DriverDtoController {
      * @return Driver Dto collection in json format.
      */
 
-    @GetMapping(value = "/drivers-range")
-    public Collection<DriverDto> showDriversListOnRange(@RequestBody DriverDto driverDto) {
+    @GetMapping("/drivers-range")
+    @ResponseBody
+    public Collection<DriverDto> showDriversListOnRange(@RequestParam String fromDateChoose, @RequestParam String toDateChoose) {
         LOG.info("Method showDriversListOnRange() started of class {}",
                 getClass().getName());
-        return driverDtoService.chooseDriverOnDateRange(driverDto.getFromDateChoose(), driverDto.getToDateChoose());
+        return driverDtoService.chooseDriverOnDateRange(fromDateChoose, toDateChoose);
     }
 }

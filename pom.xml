@@ -24,7 +24,6 @@
         <module>rest-app</module>
         <module>web-app</module>
 
-        <module>logger</module>
         <module>test-db</module>
     </modules>
 
@@ -39,7 +38,7 @@
         <maven.compiler.source>11</maven.compiler.source>
         <maven.compiler.target>11</maven.compiler.target>
         <junit.version>5.4.0</junit.version>
-        <slf4j.version>2.0.0-alpha4</slf4j.version>
+        <log4j2.version>2.14.1</log4j2.version>
         <spring.version>5.3.4</spring.version>
         <thymeleaf-spring5.version>3.0.12.RELEASE</thymeleaf-spring5.version>
         <maven-surefire-plugin.version>3.0.0-M5</maven-surefire-plugin.version>
@@ -105,11 +104,6 @@
             <dependency>
                 <groupId>com.epam.brest</groupId>
                 <artifactId>test-db</artifactId>
-                <version>${project.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>com.epam.brest</groupId>
-                <artifactId>logger</artifactId>
                 <version>${project.version}</version>
             </dependency>
 
@@ -247,9 +241,14 @@
             </dependency>
 
             <dependency>
-                <groupId>org.slf4j</groupId>
-                <artifactId>slf4j-log4j12</artifactId>
-                <version>${slf4j.version}</version>
+                <groupId>org.apache.logging.log4j</groupId>
+                <artifactId>log4j-api</artifactId>
+                <version>${log4j2.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.logging.log4j</groupId>
+                <artifactId>log4j-core</artifactId>
+                <version>${log4j2.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

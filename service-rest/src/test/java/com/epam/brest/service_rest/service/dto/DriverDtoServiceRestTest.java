@@ -4,6 +4,8 @@ import com.epam.brest.model.dto.DriverDto;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -24,8 +26,8 @@ import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
-import static com.epam.brest.logger.ProjectLogger.LOG;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.springframework.test.web.client.match.MockRestRequestMatchers.method;
 import static org.springframework.test.web.client.match.MockRestRequestMatchers.requestTo;
 import static org.springframework.test.web.client.response.MockRestResponseCreators.withStatus;
@@ -33,6 +35,9 @@ import static org.springframework.test.web.client.response.MockRestResponseCreat
 @ExtendWith(SpringExtension.class)
 @ContextConfiguration(locations = {"classpath*:service-rest-test-app-context.xml"})
 class DriverDtoServiceRestTest {
+
+    public static final Logger LOG = LogManager.getLogger(
+            DriverDtoServiceRestTest.class);
 
     public static final String URL = "http://localhost:8088/drivers_dto";
 

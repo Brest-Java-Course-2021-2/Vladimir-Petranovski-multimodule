@@ -4,6 +4,8 @@ import com.epam.brest.model.Car;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.commons.lang3.RandomStringUtils;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -22,7 +24,6 @@ import java.net.URISyntaxException;
 import java.util.Arrays;
 import java.util.List;
 
-import static com.epam.brest.logger.ProjectLogger.LOG;
 import static com.epam.brest.model.constant.CarConstants.CAR_MODEL_SIZE;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.springframework.test.web.client.match.MockRestRequestMatchers.method;
@@ -32,6 +33,9 @@ import static org.springframework.test.web.client.response.MockRestResponseCreat
 @ExtendWith(SpringExtension.class)
 @ContextConfiguration(locations = {"classpath*:service-rest-test-app-context.xml"})
 class CarServiceRestTest {
+
+    public static final Logger LOG = LogManager.getLogger(
+            CarServiceRestTest.class);
 
     public static final String CARS_URL = "http://localhost:8088/cars";
 

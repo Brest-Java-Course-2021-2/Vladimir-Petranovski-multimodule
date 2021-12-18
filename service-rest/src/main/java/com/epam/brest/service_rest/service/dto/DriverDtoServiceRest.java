@@ -2,16 +2,19 @@ package com.epam.brest.service_rest.service.dto;
 
 import com.epam.brest.model.dto.DriverDto;
 import com.epam.brest.service_api.dto.DriverDtoService;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.List;
 
-import static com.epam.brest.logger.ProjectLogger.LOG;
-
 @Service
 public class DriverDtoServiceRest implements DriverDtoService {
+
+    public static final Logger LOG = LogManager.getLogger(
+            DriverDtoServiceRest.class);
 
     /**
      * Field url String.

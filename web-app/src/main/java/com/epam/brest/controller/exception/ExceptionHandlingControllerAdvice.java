@@ -1,5 +1,7 @@
 package com.epam.brest.controller.exception;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.dao.DataAccessException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -9,10 +11,11 @@ import javax.servlet.http.HttpServletRequest;
 import java.sql.SQLException;
 import java.util.Date;
 
-import static com.epam.brest.logger.ProjectLogger.LOG;
-
 @ControllerAdvice
 public class ExceptionHandlingControllerAdvice {
+
+    public static final Logger LOG = LogManager.getLogger(
+            ExceptionHandlingControllerAdvice.class);
 
     /**
      * Exception handler of data base.

@@ -2,6 +2,8 @@ package com.epam.brest.controller;
 
 import com.epam.brest.model.Car;
 import com.epam.brest.service_api.CarService;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -20,7 +22,6 @@ import org.springframework.web.context.WebApplicationContext;
 
 import java.util.List;
 
-import static com.epam.brest.logger.ProjectLogger.LOG;
 import static org.hamcrest.Matchers.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -31,6 +32,9 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @ContextConfiguration(locations = {"classpath*:app-context-web-test.xml"})
 @Transactional
 class CarControllerTestIT {
+
+    public static final Logger LOG = LogManager.getLogger(
+            CarControllerTestIT.class);
 
     @Autowired
     private WebApplicationContext wac;

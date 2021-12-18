@@ -2,12 +2,13 @@ package com.epam.brest.rest.controller.dto;
 
 import com.epam.brest.model.dto.DriverDto;
 import com.epam.brest.service_api.dto.DriverDtoService;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.ArgumentMatchers;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
@@ -20,12 +21,13 @@ import java.math.BigDecimal;
 import java.util.Arrays;
 import java.util.Date;
 
-import static com.epam.brest.logger.ProjectLogger.LOG;
 import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @ExtendWith(MockitoExtension.class)
 class DriverDtoControllerTest {
+
+    public static final Logger LOG = LogManager.getLogger(DriverDtoControllerTest.class);
 
     @InjectMocks
     private DriverDtoController driverDtoController;

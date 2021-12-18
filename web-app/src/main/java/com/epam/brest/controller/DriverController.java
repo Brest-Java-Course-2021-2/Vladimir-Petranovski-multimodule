@@ -5,18 +5,21 @@ import com.epam.brest.model.Driver;
 import com.epam.brest.model.dto.DriverDto;
 import com.epam.brest.service_api.DriverService;
 import com.epam.brest.service_api.dto.DriverDtoService;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.ModelAttribute;
-
-import static com.epam.brest.logger.ProjectLogger.LOG;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 
 @Controller
 public class DriverController {
+
+    public static final Logger LOG = LogManager.getLogger(
+            DriverController.class);
 
     /**
      * Field driverDtoService.
