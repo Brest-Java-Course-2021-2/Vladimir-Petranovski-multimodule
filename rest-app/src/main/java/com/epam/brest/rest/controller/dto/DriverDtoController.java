@@ -13,7 +13,8 @@ import java.util.Collection;
 @RequestMapping("/drivers_dto")
 public class DriverDtoController {
 
-    public static final Logger LOG = LogManager.getLogger(DriverDtoController.class);
+    public static final Logger LOG = LogManager.getLogger(
+            DriverDtoController.class);
 
     /**
      * Field driverDtoService.
@@ -52,11 +53,30 @@ public class DriverDtoController {
      * @return Driver Dto collection in json format.
      */
 
+//    @GetMapping("/drivers-range")
+//    @ResponseBody
+//    public Collection<DriverDto> showDriversListOnRange(@RequestParam("fromDateChoose") String fromDateChoose,
+//                                                        @RequestParam("toDateChoose") String toDateChoose) {
+//        LOG.info("Method showDriversListOnRange() started of class {}",
+//                getClass().getName());
+//        return driverDtoService.chooseDriverOnDateRange(fromDateChoose, toDateChoose);
+//    }
+
     @GetMapping("/drivers-range")
     @ResponseBody
-    public Collection<DriverDto> showDriversListOnRange(@RequestParam String fromDateChoose, @RequestParam String toDateChoose) {
+    public Collection<DriverDto> showDriversListOnRange(@ModelAttribute DriverDto driverDto) {
         LOG.info("Method showDriversListOnRange() started of class {}",
                 getClass().getName());
-        return driverDtoService.chooseDriverOnDateRange(fromDateChoose, toDateChoose);
+        return driverDtoService.chooseDriverOnDateRange(driverDto.getFromDateChoose(), driverDto.getToDateChoose());
     }
+
+//    @GetMapping("/drivers-range")
+//    @ResponseBody
+//    public Collection<DriverDto> showDriversListOnRange(@ModelAttribute DriverDto driverDto, @RequestParam String fromDateChoose, @RequestParam String toDateChoose) {
+//        LOG.info("Method showDriversListOnRange() started of class {}",
+//                getClass().getName());
+//        driverDto.setFromDateChoose(fromDateChoose);
+//        driverDto.setToDateChoose(toDateChoose);
+//        return driverDtoService.chooseDriverOnDateRange(driverDto.getFromDateChoose(), driverDto.getToDateChoose());
+//    }
 }

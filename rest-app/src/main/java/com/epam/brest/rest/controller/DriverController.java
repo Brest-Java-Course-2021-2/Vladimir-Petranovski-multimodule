@@ -14,7 +14,8 @@ import java.util.Collection;
 @RequestMapping("/drivers")
 public class DriverController {
 
-    public static final Logger LOG = LogManager.getLogger(DriverController.class);
+    public static final Logger LOG = LogManager.getLogger(
+            DriverController.class);
 
     /**
      * Field driverService.
