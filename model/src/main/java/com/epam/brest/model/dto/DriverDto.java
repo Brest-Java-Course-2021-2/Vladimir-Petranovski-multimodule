@@ -56,9 +56,9 @@ public class DriverDto {
     /**
      * Constructor.
      *
-     * @param driverName String.
-     * @param driverDateStartWork Instant.
-     * @param driverSalary BigDecimal.
+     * @param driverName                  String.
+     * @param driverDateStartWork         Instant.
+     * @param driverSalary                BigDecimal.
      * @param countOfCarsAssignedToDriver Integer.
      */
 
@@ -74,10 +74,10 @@ public class DriverDto {
     /**
      * Constructor.
      *
-     * @param driverId Integer.
-     * @param driverName String.
-     * @param driverDateStartWork Instant.
-     * @param driverSalary BigDecimal.
+     * @param driverId                    Integer.
+     * @param driverName                  String.
+     * @param driverDateStartWork         Instant.
+     * @param driverSalary                BigDecimal.
      * @param countOfCarsAssignedToDriver Integer.
      */
 
@@ -90,45 +90,6 @@ public class DriverDto {
         this.driverDateStartWork = driverDateStartWork;
         this.driverSalary = driverSalary;
         this.countOfCarsAssignedToDriver = countOfCarsAssignedToDriver;
-    }
-
-    /**
-     * Constructor.
-     *
-     * @param driverId Integer.
-     * @param driverName String.
-     * @param driverDateStartWork Instant.
-     * @param driverSalary BigDecimal.
-     * @param countOfCarsAssignedToDriver Integer.
-     * @param fromDateChoose String.
-     * @param toDateChoose String.
-     */
-
-    public DriverDto(final Integer driverId, final String driverName,
-                     final Instant driverDateStartWork,
-                     final BigDecimal driverSalary,
-                     final Integer countOfCarsAssignedToDriver,
-                     final String fromDateChoose, final String toDateChoose) {
-        this.driverId = driverId;
-        this.driverName = driverName;
-        this.driverDateStartWork = driverDateStartWork;
-        this.driverSalary = driverSalary;
-        this.countOfCarsAssignedToDriver = countOfCarsAssignedToDriver;
-        this.fromDateChoose = fromDateChoose;
-        this.toDateChoose = toDateChoose;
-    }
-
-    /**
-     * Constructor.
-     *
-     * @param fromDateChoose String.
-     * @param toDateChoose String.
-     */
-
-    public DriverDto(final String fromDateChoose,
-                     final String toDateChoose) {
-        this.fromDateChoose = fromDateChoose;
-        this.toDateChoose = toDateChoose;
     }
 
     /**

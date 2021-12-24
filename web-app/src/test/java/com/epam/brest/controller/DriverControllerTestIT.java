@@ -401,5 +401,4 @@ class DriverControllerTestIT {
 
         assertEquals(drivers.get(0).getDriverName(), driversDst.get(0).getDriverName());
     }
-
 }

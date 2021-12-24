@@ -89,7 +89,7 @@ class DriverDtoServiceRestTest {
         LOG.info("Method shouldChooseDriverOnDateRange() started {}",
                 getClass().getName());
         // given
-        mockRestServiceServer.expect(ExpectedCount.once(), requestTo(new URI(URL + "/drivers-range")))
+        mockRestServiceServer.expect(ExpectedCount.once(), requestTo(new URI(URL + "/drivers-range?fromDateChoose=" + fromDate + "&toDateChoose=" + toDate)))
                 .andExpect(method(HttpMethod.GET))
                 .andRespond(withStatus(HttpStatus.OK)
                         .contentType(MediaType.APPLICATION_JSON)

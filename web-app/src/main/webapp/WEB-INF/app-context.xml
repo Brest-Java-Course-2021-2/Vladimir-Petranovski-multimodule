@@ -67,8 +67,31 @@
     <bean id="restTemplate" class="org.springframework.web.client.RestTemplate">
         <property name="messageConverters">
             <list>
-                <bean class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter"/>
+                <bean class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
+<!--                    <property name="objectMapper">-->
+<!--                        <bean class="org.springframework.web.context.support.Jackson2ObjectMapperFactoryBean"-->
+<!--                              p:failOnEmptyBeans="false"-->
+<!--                              p:indentOutput="true">-->
+<!--                            <property name="serializers">-->
+<!--                                <array>-->
+<!--                                    <bean class="LocalDateSerializer" />-->
+<!--                                </array>-->
+<!--                            </property>-->
+<!--                        </bean>-->
+<!--                    </property>-->
+<!--                    <property name="objectMapper" ref="objectMapper"/>-->
+<!--                    <property name="objectMapper">-->
+<!--                        <bean class="com.fasterxml.jackson.datatype.jsr310.JavaTimeModule"/>-->
+<!--                    </property>-->
+<!--                    <property name="objectMapper" value="com.fasterxml.jackson.datatype.jsr310.JavaTimeModule"/>-->
+                </bean>
                 <bean class="org.springframework.http.converter.ByteArrayHttpMessageConverter"/>
+<!--                <bean class="com.fasterxml.jackson.databind.ObjectMapper">-->
+
+<!--                    <property name="dateFormat">-->
+<!--                        <bean class="com.fasterxml.jackson.datatype.jsr310.JavaTimeModule"/>-->
+<!--                    </property>-->
+<!--                </bean>-->
             </list>
         </property>
         <property name="requestFactory">
@@ -80,6 +103,48 @@
 <!--    com.fasterxml.jackson.datatype.jsr310.JavaTimeModule,-->
 <!--    com.fasterxml.jackson.module.paramnames.ParameterNamesModule" />-->
     </bean>
+
+<!--    <bean id="objectMapper"-->
+<!--          class="org.springframework.http.converter.json.Jackson2ObjectMapperFactoryBean">-->
+
+<!--        <property name="featuresToDisable">-->
+<!--            <array>-->
+<!--                <util:constant-->
+<!--                        static-field="com.fasterxml.jackson.databind.SerializationFeature.WRITE_DATES_AS_TIMESTAMPS" />-->
+<!--            </array>-->
+<!--        </property>-->
+
+<!--        <property name="dateFormat">-->
+<!--            <bean class="java.text.SimpleDateFormat">-->
+<!--                <constructor-arg type="java.lang.String" value="yyyy-MM-dd"></constructor-arg>-->
+<!--            </bean>-->
+<!--        </property>-->
+
+<!--        <property name="modulesToInstall"-->
+<!--                  value="-->
+<!--        com.fasterxml.jackson.datatype.jdk8.Jdk8Module,-->
+<!--    com.fasterxml.jackson.datatype.jsr310.JavaTimeModule,-->
+<!--    com.fasterxml.jackson.module.paramnames.ParameterNamesModule" />-->
+<!--    </bean>-->
+
+<!--    <bean id="jsonHttpMessageConverter"-->
+<!--          class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">-->
+<!--        <property name="supportedMediaTypes" value="application/json" />-->
+<!--        <property name="objectMapper" ref="objectMapper" />-->
+<!--    </bean>-->
+
+<!--    <bean-->
+<!--            class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter">-->
+<!--        <property name="messageConverters">-->
+<!--            <list>-->
+<!--                <ref bean="jsonHttpMessageConverter" />-->
+<!--            </list>-->
+<!--        </property>-->
+<!--    </bean>-->
+<!--    <bean id="objectMapper" class="com.fasterxml.jackson.databind.ObjectMapper">-->
+<!--        <property name="dateFormat" value="com.fasterxml.jackson.datatype.jsr310.JavaTimeModule,-->
+<!--                                           com.fasterxml.jackson.datatype.jdk8.Jdk8Module"/>-->
+<!--    </bean>-->
 
 <!--    <bean id="objectMapper"-->
 <!--          class="org.springframework.http.converter.json.Jackson2ObjectMapperFactoryBean">-->

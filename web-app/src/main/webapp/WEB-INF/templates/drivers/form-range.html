@@ -9,10 +9,10 @@
 <div>
     <form th:method="GET" th:action="@{/drivers_dto/drivers-range}" th:object="${driver}">
         <label for="fromDate">From </label>
-        <input type="datetime-local" th:field="*{fromDateChoose}" th:name="fromDateChoose" id="fromDate"/>
+        <input type="datetime-local" th:field="*{fromDateChoose}" th:value="${driver.fromDateChoose}" id="fromDate"/>
         <br/>
         <label for="toDate"> to </label>
-        <input type="datetime-local" th:field="*{toDateChoose}" name="toDateChoose" id="toDate">
+        <input type="datetime-local" th:field="*{toDateChoose}" th:value="${driver.toDateChoose}" id="toDate">
         <br/>
         <input type="submit" value="Choose!">
         <br/>

@@ -170,15 +170,21 @@ public class DriverController {
     }
 
     @GetMapping("/drivers_dto/form-range")
-    public String showFormForChoseDateRange(@ModelAttribute("driver") DriverDto driverDto) {
-        LOG.info("Method showFormForChoseDateRange() started of class {}", getClass().getName());
+    public String showFormForChoseDateRange(
+            @ModelAttribute("driver") final DriverDto driverDto) {
+        LOG.info("Method showFormForChoseDateRange() started of class {}",
+                getClass().getName());
         return "drivers/form-range";
     }
 
     @GetMapping("/drivers_dto/drivers-range")
-    public String showDriversListOnRange(@ModelAttribute("driver") DriverDto driverDto, Model model) {
-        LOG.info("Method showDriversListOnRange() started of class {}", getClass().getName());
-        model.addAttribute("driverList", driverDtoService.chooseDriverOnDateRange(driverDto.getFromDateChoose(), driverDto.getToDateChoose()));
+    public String showDriversListOnRange(
+            @ModelAttribute("driver") final DriverDto driverDto,
+            final Model model) {
+        LOG.info("Method showDriversListOnRange() started of class {}",
+                getClass().getName());
+        model.addAttribute("driverList", driverDtoService.chooseDriverOnDateRange(
+                driverDto.getFromDateChoose(), driverDto.getToDateChoose()));
         return "drivers/drivers-range";
     }
 }

@@ -4,9 +4,12 @@ import com.epam.brest.model.dto.DriverDto;
 import com.epam.brest.service_api.dto.DriverDtoService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.springframework.core.ParameterizedTypeReference;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.util.UriComponentsBuilder;
 
 import java.util.List;
 
@@ -69,16 +72,22 @@ public class DriverDtoServiceRest implements DriverDtoService {
      *
      * @return driver's list rest Dto.
      */
-
     @Override
-    public List<DriverDto> chooseDriverOnDateRange(final String fromDate,
-                                                   final String toDate) {
+    public List<DriverDto> chooseDriverOnDateRange(final String fromDateChoose,
+                                                   final String toDateChoose) {
 
         LOG.info("Method chooseDriverOnDateRange()"
                         + " with fromDate {} and toDate {} started {}",
-                fromDate, toDate, getClass().getName());
-        ResponseEntity responseEntity = restTemplate.getForEntity(
-                url + "/drivers-range", List.class);
-        return (List<DriverDto>) responseEntity.getBody();
+                fromDateChoose, toDateChoose, getClass().getName());
+        UriComponentsBuilder uriComponentsBuilder = UriComponentsBuilder.fromHttpUrl(
+                        url + "/drivers-range")
+                .queryParam("fromDateChoose", fromDateChoose)
+                .queryParam("toDateChoose", toDateChoose);
+        ParameterizedTypeReference<List<DriverDto>> typeReference =
+                new ParameterizedTypeReference<>(){};
+        ResponseEntity<List<DriverDto>> responseEntity =
+                restTemplate.exchange(uriComponentsBuilder.toUriString(),
+                        HttpMethod.GET,null, typeReference);
+        return responseEntity.getBody();
     }
 }

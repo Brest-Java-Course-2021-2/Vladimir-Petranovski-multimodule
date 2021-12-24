@@ -9,6 +9,8 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.ArgumentCaptor;
+import org.mockito.Captor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
@@ -34,6 +36,9 @@ class DriverDtoControllerTest {
 
     @Mock
     private DriverDtoService driverDtoService;
+
+    @Captor
+    private ArgumentCaptor<String> stringCaptor;
 
     private MockMvc mockMvc;
 
@@ -73,30 +78,28 @@ class DriverDtoControllerTest {
         verify(driverDtoService, times(1)).findAllDriverWithCountCars();
     }
 
-//    @Test
-//    void shouldShowDriversListOnRange() throws Exception {
-//        LOG.info("Method shouldShowDriversListOnRange() started of class {}", getClass().getName());
-//
-//        when(driverDtoService.chooseDriverOnDateRange(anyString(), anyString())).thenReturn(Arrays.asList(create(0), create(1)));
-//
-//        mockMvc.perform(
-//                        MockMvcRequestBuilders.get("/drivers_dto/drivers-range")
-//                ).andDo(MockMvcResultHandlers.print())
-//                .andExpect(status().isOk())
-//                .andExpect(content().contentType("application/json"))
-//                .andExpect(jsonPath("$[0].driverId", Matchers.is(0)))
-//                .andExpect(jsonPath("$[0].driverName", Matchers.is("d0")))
-//                .andExpect(jsonPath("$[0].driverDateStartWork", Matchers.is(0.0)))
-//                .andExpect(jsonPath("$[0].driverSalary", Matchers.is(100)))
-//                .andExpect(jsonPath("$[0].countOfCarsAssignedToDriver", Matchers.is(100)))
-//                .andExpect(jsonPath("$[1].driverId", Matchers.is(1)))
-//                .andExpect(jsonPath("$[1].driverName", Matchers.is("d1")))
-//                .andExpect(jsonPath("$[1].driverDateStartWork", Matchers.is(0.001)))
-//                .andExpect(jsonPath("$[1].driverSalary", Matchers.is(101)))
-//                .andExpect(jsonPath("$[1].countOfCarsAssignedToDriver", Matchers.is(101)));
-//
-//        verify(driverDtoService, times(1)).chooseDriverOnDateRange(ArgumentMatchers.anyString(), ArgumentMatchers.anyString());
-//    }
+    @Test
+    void shouldShowDriversListOnRange() throws Exception {
+        LOG.info("Method shouldShowDriversListOnRange() started of class {}", getClass().getName());
+
+        when(driverDtoService.chooseDriverOnDateRange(stringCaptor.capture(), stringCaptor.capture())).thenReturn(Arrays.asList(create(0), create(1)));
+
+        mockMvc.perform(
+                        MockMvcRequestBuilders.get("/drivers_dto/drivers-range")
+                ).andDo(MockMvcResultHandlers.print())
+                .andExpect(status().isOk())
+                .andExpect(content().contentType("application/json"))
+                .andExpect(jsonPath("$[0].driverId", Matchers.is(0)))
+                .andExpect(jsonPath("$[0].driverName", Matchers.is("d0")))
+                .andExpect(jsonPath("$[0].driverDateStartWork", Matchers.is(0.0)))
+                .andExpect(jsonPath("$[0].driverSalary", Matchers.is(100)))
+                .andExpect(jsonPath("$[1].driverId", Matchers.is(1)))
+                .andExpect(jsonPath("$[1].driverName", Matchers.is("d1")))
+                .andExpect(jsonPath("$[1].driverDateStartWork", Matchers.is(0.001)))
+                .andExpect(jsonPath("$[1].driverSalary", Matchers.is(101)));
+
+        verify(driverDtoService, times(1)).chooseDriverOnDateRange(stringCaptor.capture(), stringCaptor.capture());
+    }
 
     private DriverDto create(Integer index) {
         DriverDto driverDto = new DriverDto();
