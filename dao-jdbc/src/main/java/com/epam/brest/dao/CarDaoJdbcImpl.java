@@ -3,6 +3,8 @@ package com.epam.brest.dao;
 import com.epam.brest.dao.rowMappers.CarDaoJdbcRowMapper;
 import com.epam.brest.dao_api.CarDao;
 import com.epam.brest.model.Car;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.core.namedparam.SqlParameterSource;
@@ -13,10 +15,11 @@ import org.springframework.stereotype.Component;
 import java.util.List;
 
 import static com.epam.brest.dao.Queries.*;
-import static com.epam.brest.logger.ProjectLogger.LOG;
 
 @Component
 public class CarDaoJdbcImpl implements CarDao {
+
+    public static final Logger LOG = LogManager.getLogger(CarDaoJdbcImpl.class);
 
     /**
      * Field namedParameterJdbcTemplate.

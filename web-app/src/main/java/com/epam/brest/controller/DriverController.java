@@ -2,26 +2,30 @@ package com.epam.brest.controller;
 
 import com.epam.brest.controller.validator.DriverValidator;
 import com.epam.brest.model.Driver;
+import com.epam.brest.model.dto.DriverDto;
 import com.epam.brest.service_api.DriverService;
 import com.epam.brest.service_api.dto.DriverDtoService;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.ModelAttribute;
-
-import static com.epam.brest.logger.ProjectLogger.LOG;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 
 @Controller
 public class DriverController {
+
+    public static final Logger LOG = LogManager.getLogger(
+            DriverController.class);
 
     /**
      * Field driverDtoService.
      */
 
-    private final DriverDtoService driverDtoServiceh;
+    private final DriverDtoService driverDtoService;
 
     /**
      * Field driverService.
@@ -35,25 +39,6 @@ public class DriverController {
 
     private final DriverValidator driverValidator;
 
-//    /**
-//     * Constructor.
-//     *
-//     * @param enterDriverDtoService driverDto Service.
-//     * @param enterDriverService driverService.
-//     * @param enterDriverValidator driverValidator.
-//     */
-//
-//    public DriverController(@Qualifier("driverDtoServiceRest")
-//                            final DriverDtoService enterDriverDtoService,
-//                            @Qualifier("driverServiceRest")
-//                            final DriverService enterDriverService,
-//                            @Qualifier("driverValidator")
-//                            final DriverValidator enterDriverValidator) {
-//        this.driverDtoService = enterDriverDtoService;
-//        this.driverService = enterDriverService;
-//        this.driverValidator = enterDriverValidator;
-//    }
-
     /**
      * Constructor.
      *
@@ -65,7 +50,7 @@ public class DriverController {
     public DriverController(final DriverDtoService driverDtoService,
                             final DriverService driverService,
                             final DriverValidator driverValidator) {
-        this.driverDtoServiceh = driverDtoService;
+        this.driverDtoService = driverDtoService;
         this.driverService = driverService;
         this.driverValidator = driverValidator;
     }
@@ -82,7 +67,7 @@ public class DriverController {
         LOG.info("Method findAllDrivers() started of class {}",
                 getClass().getName());
         model.addAttribute("driverList",
-                driverDtoServiceh.findAllDriverWithCountCars());
+                driverDtoService.findAllDriverWithCountCars());
         return "drivers/drivers";
     }
 
@@ -182,5 +167,24 @@ public class DriverController {
                 id, getClass().getName());
         driverService.deleteDriverById(id);
         return "redirect:/drivers_dto";
+    }
+
+    @GetMapping("/drivers_dto/form-range")
+    public String showFormForChoseDateRange(
+            @ModelAttribute("driver") final DriverDto driverDto) {
+        LOG.info("Method showFormForChoseDateRange() started of class {}",
+                getClass().getName());
+        return "drivers/form-range";
+    }
+
+    @GetMapping("/drivers_dto/drivers-range")
+    public String showDriversListOnRange(
+            @ModelAttribute("driver") final DriverDto driverDto,
+            final Model model) {
+        LOG.info("Method showDriversListOnRange() started of class {}",
+                getClass().getName());
+        model.addAttribute("driverList", driverDtoService.chooseDriverOnDateRange(
+                driverDto.getFromDateChoose(), driverDto.getToDateChoose()));
+        return "drivers/drivers-range";
     }
 }

@@ -65,6 +65,16 @@ public class Queries {
                     + " car c ON d.driver_id=c.driver_id GROUP BY d.driver_id";
 
     /**
+     * Field constant DRIVER_FIND_DRIVERS_ON_RANGE_DATE.
+     */
+
+    public static final String DRIVER_FIND_DRIVERS_ON_RANGE_DATE =
+            "SELECT d.driver_id as driverId, d.name as driverName,"
+                    + " d.dateStartWork as driverDateStartWork, d.salary as driverSalary"
+                    + " FROM driver d WHERE dateStartWork BETWEEN"
+                    + " :fromDateChoose AND :toDateChoose";
+
+    /**
      * Field constant CAR_FIND_ALL.
      */
 

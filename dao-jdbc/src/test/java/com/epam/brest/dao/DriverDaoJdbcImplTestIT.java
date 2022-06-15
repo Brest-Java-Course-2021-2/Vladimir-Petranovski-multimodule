@@ -2,6 +2,8 @@ package com.epam.brest.dao;
 
 import com.epam.brest.dao_api.DriverDao;
 import com.epam.brest.model.Driver;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,13 +15,14 @@ import java.math.BigDecimal;
 import java.time.Instant;
 import java.util.List;
 
-import static com.epam.brest.logger.ProjectLogger.LOG;
 import static org.junit.jupiter.api.Assertions.*;
 
 @ExtendWith(SpringExtension.class)
 @ContextConfiguration(locations = {"classpath*:test-db.xml", "classpath*:test-jdbc-config.xml"})
 @Transactional
 class DriverDaoJdbcImplTestIT {
+
+    public static final Logger LOG = LogManager.getLogger(DriverDaoJdbcImplTestIT.class);
 
     private final DriverDaoJdbcImpl driverDAO;
 

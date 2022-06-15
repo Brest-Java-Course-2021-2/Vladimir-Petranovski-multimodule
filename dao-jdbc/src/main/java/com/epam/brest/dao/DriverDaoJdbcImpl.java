@@ -3,6 +3,8 @@ package com.epam.brest.dao;
 import com.epam.brest.dao.rowMappers.DriverDaoJdbcRowMapper;
 import com.epam.brest.dao_api.DriverDao;
 import com.epam.brest.model.Driver;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.core.namedparam.SqlParameterSource;
@@ -13,10 +15,11 @@ import org.springframework.stereotype.Component;
 import java.util.List;
 
 import static com.epam.brest.dao.Queries.*;
-import static com.epam.brest.logger.ProjectLogger.LOG;
 
 @Component
 public class DriverDaoJdbcImpl implements DriverDao {
+
+    public static final Logger LOG = LogManager.getLogger(DriverDaoJdbcImpl.class);
 
     /**
      * Field namedParameterJdbcTemplate.

@@ -1,6 +1,8 @@
 package com.epam.brest.service.impl;
 
 import com.epam.brest.model.Car;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,14 +13,16 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
-import static com.epam.brest.logger.ProjectLogger.LOG;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 @ExtendWith({SpringExtension.class})
 @ContextConfiguration(locations = {"classpath*:test-db.xml", "classpath*:service-context-test.xml"})
 @Transactional
 @Rollback
 class CarServiceImplTestIT {
+
+    public static final Logger LOG = LogManager.getLogger(CarServiceImplTestIT.class);
 
     @Autowired
     CarServiceImpl carService;

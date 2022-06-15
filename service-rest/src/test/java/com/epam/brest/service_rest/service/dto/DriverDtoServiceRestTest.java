@@ -3,7 +3,9 @@ package com.epam.brest.service_rest.service.dto;
 import com.epam.brest.model.dto.DriverDto;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.datatype.jsr310.JSR310Module;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -24,8 +26,8 @@ import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
-import static com.epam.brest.logger.ProjectLogger.LOG;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.springframework.test.web.client.match.MockRestRequestMatchers.method;
 import static org.springframework.test.web.client.match.MockRestRequestMatchers.requestTo;
 import static org.springframework.test.web.client.response.MockRestResponseCreators.withStatus;
@@ -33,6 +35,9 @@ import static org.springframework.test.web.client.response.MockRestResponseCreat
 @ExtendWith(SpringExtension.class)
 @ContextConfiguration(locations = {"classpath*:service-rest-test-app-context.xml"})
 class DriverDtoServiceRestTest {
+
+    public static final Logger LOG = LogManager.getLogger(
+            DriverDtoServiceRestTest.class);
 
     public static final String URL = "http://localhost:8088/drivers_dto";
 
@@ -45,11 +50,17 @@ class DriverDtoServiceRestTest {
 
     private ObjectMapper objectMapper;
 
+    private String fromDate;
+    private String toDate;
+
     @BeforeEach
     void setUp() {
-        objectMapper = new ObjectMapper().registerModule(new JSR310Module());
+        objectMapper = new ObjectMapper().registerModule(new JavaTimeModule());
         driverDtoServiceRest = new DriverDtoServiceRest(URL, restTemplate);
         mockRestServiceServer = MockRestServiceServer.createServer(restTemplate);
+
+        fromDate = "1990-01-02T10:10:10.002Z";
+        toDate = "2021-01-02T10:10:10.002Z";
     }
 
     @Test
@@ -70,7 +81,26 @@ class DriverDtoServiceRestTest {
         mockRestServiceServer.verify();
         assertNotNull(list);
         assertTrue(list.size() > 0);
+    }
 
+    @Test
+    void shouldChooseDriverOnDateRange() throws JsonProcessingException, URISyntaxException {
+
+        LOG.info("Method shouldChooseDriverOnDateRange() started {}",
+                getClass().getName());
+        // given
+        mockRestServiceServer.expect(ExpectedCount.once(), requestTo(new URI(URL + "/drivers-range?fromDateChoose=" + fromDate + "&toDateChoose=" + toDate)))
+                .andExpect(method(HttpMethod.GET))
+                .andRespond(withStatus(HttpStatus.OK)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .body(objectMapper.writeValueAsString(Arrays.asList(create(0), create(1))))
+                );
+        // when
+        List<DriverDto> listDst = driverDtoServiceRest.chooseDriverOnDateRange(fromDate, toDate);
+        // then
+        mockRestServiceServer.verify();
+        assertNotNull(listDst);
+        assertTrue(listDst.size() > 0);
     }
 
     private DriverDto create(Integer index) {

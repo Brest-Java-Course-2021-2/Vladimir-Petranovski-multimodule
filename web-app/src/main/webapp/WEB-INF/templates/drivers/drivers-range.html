@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Drivers from date to date</title>
+</head>
+<body>
+<center>
+    <h1>Driver's list from date to date</h1>
+    <br/>
+    <div>
+        <table border="1">
+            <thead>
+            <tr>
+                <th scope="col">Unique driver's number</th>
+                <th scope="col">Driver name</th>
+                <th scope="col">Date when got job</th>
+                <th scope="col">Salary</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="driver : ${driverList}">
+                <td th:text="${driver.driverId}"></td>
+                <td th:text="${driver.driverName}"></td>
+                <td th:text="${driver.driverDateStartWork}"></td>
+                <td th:text="${driver.driverSalary}"></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</center>
+</body>
+<hr>
+<a th:href="@{/drivers_dto}">Back to menu of drivers</a>
+<br/>
+<a th:href="@{/drivers_dto/form-range}">Back to form choosing drivers on range of date</a>
+</html>

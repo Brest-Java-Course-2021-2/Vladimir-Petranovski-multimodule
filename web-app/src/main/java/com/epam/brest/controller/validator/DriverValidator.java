@@ -1,6 +1,8 @@
 package com.epam.brest.controller.validator;
 
 import com.epam.brest.model.Driver;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 import org.springframework.validation.Errors;
@@ -12,13 +14,20 @@ import static com.epam.brest.model.constant.DriverConstants.DRIVER_NAME_SIZE;
 @Component
 public final class DriverValidator implements Validator {
 
+    public static final Logger LOG = LogManager.getLogger(
+            DriverValidator.class);
+
     @Override
     public boolean supports(final Class<?> clazz) {
+        LOG.info("Method supports()"
+                + "started in {}", getClass().getName());
         return Driver.class.equals(clazz);
     }
 
     @Override
     public void validate(final Object target, final Errors errors) {
+        LOG.info("Method validate()"
+                + "started in {}", getClass().getName());
 
         ValidationUtils.rejectIfEmpty(errors,
                 "driverName", "driverName.empty");
