@@ -3,7 +3,6 @@ package com.epam.brest.service.impl;
 import com.epam.brest.dao_api.CarDao;
 import com.epam.brest.model.Car;
 import com.epam.brest.service.exception.CarNotFoundException;
-import com.epam.brest.service.impl.dto.DriverDtoServiceImpl;
 import com.epam.brest.service_api.CarService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
