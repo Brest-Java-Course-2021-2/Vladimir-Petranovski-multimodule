@@ -1,7 +1,11 @@
 package com.epam.brest.controller;
 
 import com.epam.brest.model.Driver;
+import com.epam.brest.model.dto.DriverDto;
 import com.epam.brest.service_api.DriverService;
+import com.epam.brest.service_api.dto.DriverDtoService;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -22,7 +26,6 @@ import java.math.BigDecimal;
 import java.time.Instant;
 import java.util.List;
 
-import static com.epam.brest.logger.ProjectLogger.LOG;
 import static org.hamcrest.Matchers.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -34,11 +37,17 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @Transactional
 class DriverControllerTestIT {
 
+    public static final Logger LOG = LogManager.getLogger(
+            DriverControllerTestIT.class);
+
     @Autowired
     private WebApplicationContext wac;
 
     @Autowired
     private DriverService driverService;
+
+    @Autowired
+    private DriverDtoService driverDtoService;
 
     private MockMvc mockMvc;
 
@@ -359,4 +368,37 @@ class DriverControllerTestIT {
         LOG.info("First driver's size list minus one: {} equals driver's size list after deleting {}", drivers.size() - 1, driverService.findAllDrivers().size());
     }
 
+    @Test
+    void shouldReturnFormForChoosingDriversByDate() throws Exception {
+        LOG.info("Method shouldReturnFormForChoosingDriversByDate() started of class {}", getClass().getName());
+        assertNotNull(driverService);
+
+        mockMvc.perform(
+                        MockMvcRequestBuilders.get("/drivers_dto/form-range")
+                                .contentType(MediaType.APPLICATION_FORM_URLENCODED)
+                ).andDo(MockMvcResultHandlers.print())
+                .andExpect(status().isOk())
+                .andExpect(view().name("drivers/form-range"));
+    }
+
+    @Test
+    void shouldDoChooseDriverFromDateToDate() throws Exception {
+        LOG.info("Method shouldDoChooseDriverFromDateToDate() started of class {}", getClass().getName());
+        assertNotNull(driverService);
+        List<DriverDto> drivers = driverDtoService.findAllDriverWithCountCars();
+
+        assertNotNull(drivers);
+        String fromDate = drivers.get(0).getDriverDateStartWork().toString();
+        String toDate = drivers.get(drivers.size() - 1).getDriverDateStartWork().toString();
+
+        List<DriverDto> driversDst = driverDtoService.chooseDriverOnDateRange(fromDate, toDate);
+
+        mockMvc.perform(
+                MockMvcRequestBuilders.get("/drivers_dto/drivers-range")
+        ).andDo(MockMvcResultHandlers.print())
+                .andExpect(status().is2xxSuccessful())
+                .andExpect(view().name("drivers/drivers-range"));
+
+        assertEquals(drivers.get(0).getDriverName(), driversDst.get(0).getDriverName());
+    }
 }

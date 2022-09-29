@@ -5,8 +5,10 @@ import com.epam.brest.rest.controller.exception.CustomExceptionHandler;
 import com.epam.brest.rest.controller.exception.ErrorResponse;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.datatype.jsr310.JSR310Module;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import org.apache.commons.lang3.RandomStringUtils;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -26,7 +28,6 @@ import java.math.BigDecimal;
 import java.time.Instant;
 import java.util.List;
 
-import static com.epam.brest.logger.ProjectLogger.LOG;
 import static com.epam.brest.model.constant.DriverConstants.DRIVER_NAME_SIZE;
 import static com.epam.brest.rest.controller.exception.CustomExceptionHandler.DRIVER_NOT_FOUND;
 import static com.epam.brest.rest.controller.exception.CustomExceptionHandler.VALIDATION_ERROR;
@@ -37,6 +38,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @ContextConfiguration(locations = {"classpath*:rest-test-app-context.xml"})
 @Transactional
 class DriverControllerTestIT {
+
+    public static final Logger LOG = LogManager.getLogger(DriverControllerTestIT.class);
 
     public static final String DRIVERS_ENDPOINT = "/drivers";
 
@@ -63,7 +66,7 @@ class DriverControllerTestIT {
                 .alwaysDo(MockMvcResultHandlers.print())
                 .build();
 
-        objectMapper = new ObjectMapper().registerModule(new JSR310Module());
+        objectMapper = new ObjectMapper().registerModule(new JavaTimeModule());
 
         driverDateStartWork = Instant.MIN;
         driverSalary = new BigDecimal(250);

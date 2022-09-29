@@ -4,16 +4,19 @@ import com.epam.brest.dao_api.DriverDao;
 import com.epam.brest.model.Driver;
 import com.epam.brest.service.exception.DriverNotFoundException;
 import com.epam.brest.service_api.DriverService;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
-import static com.epam.brest.logger.ProjectLogger.LOG;
-
 @Service
 public class DriverServiceImpl implements DriverService {
+
+    public static final Logger LOG = LogManager.getLogger(
+            DriverServiceImpl.class);
 
     /**
      * Field driverDao.

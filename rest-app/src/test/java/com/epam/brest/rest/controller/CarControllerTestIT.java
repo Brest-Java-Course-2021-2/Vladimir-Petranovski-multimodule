@@ -6,6 +6,8 @@ import com.epam.brest.rest.controller.exception.ErrorResponse;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.commons.lang3.RandomStringUtils;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -22,7 +24,6 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import java.util.List;
 
-import static com.epam.brest.logger.ProjectLogger.LOG;
 import static com.epam.brest.model.constant.CarConstants.CAR_MODEL_SIZE;
 import static com.epam.brest.rest.controller.exception.CustomExceptionHandlerCar.CAR_NOT_FOUND;
 import static org.junit.jupiter.api.Assertions.*;
@@ -32,6 +33,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @ExtendWith(SpringExtension.class)
 @ContextConfiguration(locations = {"classpath*:rest-test-app-context.xml"})
 class CarControllerTestIT {
+
+    public static final Logger LOG = LogManager.getLogger(CarControllerTestIT.class);
 
     public static final String CARS_ENDPOINT = "/cars";
 

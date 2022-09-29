@@ -1,6 +1,8 @@
 package com.epam.brest.service.impl;
 
 import com.epam.brest.model.Driver;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,13 +14,14 @@ import java.math.BigDecimal;
 import java.time.Instant;
 import java.util.List;
 
-import static com.epam.brest.logger.ProjectLogger.LOG;
 import static org.junit.jupiter.api.Assertions.*;
 
 @ExtendWith(SpringExtension.class)
 @ContextConfiguration(locations = {"classpath*:test-db.xml", "classpath*:service-context-test.xml"})
 @Transactional
 class DriverServiceImplTestIT {
+
+    public static final Logger LOG = LogManager.getLogger(DriverServiceImplTestIT.class);
 
     @Autowired
     private DriverServiceImpl driverService;

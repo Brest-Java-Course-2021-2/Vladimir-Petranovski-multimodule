@@ -1,6 +1,8 @@
 package com.epam.brest.rest.controller.exception;
 
 import com.epam.brest.service.exception.CarNotFoundException;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -11,10 +13,11 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.epam.brest.logger.ProjectLogger.LOG;
-
 @ControllerAdvice
 public class CustomExceptionHandlerCar extends ResponseEntityExceptionHandler {
+
+    public static final Logger LOG = LogManager.getLogger(
+            CustomExceptionHandlerCar.class);
 
     /**
      * Field CAR_NOT_FOUND.

@@ -1,6 +1,8 @@
 package com.epam.brest.dao;
 
 import com.epam.brest.model.Car;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,7 +13,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
-import static com.epam.brest.logger.ProjectLogger.LOG;
 import static org.junit.jupiter.api.Assertions.*;
 
 @ExtendWith(SpringExtension.class)
@@ -19,6 +20,8 @@ import static org.junit.jupiter.api.Assertions.*;
 @Transactional
 @Rollback
 class CarDaoJdbcImplTestIT {
+
+    public static final Logger LOG = LogManager.getLogger(CarDaoJdbcImplTestIT.class);
 
     @Autowired
     private CarDaoJdbcImpl carDaoJdbc;
@@ -28,7 +31,7 @@ class CarDaoJdbcImplTestIT {
         LOG.info("Method started: findAllCars() of {}", getClass().getName());
         assertNotNull(carDaoJdbc);
         assertNotNull(carDaoJdbc.findAllCars());
-        LOG.info("{}", carDaoJdbc.findAllCars());
+        LOG.info("Car's list {}", carDaoJdbc.findAllCars());
     }
 
     @Test

@@ -2,36 +2,57 @@
 
 # Brest Java Course 2021 2
 
-# Vladimir-Petranovski-multimodule
+# Vladimir-Petranovski-MD-SpringBoot
 
 This is sample 'Motor depot' web application.
 
-## Business logic
+## Project Information
 
-${project}/documents/src/motor_depot.md
+- [Software requirements specification](documents/src/motor_depot.md)
+
+## Technology Stack
+
+- **Programming Language:** [Java](https://www.java.com) <a href="https://www.java.com" target="_blank"> <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/java/java-original.svg" alt="java" width="20" height="20"/> </a>
+- **Core Framework:** [Spring Boot](https://spring.io/projects/spring-boot) <a href="https://spring.io/projects/spring-boot" target="_blank" rel="noreferrer"> <img src="https://www.vectorlogo.zone/logos/springio/springio-icon.svg" alt="spring" width="18" height="18"/> </a>
+- **Build System:** [Maven](https://maven.apache.org/)
+- **Control System:** [Git](https://git-scm.com/) <a href="https://git-scm.com/" target="_blank" rel="noreferrer"> <img src="https://www.vectorlogo.zone/logos/git-scm/git-scm-icon.svg" alt="git" width="18" height="18"/> </a>
+- **License:** [Apache license, version 2.0](http://www.apache.org/licenses/LICENSE-2.0)
+- **Automated Testing:**
+    - [JUnit5](https://junit.org/junit5/)
+    - [Mockito](http://site.mockito.org/)
+- **Log:** [Log4j 2](https://logging.apache.org/log4j/2.x/)
+- **Database:** [H2](http://www.h2database.com/html/main.html)
+- **Template Engine:** [Thymeleaf](https://www.thymeleaf.org/)
 
 ## Requirements
 
-* JDK 11
-* Apache Maven
-* Clone repository from https://github.com/Brest-Java-Course-2021-2/Vladimir-Petranovski-multimodule
+* JDK 11+
+* Git 2.25.1+
+* Apache Maven 3.6.3+
 
 ## Build application:
+```bash
+$ git clone https://github.com/Brest-Java-Course-2021-2/Vladimir-Petranovski-MD-SpringBoot
+$ cd Vladimir-Petranovski-MD-SpringBoot
+$ mvn clean install
 ```
-mvn clean install
+
+## Run tests:
+```bash
+$ mvn clean test
 ```
 
 ## Run integration tests:
-```
-mvn clean verify
+```bash
+$ mvn clean verify
 ```
 
 ## Run project information ( coverage, dependency, etc. ):
+```bash
+$ mvn site
+$ mvn site:stage
+Open in browser: ./target/staging/index.html
 ```
-mvn site
-mvn site:stage
-
-open in browser: ${project}/target/staging/index.html
 
 ## Rest server
 
@@ -39,49 +60,60 @@ open in browser: ${project}/target/staging/index.html
 
 To start Rest using Maven Jetty plugin use:
 
+```bash
+$ cd rest-app
+$ mvn jetty:run
 ```
-cd rest-app
-mvn jetty:run
+
+## Web
+
+### Start Web using Maven Jetty plugin
+
+To start Web using Maven Jetty plugin use:
+
+```bash
+$ cd web-app
+$ mvn jetty:run
 ```
 
 ## Available REST endpoints
 
-### version
+## version
 
-```
-curl --request GET 'http://localhost:8088/version'
-```
-
-### drivers_dto
-
-```
-curl --request GET 'http://localhost:8088/drivers_dto'
+```bash
+$ curl --request GET 'http://localhost:8088/version'
 ```
 
-Pretty print json:
+## drivers_dto
 
-```
-curl --request GET 'http://localhost:8088/drivers_dto' | json_pp
+```bash
+$ curl --request GET 'http://localhost:8088/drivers_dto'
 ```
 
-### drivers
+#### Pretty print json:
+
+```bash
+$ curl --request GET 'http://localhost:8088/drivers_dto' | json_pp
+```
+
+## drivers
 
 #### findAll
 
-```
-curl --request GET 'http://localhost:8088/drivers' | json_pp
+```bash
+$ curl --request GET 'http://localhost:8088/drivers' | json_pp
 ```
 
 #### findById
 
-```
-curl --request GET 'http://localhost:8088/drivers/1' | json_pp
+```bash
+$ curl --request GET 'http://localhost:8088/drivers/1' | json_pp
 ```
 
 ### create
 
-```
-curl --request POST 'http://localhost:8088/drivers' \
+```bash
+$ curl --request POST 'http://localhost:8088/drivers' \
 --header 'Accept: application/json' \
 --header 'Content-Type: application/json' \
 --data-raw '{
@@ -91,10 +123,10 @@ curl --request POST 'http://localhost:8088/drivers' \
 }'
 ```
 
-## update
+### update
 
-```
-curl --request PATCH 'http://localhost:8088/drivers/3' \
+```bash
+$ curl --request PATCH 'http://localhost:8088/drivers/3' \
 --header 'Content-Type: application/json' \
 --data-raw '{
 "driverName": "SERGEI",
@@ -103,30 +135,30 @@ curl --request PATCH 'http://localhost:8088/drivers/3' \
 }'
 ```
 
-## delete
+### delete
 
-```
-curl --request DELETE 'http://localhost:8088/drivers/3/delete-driver'
+```bash
+$ curl --request DELETE 'http://localhost:8088/drivers/3/delete-driver'
 ```
 
-### cars
+## cars
 
 #### findAll
 
-```
-curl --request GET 'http://localhost:8088/cars' | json_pp
+```bash
+$ curl --request GET 'http://localhost:8088/cars' | json_pp
 ```
 
 #### findById
 
-```
-curl --request GET 'http://localhost:8088/cars/1' | json_pp
+```bash
+$ curl --request GET 'http://localhost:8088/cars/1' | json_pp
 ```
 
 ### create
 
-```
-curl --request POST 'http://localhost:8088/cars' \
+```bash
+$ curl --request POST 'http://localhost:8088/cars' \
 --header 'Accept: application/json' \
 --header 'Content-Type: application/json' \
 --data-raw '{
@@ -135,10 +167,10 @@ curl --request POST 'http://localhost:8088/cars' \
 }'
 ```
 
-## update
+### update
 
-```
-curl --request PATCH 'http://localhost:8088/cars/3' \
+```bash
+$ curl --request PATCH 'http://localhost:8088/cars/3' \
 --header 'Content-Type: application/json' \
 --data-raw '{
 "carModel": "AUDI",
@@ -148,6 +180,6 @@ curl --request PATCH 'http://localhost:8088/cars/3' \
 
 ## delete
 
-```
-curl --request DELETE 'http://localhost:8088/cars/3/delete-car'
+```bash
+$ curl --request DELETE 'http://localhost:8088/cars/3/delete-car'
 ```
